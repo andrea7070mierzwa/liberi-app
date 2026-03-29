@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Líberi - Dashboard Colorido</title>
+    <title>Líberi - Dashboard</title>
     <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=Poppins:wght@400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Poppins:wght@400;500;600&display=swap"
         rel="stylesheet">
     <style>
         :root {
@@ -24,143 +24,154 @@
 
         .layout-geral {
             display: grid;
-            grid-template-columns: 280px 1fr 300px;
-            gap: 25px;
-            max-width: 1250px;
-            margin: 30px auto;
+            grid-template-columns: 240px 1fr 260px;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 25px auto;
             padding: 0 20px;
         }
 
         .card {
             background: var(--card);
-            border-radius: 25px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(108, 92, 231, 0.05);
-            margin-bottom: 25px;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 8px 25px rgba(108, 92, 231, 0.04);
+            margin-bottom: 20px;
         }
 
-        .foto-perfil {
-            width: 100px;
-            height: 100px;
-            border-radius: 35px;
-            border: 4px solid #EBE8FF;
-            object-fit: cover;
-            margin-bottom: 15px;
+        /* AJUSTE DE FONTES */
+        h2,
+        h3 {
+            font-family: 'Plus Jakarta Sans';
+            color: var(--roxo);
+            margin-top: 0;
+            font-size: 1.2rem;
         }
 
         .nome-user {
             font-family: 'Plus Jakarta Sans';
             font-weight: 800;
             color: var(--roxo);
-            display: block;
-            margin-bottom: 20px;
-            text-align: center;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
         }
 
-        /* TOOLBAR ESTILO ORKUT COLORIDO */
-        .toolbar {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .foto-perfil {
+            width: 90px;
+            height: 90px;
+            border-radius: 25px;
+            object-fit: cover;
             margin-bottom: 10px;
-            background: #f8f7ff;
-            padding: 12px;
-            border-radius: 15px;
-            flex-wrap: wrap;
+            border: 3px solid #F0EEFF;
         }
 
-        .btn-tool {
-            background: white;
-            border: 1px solid #ddd;
-            padding: 5px 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            font-family: 'Poppins';
-            transition: 0.3s;
-        }
-
-        .btn-tool:hover {
-            background: var(--roxo);
-            color: white;
-            border-color: var(--roxo);
-        }
-
-        /* Seletor de cor discreto */
-        .input-cor {
-            border: none;
-            width: 35px;
-            height: 35px;
-            cursor: pointer;
-            background: none;
-            padding: 0;
+        /* EDITOR CLEAN */
+        .area-escrita {
+            position: relative;
         }
 
         #campoPost {
             width: 100%;
-            border: 2px solid #f8f7ff;
-            background: #f8f7ff;
+            border: none;
+            background: #F8F7FF;
             border-radius: 15px;
             padding: 15px;
             font-family: 'Poppins';
-            font-size: 1rem;
-            min-height: 150px;
+            font-size: 0.95rem;
+            min-height: 120px;
             outline: none;
             box-sizing: border-box;
-            overflow-y: auto;
+            transition: 0.3s;
         }
 
         #campoPost:focus {
             background: white;
-            border-color: var(--roxo);
+            box-shadow: inset 0 0 0 2px var(--roxo);
+        }
+
+        /* BARRA DE FERRAMENTAS ESCONDIDA */
+        .controles-post {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .toolbar-oculta {
+            display: none;
+            align-items: center;
+            gap: 8px;
+            background: #eee8ff;
+            padding: 8px 15px;
+            border-radius: 12px;
+            transition: 0.3s;
+        }
+
+        .btn-toggle-tools {
+            background: #f0eeff;
+            border: none;
+            color: var(--roxo);
+            padding: 8px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .btn-tool {
+            background: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .input-cor {
+            border: none;
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+            background: none;
         }
 
         .btn-postar {
             background: var(--roxo);
             color: white;
             border: none;
-            padding: 12px 25px;
-            border-radius: 15px;
+            padding: 10px 20px;
+            border-radius: 12px;
             font-weight: 600;
             cursor: pointer;
-            margin-top: 15px;
-            float: right;
+            font-size: 0.9rem;
         }
 
+        /* FEED */
         .post-card {
             border-left: 5px solid var(--roxo);
-            padding: 20px;
-            margin-bottom: 20px;
+            padding: 15px;
             background: white;
-            border-radius: 20px;
+            border-radius: 15px;
+            margin-bottom: 15px;
         }
 
         .post-conteudo {
-            line-height: 1.6;
-            word-wrap: break-word;
+            font-size: 0.95rem;
+            line-height: 1.5;
         }
 
         .post-conteudo img {
             max-width: 100%;
-            border-radius: 15px;
+            border-radius: 10px;
             margin-top: 10px;
-            display: block;
-        }
-
-        .btn-excluir {
-            background: none;
-            border: none;
-            color: #ff4757;
-            cursor: pointer;
-            font-size: 0.8rem;
-            font-weight: 600;
         }
 
         .link-comentarios {
             color: var(--roxo);
             text-decoration: none;
             font-weight: 700;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
     </style>
 </head>
@@ -172,42 +183,45 @@
             <div class="card" style="text-align: center;">
                 <img id="userFoto" src="" class="foto-perfil">
                 <span id="userName" class="nome-user">...</span>
-                <button class="card" style="width: 100%; cursor: pointer; border: none;"
+                <hr style="border: 0; border-top: 1px solid #f0eeff; margin: 15px 0;">
+                <button
+                    style="background: none; border: none; color: #666; cursor: pointer; font-weight: 600; font-size: 0.85rem;"
                     onclick="window.location.href='perfil.html'">👤 Meu Perfil</button>
             </div>
         </aside>
 
         <section>
             <div class="card">
-                <h2 style="font-family: 'Plus Jakarta Sans'; color: var(--roxo); margin-top:0;">Criar Postagem ✨</h2>
+                <h2>Criar Postagem ✨</h2>
 
-                <div class="toolbar">
-                    <button class="btn-tool" onclick="formatar('bold')" title="Negrito">B</button>
-                    <button class="btn-tool" onclick="formatar('italic')" title="Itálico">I</button>
-                    <button class="btn-tool" onclick="formatar('underline')" title="Sublinhado">U</button>
-
-                    <div style="display: flex; align-items: center; gap: 5px; margin-left: 5px;">
-                        <span style="font-size: 0.8rem; font-weight: 600; color: #666;">Cor:</span>
-                        <input type="color" class="input-cor" id="corTexto" onchange="mudarCor(this.value)"
-                            title="Escolher cor">
-                    </div>
-
-                    <button class="btn-tool" onclick="inserirImagem()" style="margin-left: auto;">🖼️ Imagem</button>
+                <div class="area-escrita">
+                    <div id="campoPost" contenteditable="true" placeholder="O que você quer compartilhar?"></div>
                 </div>
 
-                <div id="campoPost" contenteditable="true" placeholder="Deixe sua marca colorida aqui..."></div>
+                <div class="controles-post">
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <button class="btn-toggle-tools" onclick="toggleTools()" title="Formatar texto">🎨</button>
 
-                <button id="btnPostar" class="btn-postar">Publicar Post →</button>
-                <div style="clear: both;"></div>
+                        <div id="minhaToolbar" class="toolbar-oculta">
+                            <button class="btn-tool" onclick="formatar('bold')">B</button>
+                            <button class="btn-tool" onclick="formatar('italic')">I</button>
+                            <input type="color" class="input-cor" onchange="mudarCor(this.value)">
+                            <button class="btn-tool" onclick="inserirImagem()">🖼️</button>
+                        </div>
+                    </div>
+
+                    <button id="btnPostar" class="btn-postar">Publicar Post</button>
+                </div>
             </div>
             <div id="feedPosts"></div>
         </section>
 
         <aside>
             <div class="card">
-                <h3 style="font-family: 'Plus Jakarta Sans'; color: var(--roxo);">🔍 Comunidades</h3>
-                <a href="comunidades.html" style="color: #6C5CE7; text-decoration: none; font-weight: 600;">Explorar
-                    →</a>
+                <h3>🔍 Comunidades</h3>
+                <button onclick="window.location.href='comunidades.html'"
+                    style="background: var(--bg); border: none; color: var(--roxo); padding: 10px; border-radius: 10px; width: 100%; font-weight: 700; cursor: pointer; font-size: 0.85rem;">Explorar
+                    Vila →</button>
             </div>
         </aside>
     </main>
@@ -217,29 +231,23 @@
         import { collection, addDoc, query, orderBy, onSnapshot, serverTimestamp, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-        // Funções de Formatação e Cor
-        window.formatar = (comando) => {
-            document.execCommand(comando, false, null);
-            document.getElementById('campoPost').focus();
+        // Toggle da Toolbar
+        window.toggleTools = () => {
+            const bar = document.getElementById('minhaToolbar');
+            bar.style.display = bar.style.display === 'flex' ? 'none' : 'flex';
         };
 
-        window.mudarCor = (cor) => {
-            document.execCommand('foreColor', false, cor);
-            document.getElementById('campoPost').focus();
-        };
-
+        window.formatar = (cmd) => { document.execCommand(cmd, false, null); document.getElementById('campoPost').focus(); };
+        window.mudarCor = (cor) => { document.execCommand('foreColor', false, cor); document.getElementById('campoPost').focus(); };
         window.inserirImagem = () => {
-            const url = prompt("Cole o link da imagem (ex: https://site.com/foto.jpg):");
-            if (url) {
-                document.execCommand('insertImage', false, url);
-                document.getElementById('campoPost').focus();
-            }
+            const url = prompt("Link da imagem:");
+            if (url) document.execCommand('insertImage', false, url);
         };
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 document.getElementById('userFoto').src = user.photoURL;
-                document.getElementById('userName').innerText = user.displayName.split(' ')[0];
+                document.getElementById('userName').innerText = user.displayName;
                 carregarFeed();
             } else { window.location.href = "index.html"; }
         });
@@ -251,44 +259,38 @@
                 feed.innerHTML = "";
                 snapshot.forEach((docSnap) => {
                     const post = docSnap.data();
-                    const id = docSnap.id;
-                    const eDono = auth.currentUser && (post.autorId === auth.currentUser.uid || auth.currentUser.email === "ANDREA_ADMIN@gmail.com");
+                    const eDono = auth.currentUser && (post.autorId === auth.currentUser.uid || auth.currentUser.email === "seu-email@gmail.com");
 
                     feed.insertAdjacentHTML('beforeend', `
-                        <div class="post-card card">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                                <div style="display: flex; align-items: center; gap: 10px;">
-                                    <img src="${post.fotoAutor}" style="width: 35px; height: 35px; border-radius: 12px;">
-                                    <strong style="color: #6C5CE7;">${post.autor}</strong>
+                        <div class="post-card">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <img src="${post.fotoAutor}" style="width: 25px; height: 25px; border-radius: 8px;">
+                                    <strong style="color: #6C5CE7; font-size: 0.85rem;">${post.autor}</strong>
                                 </div>
-                                ${eDono ? `<button onclick="window.excluirPost('${id}')" class="btn-excluir">🗑️ Apagar</button>` : ''}
+                                ${eDono ? `<button onclick="window.excluirPost('${docSnap.id}')" style="background:none; border:none; color:#ccc; cursor:pointer; font-size:0.7rem;">Apagar</button>` : ''}
                             </div>
                             <div class="post-conteudo">${post.texto}</div>
-                            <a href="discussao.html?id=${id}" class="link-comentarios" style="display:block; margin-top:15px; border-top: 1px solid #f0eeff; padding-top: 10px;">💬 Ver comentários</a>
+                            <a href="discussao.html?id=${docSnap.id}" class="link-comentarios" style="display:block; margin-top:10px;">💬 Comentários</a>
                         </div>`);
                 });
             });
         }
 
-        window.excluirPost = async (id) => {
-            if (confirm("Deseja apagar este post colorido?")) await deleteDoc(doc(db, "posts", id));
-        };
+        window.excluirPost = async (id) => { if (confirm("Apagar?")) await deleteDoc(doc(db, "posts", id)); };
 
         document.getElementById('btnPostar').onclick = async () => {
             const campo = document.getElementById('campoPost');
-            // Limpa o conteúdo se for apenas um <br>
-            const conteudo = campo.innerHTML.trim();
-            if (!conteudo || conteudo === "<br>") return;
-
+            if (!campo.innerHTML.trim() || campo.innerHTML === "<br>") return;
             await addDoc(collection(db, "posts"), {
-                texto: conteudo,
+                texto: campo.innerHTML,
                 autor: auth.currentUser.displayName,
                 fotoAutor: auth.currentUser.photoURL,
                 autorId: auth.currentUser.uid,
                 data: serverTimestamp()
             });
             campo.innerHTML = "";
-            document.getElementById('corTexto').value = "#000000"; // Reseta a cor no seletor
+            document.getElementById('minhaToolbar').style.display = 'none'; // Esconde após postar
         };
     </script>
 </body>
