@@ -3,140 +3,62 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Líberi - Meu Perfil</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=Poppins:wght@400;500;600&display=swap"
-        rel="stylesheet">
+    <title>Líberi - Perfil</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --roxo: #6C5CE7;
-            --bg: #F0EEFF;
-            --branco: #FFFFFF;
-        }
-
         body {
             font-family: 'Poppins', sans-serif;
-            background: var(--bg);
-            margin: 0;
-            color: #4A4A4A;
+            background: #F0EEFF;
+            display: flex;
+            justify-content: center;
+            padding-top: 50px;
         }
 
-        .container-perfil {
-            max-width: 600px;
-            margin: 40px auto;
-            padding: 20px;
-        }
-
-        .card-perfil {
-            background: var(--branco);
+        .card {
+            background: white;
             padding: 40px;
             border-radius: 30px;
             text-align: center;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+            max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
         }
 
-        .foto-perfil {
+        .foto {
             width: 120px;
             height: 120px;
             border-radius: 40px;
-            background: #EEE;
-            margin: 0 auto 20px;
             border: 5px solid #EBE8FF;
             object-fit: cover;
         }
 
         h2 {
-            font-family: 'Plus Jakarta Sans';
-            color: var(--roxo);
-            margin: 10px 0;
+            color: #6C5CE7;
         }
 
         .bio {
             color: #777;
-            font-size: 0.95rem;
-            line-height: 1.5;
-            margin-bottom: 25px;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-
-        .stat-item {
-            background: #F8F7FF;
-            padding: 15px;
-            border-radius: 20px;
-            border: 1px solid #EEE;
-        }
-
-        .stat-item strong {
-            display: block;
-            font-size: 1.4rem;
-            color: var(--roxo);
-        }
-
-        .stat-item span {
-            font-size: 0.8rem;
-            color: #999;
-            text-transform: uppercase;
-        }
-
-        .btn-editar {
-            background: var(--roxo);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 15px;
-            cursor: pointer;
-            font-weight: 600;
-            width: 100%;
-            transition: 0.3s;
+            font-size: 0.9rem;
         }
     </style>
 </head>
 
 <body>
-
-    <script type="module" src="menu.js"></script>
-
-    <div class="container-perfil">
-        <div class="card-perfil">
-            <img id="userFoto" src="" alt="Foto" class="foto-perfil">
-            <h2 id="userName">Carregando...</h2>
-            <p class="bio" id="userBio">Acreditando no poder da coletividade para educar e crescer. Pai, parceiro e
-                eterno aprendiz da jornada que é criar raízes e asas para os nossos filhos. 🌿✨</p>
-
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <strong id="countTopicos">0</strong>
-                    <span>Tópicos Criados</span>
-                </div>
-                <div class="stat-item">
-                    <strong id="countComentarios">0</strong>
-                    <span>Respostas dadas</span>
-                </div>
-            </div>
-
-            <button class="btn-editar" onclick="alert('Funcionalidade de edição em breve!')">Editar Perfil</button>
-        </div>
+    <div class="card">
+        <img id="uFoto" src="" class="foto">
+        <h2 id="uNome">...</h2>
+        <p class="bio">Acreditando no poder da coletividade para educar e crescer. Pai, parceiro e aprendiz. 🌿</p>
+        <button onclick="window.location.href='dashboard.html'"
+            style="background:#6C5CE7; color:white; border:none; padding:10px 20px; border-radius:10px; cursor:pointer">Voltar
+            para a Vila</button>
     </div>
 
     <script type="module">
-        import { db, auth } from "./liberi.js";
-        import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { auth } from "./liberi.js";
         import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
-        onAuthStateChanged(auth, async (user) => {
+        onAuthStateChanged(auth, (user) => {
             if (user) {
-                document.getElementById('userName').innerText = user.displayName;
-                document.getElementById('userFoto').src = user.photoURL;
-                // No futuro aqui buscaremos as estatísticas reais no Firestore
-            } else {
-                window.location.href = "index.html";
+                document.getElementById('uNome').innerText = user.displayName;
+                document.getElementById('uFoto').src = user.photoURL;
             }
         });
     </script>

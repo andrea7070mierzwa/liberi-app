@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Líberi - Vila de Apoio</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=Poppins:wght@400;500;600&display=swap"
         rel="stylesheet">
@@ -44,7 +43,6 @@
             width: 100px;
             height: 100px;
             border-radius: 35px;
-            background: #EEE;
             border: 4px solid #EBE8FF;
             object-fit: cover;
             margin-bottom: 15px;
@@ -112,18 +110,16 @@
 </head>
 
 <body>
-
     <script type="module" src="menu.js"></script>
-
     <main class="layout-vila">
         <aside>
             <div class="card" style="text-align: center;">
                 <img id="userFoto" src="" class="foto-perfil">
                 <span id="userName" class="nome-user">...</span>
-                <button class="card" style="width: 100%; cursor: pointer; border: none; font-family: 'Poppins';"
+                <button class="card" style="width: 100%; cursor: pointer; border: none;"
+                    onclick="window.location.href='perfil.html'">👤 Meu Perfil</button>
+                <button class="card" style="width: 100%; cursor: pointer; border: none;"
                     onclick="window.location.href='recados.html'">📬 Meus Recados</button>
-                <button class="card" style="width: 100%; cursor: pointer; border: none; font-family: 'Poppins';"
-                    onclick="window.location.href='amigos.html'">🤝 Amigos</button>
             </div>
         </aside>
 
@@ -135,15 +131,12 @@
                 <button id="btnPostarNeura" class="btn-postar">Postar Neura →</button>
                 <div style="clear: both;"></div>
             </div>
-
-            <div id="feedReal">
-                <p style="text-align: center; color: #999;">Carregando neuras da vila...</p>
-            </div>
+            <div id="feedReal"></div>
         </section>
 
         <aside>
             <div class="card">
-                <h3 style="font-family: 'Plus Jakarta Sans'; color: var(--roxo);">🔍 Explorar Comunidades</h3>
+                <h3 style="font-family: 'Plus Jakarta Sans'; color: var(--roxo);">🔍 Explorar</h3>
                 <a href="comunidades.html" style="color: #6C5CE7; text-decoration: none; font-weight: 600;">Ver todas as
                     vilas →</a>
             </div>
@@ -160,9 +153,7 @@
                 document.getElementById('userFoto').src = user.photoURL;
                 document.getElementById('userName').innerText = user.displayName.split(' ')[0];
                 carregarFeed();
-            } else {
-                window.location.href = "index.html";
-            }
+            } else { window.location.href = "index.html"; }
         });
 
         function carregarFeed() {
@@ -170,43 +161,40 @@
             onSnapshot(q, (snapshot) => {
                 const feed = document.getElementById('feedReal');
                 feed.innerHTML = "";
-                const usuarioLogado = auth.currentUser;
+                const user = auth.currentUser;
 
                 snapshot.forEach((docSnap) => {
                     const post = docSnap.data();
                     const id = docSnap.id;
-                    const eDono = usuarioLogado && (post.autorId === usuarioLogado.uid || usuarioLogado.email === "SEU-EMAIL-AQUI@gmail.com");
+                    const eDono = user && (post.autorId === user.uid || user.email === "ANDREA_ADMIN@gmail.com");
 
-                    const htmlPost = `
+                    feed.insertAdjacentHTML('beforeend', `
                         <div class="post-real card">
-                            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                            <div style="display: flex; justify-content: space-between;">
+                                <div style="display: flex; align-items: center; gap: 10px;">
                                     <img src="${post.fotoAutor}" style="width: 30px; height: 30px; border-radius: 10px;">
-                                    <strong style="color: #6C5CE7; font-size: 0.9rem;">${post.autor}</strong>
+                                    <strong style="color: #6C5CE7;">${post.autor}</strong>
                                 </div>
-                                ${eDono ? `<button onclick="window.excluirItem('${id}', 'topicos')" class="btn-excluir">🗑️ Excluir</button>` : ''}
+                                ${eDono ? `<button onclick="window.excluirItem('${id}', 'topicos')" class="btn-excluir">🗑️</button>` : ''}
                             </div>
                             <p>${post.texto}</p>
-                            <a href="discussao.html?id=${id}" class="link-discussao">💬 Ver discussão completa</a>
-                        </div>`;
-                    feed.insertAdjacentHTML('beforeend', htmlPost);
+                            <a href="discussao.html?id=${id}" class="link-discussao">💬 Ver discussão</a>
+                        </div>`);
                 });
             });
         }
 
-        window.excluirItem = async (id, colecao) => {
-            if (confirm("Deseja apagar esta neura?")) {
-                try { await deleteDoc(doc(db, colecao, id)); } catch (e) { console.error(e); }
-            }
+        window.excluirItem = async (id, col) => {
+            if (confirm("Apagar postagem?")) await deleteDoc(doc(db, col, id));
         };
 
         document.getElementById('btnPostarNeura').onclick = async () => {
             const campo = document.getElementById('campoNeura');
-            const user = auth.currentUser;
             if (!campo.value) return;
             await addDoc(collection(db, "topicos"), {
-                texto: campo.value, autor: user.displayName, fotoAutor: user.photoURL,
-                autorId: user.uid, data: serverTimestamp()
+                texto: campo.value, autor: auth.currentUser.displayName,
+                fotoAutor: auth.currentUser.photoURL, autorId: auth.currentUser.uid,
+                data: serverTimestamp()
             });
             campo.value = "";
         };
