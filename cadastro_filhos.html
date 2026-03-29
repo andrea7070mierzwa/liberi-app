@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liberi - Cadastro</title>
+    <link rel="stylesheet" href="./estilo.css">
+</head>
+
+<body>
+    <div class="card">
+        <h2 class="logo">Quem são os pequenos?</h2>
+
+        <div id="lista-filhos">
+            <div class="filho-item" style="margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 15px;">
+                <input type="text" class="nick" placeholder="Apelido (ex: Manu)" required>
+                <p style="font-size: 0.8rem; margin: 10px 0 5px;">Data de Nascimento:</p>
+                <input type="date" class="birth" required>
+
+                <label
+                    style="display: flex; align-items: center; gap: 10px; margin-top: 10px; font-size: 0.85rem; cursor: pointer;">
+                    <input type="checkbox" class="is-atypical" style="width: auto; margin:0;">
+                    Perfil Neuroatípico (Autismo, TDAH, etc.)
+                </label>
+            </div>
+        </div>
+
+        <button type="button" id="btnAdd" class="btn-secundario"
+            style="background:#f0f2f5; color:#6a4c93; border: 1px dashed #6a4c93;">
+            ➕ Adicionar outro filho
+        </button>
+
+        <button class="btn-principal" id="btnFinalizar" disabled style="opacity: 0.5;">
+            Aguardando Vila...
+        </button>
+    </div>
+
+    <script type="module">
+        import { auth, db, doc, setDoc } from "./liberi.js";
+        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        const btnFinalizar = document.getElementById('btnFinalizar');
+        const btnAdd = document.getElementById('btnAdd');
+        const lista = document.getElementById('lista-filhos');
+
+        // 1. MONITOR DE LOGIN
+        onAuthStateChanged(auth, (user) => {
+            if (user && btnFinalizar) {
+                btnFinalizar.disabled = false;
+                btnFinalizar.style.opacity = "1";
+                btnFinalizar.innerText = "Concluir Cadastro";
+            }
+        });
+
+        // 2. FUNÇÃO DE ADICIONAR NOVOS FILHOS
+        if (btnAdd) {
+            btnAdd.onclick = () => {
+                const div = document.createElement('div');
+                div.className = "filho-item";
+                div.style = "margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 15px;";
+
+                div.innerHTML = `
+                <div style="display: grid; grid-template-columns: 1fr 40px; gap: 10px; align-items: center; margin-bottom: 10px;">
+                    <input type="text" class="nick" placeholder="Apelido (Ex: Manu)" style="margin:0;">
+                    <button type="button" class="btn-remover" style="background:#ff4d4d; color:white; border:none; height:40px; border-radius:8px; cursor:pointer; font-weight:bold;">X</button>
+                </div>
+                <p style="font-size: 0.8rem; margin: 5px 0;">Data de Nascimento:</p>
+                <input type="date" class="birth" style="width:100%;">
+                
+                <label style="display: flex; align-items: center; gap: 10px; margin-top: 10px; font-size: 0.85rem; cursor: pointer;">
+                    <input type="checkbox" class="is-atypical" style="width: auto; margin:0;"> 
+                    Perfil Neuroatípico (Autismo, TDAH, etc.)
+                </label>
+            `;
+                lista.appendChild(div);
+                div.querySelector('.btn-remover').onclick = () => div.remove();
+            };
+        }
+
+        // 3. SALVAR NO FIRESTORE
+        if (btnFinalizar) {
+            btnFinalizar.onclick = async () => {
+                const user = auth.currentUser;
+                const nicks = document.querySelectorAll('.nick');
+                const dates = document.querySelectorAll('.birth');
+                const atypicalChecks = document.querySelectorAll('.is-atypical');
+
+                let dadosFilhos = [];
+                let maeEspecial = false;
+
+                nicks.forEach((input, i) => {
+                    if (input.value.trim() !== "" && dates[i].value !== "") {
+                        const neuroatipico = atypicalChecks[i].checked;
+                        if (neuroatipico) maeEspecial = true;
+
+                        dadosFilhos.push({
+                            apelido: input.value,
+                            nascimento: dates[i].value,
+                            neuroatipico: neuroatipico
+                        });
+                    }
+                });
+
+                if (dadosFilhos.length === 0) {
+                    alert("Ops! Preencha pelo menos um filho corretamente.");
+                    return;
+                }
+
+                try {
+                    btnFinalizar.innerText = "Salvando na Vila...";
+                    btnFinalizar.disabled = true;
+
+                    await setDoc(doc(db, "usuarios", user.uid), {
+                        filhos: dadosFilhos,
+                        perfilEspecial: maeEspecial,
+                        cadastroCompleto: true,
+                        dataCadastro: new Date().toISOString()
+                    }, { merge: true });
+
+                    window.location.href = "dashboard.html";
+                } catch (e) {
+                    console.error(e);
+                    alert("Erro ao salvar: " + e.message);
+                    btnFinalizar.disabled = false;
+                    btnFinalizar.innerText = "Tentar Novamente";
+                }
+            };
+        }
+    </script>
+</body>
+
+</html>

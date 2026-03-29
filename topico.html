@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Líberi - Conversa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Poppins:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --roxo: #6C5CE7;
+            --bg: #F0EEFF;
+            --branco: #FFFFFF;
+            --roxo-claro: #A29BFE;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg);
+            margin: 0;
+            color: #4A4A4A;
+        }
+
+        header {
+            background: var(--roxo);
+            padding: 15px 5%;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .card-topico {
+            background: var(--branco);
+            padding: 35px;
+            border-radius: 28px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            margin-bottom: 25px;
+        }
+
+        .autor-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .avatar-mini {
+            width: 45px;
+            height: 45px;
+            background: var(--roxo);
+            color: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        h2 {
+            font-family: 'Plus Jakarta Sans';
+            color: var(--roxo);
+            margin: 0;
+        }
+
+        .comentario-item {
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--roxo-claro);
+            position: relative;
+        }
+
+        /* Estilo dos Botões de Ação */
+        .acoes-post {
+            display: flex;
+            gap: 15px;
+            margin-top: 12px;
+            border-top: 1px solid #f0f0f0;
+            padding-top: 10px;
+        }
+
+        .btn-acao {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: #888;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-acao:hover {
+            color: var(--roxo);
+        }
+
+        .btn-excluir {
+            color: #ff7675;
+            margin-left: auto;
+        }
+
+        textarea {
+            width: 100%;
+            border: 1px solid #eee;
+            border-radius: 15px;
+            padding: 15px;
+            font-family: 'Poppins';
+            resize: none;
+            box-sizing: border-box;
+        }
+
+        .btn-enviar {
+            background: var(--roxo);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1 style="font-family: 'Plus Jakarta Sans'; font-size: 1.3rem; margin: 0;">Líberi</h1>
+        <a id="linkVoltar" href="#" style="color:white; text-decoration:none; font-size: 0.85rem;">← Voltar</a>
+    </header>
+
+    <div class="container">
+        <article class="card-topico">
+            <div class="autor-info">
+                <div class="avatar-mini" id="avatarAutor">-</div><strong id="nomeAutor">...</strong>
+            </div>
+            <h2 id="tituloTopico">Carregando...</h2>
+            <p id="corpoTopico"></p>
+        </article>
+
+        <div id="listaComentarios"></div>
+
+        <div style="background: white; padding: 25px; border-radius: 24px; margin-top: 30px;">
+            <textarea id="textoComentario" rows="3" placeholder="Escreva um comentário..."></textarea>
+            <button class="btn-enviar" id="btnEnviarComentario">Publicar</button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { db, auth } from "./liberi.js";
+        import { doc, getDoc, collection, addDoc, query, orderBy, onSnapshot, updateDoc, increment, serverTimestamp, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const params = new URLSearchParams(window.location.search);
+        const idComu = params.get('comu');
+        const idGrupo = params.get('grupo');
+        const idTopico = params.get('id');
+        document.getElementById('linkVoltar').href = `grupos.html?comu=${idComu}`;
+
+        const refTopicoDoc = doc(db, `comunidades/${idComu}/grupos/${idGrupo}/topicos`, idTopico);
+
+        // 1. Carregar Tópico
+        const snap = await getDoc(refTopicoDoc);
+        if (snap.exists()) {
+            const t = snap.data();
+            document.getElementById('tituloTopico').innerText = t.titulo;
+            document.getElementById('corpoTopico').innerText = t.texto;
+            document.getElementById('nomeAutor').innerText = t.autor;
+            document.getElementById('avatarAutor').innerText = t.autor.charAt(0).toUpperCase();
+        }
+
+        // 2. Carregar Comentários com Botões de Ação
+        onSnapshot(query(collection(refTopicoDoc, "comentarios"), orderBy("data", "asc")), (snap) => {
+            const area = document.getElementById('listaComentarios');
+            area.innerHTML = "";
+            const user = auth.currentUser;
+
+            snap.forEach(d => {
+                const c = d.data();
+                const postID = d.id;
+
+                // Só mostra o botão excluir se o UID do usuário for igual ao do autor do comentário
+                const btnExcluirHtml = (user && user.uid === c.autorId)
+                    ? `<button class="btn-acao btn-excluir" onclick="removerPost('${postID}')">🗑️ Excluir</button>`
+                    : "";
+
+                area.innerHTML += `
+                    <div class="comentario-item">
+                        <div style="font-size: 0.8rem; color: var(--roxo); font-weight: 600;">${c.autor}</div>
+                        <div style="margin: 5px 0;">${c.texto}</div>
+                        <div class="acoes-post">
+                            <button class="btn-acao" onclick="darApoio('${postID}')">❤️ <span>${c.reacoes || 0}</span></button>
+                            <button class="btn-acao" onclick="denunciarPost('${postID}')">🚩 Denunciar</button>
+                            ${btnExcluirHtml}
+                        </div>
+                    </div>`;
+            });
+        });
+
+        // 3. Funções Globais (para os botões do HTML funcionarem)
+        window.darApoio = async (id) => {
+            await updateDoc(doc(refTopicoDoc, "comentarios", id), { reacoes: increment(1) });
+        };
+
+        window.removerPost = async (id) => {
+            if (confirm("Deseja apagar seu comentário?")) {
+                await deleteDoc(doc(refTopicoDoc, "comentarios", id));
+            }
+        };
+
+        window.denunciarPost = async (id) => {
+            if (confirm("Denunciar este conteúdo?")) {
+                await addDoc(collection(db, "denuncias"), { postId: id, data: serverTimestamp() });
+                alert("Analisaremos a denúncia. Obrigada!");
+            }
+        };
+
+        // 4. Enviar Comentário
+        document.getElementById('btnEnviarComentario').onclick = async () => {
+            const texto = document.getElementById('textoComentario').value;
+            const user = auth.currentUser;
+            if (!texto || !user) return;
+
+            await addDoc(collection(refTopicoDoc, "comentarios"), {
+                texto, autor: user.displayName || "Usuária", autorId: user.uid,
+                data: serverTimestamp(), reacoes: 0
+            });
+
+            await updateDoc(doc(db, "usuarios", user.uid), { comentarios: increment(1) });
+            await updateDoc(refTopicoDoc, { respostas: increment(1) });
+            document.getElementById('textoComentario').value = "";
+        };
+    </script>
+</body>
+
+</html>

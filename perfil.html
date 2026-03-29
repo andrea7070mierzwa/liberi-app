@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Líberi - Meu Perfil</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Poppins:wght@400;500&family=Sora:wght@600&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --roxo-principal: #6C5CE7;
+            --bg-lavanda: #F0EEFF;
+            --branco: #FFFFFF;
+            --cinza-texto: #4A4A4A;
+            --roxo-claro: #A29BFE;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background-color: var(--bg-lavanda);
+            color: var(--cinza-texto);
+        }
+
+        header {
+            background-color: var(--roxo-principal);
+            padding: 15px 5%;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .container-perfil {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .card-perfil {
+            background: var(--branco);
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 15px 40px rgba(108, 92, 231, 0.1);
+            text-align: center;
+            position: relative;
+        }
+
+        /* FOTO DE PERFIL / AVATAR */
+        .avatar-grande {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, var(--roxo-principal), var(--roxo-claro));
+            border-radius: 40px;
+            margin: -80px auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            font-weight: 800;
+            box-shadow: 0 10px 25px rgba(108, 92, 231, 0.3);
+            border: 5px solid var(--branco);
+        }
+
+        h2 {
+            font-family: 'Plus Jakarta Sans';
+            color: var(--roxo-principal);
+            margin: 10px 0 5px;
+        }
+
+        .email-user {
+            color: #999;
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .stat-box {
+            background: var(--bg-lavanda);
+            padding: 15px;
+            border-radius: 18px;
+        }
+
+        .stat-box strong {
+            display: block;
+            color: var(--roxo-principal);
+            font-size: 1.2rem;
+        }
+
+        .stat-box span {
+            font-size: 0.75rem;
+            color: #777;
+        }
+
+        .bio-area {
+            text-align: left;
+            margin-top: 30px;
+            border-top: 1px solid #eee;
+            padding-top: 25px;
+        }
+
+        label {
+            font-family: 'Sora';
+            font-size: 0.8rem;
+            color: var(--roxo-principal);
+        }
+
+        textarea {
+            width: 100%;
+            border: 1px solid #f0eeff;
+            background: #fafaff;
+            border-radius: 15px;
+            padding: 15px;
+            font-family: 'Poppins';
+            margin-top: 8px;
+            resize: none;
+            box-sizing: border-box;
+        }
+
+        .botao {
+            background: var(--roxo-principal);
+            color: white;
+            padding: 14px 30px;
+            border-radius: 15px;
+            border: none;
+            font-family: 'Sora';
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+
+        .botao:hover {
+            background: #5649c0;
+            transform: translateY(-2px);
+        }
+
+        .link-voltar {
+            display: inline-block;
+            margin-top: 25px;
+            color: #aaa;
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1 style="font-family: 'Plus Jakarta Sans'; margin:0; font-size: 1.3rem;">Líberi</h1>
+        <button onclick="fazerLogout()"
+            style="background:none; border: 1px solid white; color:white; padding: 5px 15px; border-radius: 8px; cursor:pointer; font-size: 0.8rem;">Sair</button>
+    </header>
+
+    <div class="container-perfil">
+
+        <div class="card-perfil">
+            <div class="avatar-grande" id="userAvatar">A</div>
+
+            <h2 id="userName">Carregando...</h2>
+            <p class="email-user" id="userEmail">email@exemplo.com</p>
+
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <strong id="countPost">0</strong>
+                    <span>Postagens Criadas</span>
+                </div>
+                <div class="stat-box">
+                    <strong id="countResp">0</strong>
+                    <span>Comentários Feitos</span>
+                </div>
+            </div>
+
+            <div class="bio-area">
+                <label>Sobre Mim</label>
+                <textarea id="userBio" rows="3" placeholder="Escreva uma breve biografia..."></textarea>
+                <button class="botao" id="btnSalvarBio">Salvar Alterações</button>
+            </div>
+
+            <a href="dashboard.html" class="link-voltar">← Voltar para o Início</a>
+        </div>
+
+    </div>
+
+    <script type="module">
+        import { auth, db } from "./liberi.js";
+        import { doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                // Preenche dados básicos do Auth
+                const nome = user.displayName || "Mãe Líberi";
+                document.getElementById('userName').innerText = nome;
+                document.getElementById('userEmail').innerText = user.email;
+                document.getElementById('userAvatar').innerText = nome.charAt(0).toUpperCase();
+
+                // Busca Bio e Stats no Firestore
+                const userRef = doc(db, "usuarios", user.uid);
+                const snap = await getDoc(userRef);
+
+                if (snap.exists()) {
+                    const dados = snap.data();
+                    document.getElementById('userBio').value = dados.bio || "";
+                    document.getElementById('countPost').innerText = dados.posts || 0;
+                    document.getElementById('countResp').innerText = dados.respostas || 0;
+                }
+            } else {
+                window.location.href = "index.html";
+            }
+        });
+
+        // Salvar Bio
+        document.getElementById('btnSalvarBio').onclick = async () => {
+            const user = auth.currentUser;
+            const bioTxt = document.getElementById('userBio').value;
+
+            if (user) {
+                await setDoc(doc(db, "usuarios", user.uid), {
+                    bio: bioTxt
+                }, { merge: true }); // Merge garante que não apaguemos os stats ao salvar a bio
+                alert("Perfil atualizado com carinho! ✨");
+            }
+        };
+
+        // Função de Logout
+        window.fazerLogout = () => {
+            signOut(auth).then(() => {
+                window.location.href = "index.html";
+            });
+        };
+    </script>
+</body>
+
+</html>

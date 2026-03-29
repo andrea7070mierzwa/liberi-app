@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liberi - Login</title>
+    <link rel="stylesheet" href="./estilo.css">
+</head>
+
+<body>
+    <div class="sponsor-bar">✨ Patrocinador Master: Espaço para marcas que cuidam da infância</div>
+
+    <div class="login-card">
+        <h1 class="logo">Liberi</h1>
+        <p>Sua vila digital, segura e anônima.</p>
+        <button class="btn-principal" id="btnLogin">Entrar com Google</button>
+    </div>
+
+    <script type="module">
+        import { auth, provider, signInWithPopup } from "./liberi.js";
+
+        const btnLogin = document.getElementById('btnLogin');
+
+        if (btnLogin) {
+            btnLogin.onclick = async () => {
+                try {
+                    const result = await signInWithPopup(auth, provider);
+                    const user = result.user;
+
+                    console.log("Logado como:", user.displayName);
+
+                    // 🚀 ALTERAÇÃO AQUI: Agora vamos direto para o Dashboard!
+                    window.location.href = "dashboard.html";
+
+                } catch (error) {
+                    console.error("Erro no login:", error);
+                    alert("Ops! O Google não deixou entrar.");
+                }
+            };
+        }
+    </script>
+    <script type="module" src="menu.js"></script>
+</body>
+
+</html>

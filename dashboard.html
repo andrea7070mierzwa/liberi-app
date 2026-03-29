@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Líberi - Neuras de Mãe</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Poppins:wght@400;500&family=Sora:wght@600&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --roxo-principal: #6C5CE7;
+            --roxo-escuro: #2D3436;
+            --bg-lavanda: #F0EEFF;
+            --branco: #FFFFFF;
+            --cinza-texto: #4A4A4A;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--cinza-texto);
+            margin: 0;
+            background-color: var(--bg-lavanda);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* HEADER */
+        header {
+            background-color: var(--roxo-principal);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--branco);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-family: 'Plus Jakarta Sans';
+            font-size: 1.5rem;
+            margin: 0;
+            color: var(--branco);
+            letter-spacing: -1px;
+        }
+
+        /* CONTAINER 3 COLUNAS */
+        .container-liberi {
+            display: grid;
+            grid-template-columns: 240px 1fr 280px;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        /* CARDS */
+        .card {
+            background: var(--branco);
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(108, 92, 231, 0.05);
+            margin-bottom: 20px;
+        }
+
+        h2,
+        h3 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: var(--roxo-principal);
+            font-weight: 800;
+            margin-top: 0;
+        }
+
+        .botao {
+            display: block;
+            text-align: center;
+            background-color: var(--roxo-principal);
+            color: white;
+            padding: 12px;
+            border-radius: 12px;
+            font-family: 'Sora', sans-serif;
+            text-decoration: none;
+            margin-top: 10px;
+            font-size: 0.85rem;
+            transition: 0.2s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .botao:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.2);
+        }
+
+        .foto-perfil {
+            width: 120px;
+            height: 120px;
+            background: var(--bg-lavanda);
+            border-radius: 30px;
+            margin: 0 auto 15px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .textarea-neura {
+            width: 100%;
+            border: none;
+            background-color: var(--bg-lavanda);
+            border-radius: 15px;
+            padding: 15px;
+            font-family: 'Poppins';
+            resize: none;
+        }
+
+        .cta-link {
+            font-family: 'Sora', sans-serif;
+            font-size: 0.75rem;
+            color: var(--roxo-principal);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .selo-especial {
+            font-family: 'Sora';
+            font-size: 0.7rem;
+            background: var(--bg-lavanda);
+            color: var(--roxo-principal);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        /* MODAL SEGURANÇA */
+        #modalSeguranca {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(45, 52, 54, 0.9);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (max-width: 950px) {
+            .container-liberi {
+                grid-template-columns: 1fr;
+            }
+
+            .aside-hide {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="modalSeguranca">
+        <div class="card" style="max-width: 500px; text-align: center; border: 4px solid var(--roxo-principal);">
+            <h2>💠 Compromisso do Ninho</h2>
+            <p>Para mantermos a <strong>Líberi</strong> segura, a responsabilidade pela imagem dos seus filhos é
+                exclusiva dos pais (ECA Digital).</p>
+            <button id="btnAceitar" class="botao" style="width:100%;">Eu aceito e me sinto segura</button>
+        </div>
+    </div>
+
+    <header>
+        <h1>Líberi.</h1>
+        <div style="display: flex; align-items: center; gap: 15px;">
+           
+            <button id="btnSair"
+                style="background:none; border:1px solid white; color:white; border-radius:8px; cursor:pointer; font-size: 0.7rem; padding: 5px 10px;">Sair</button>
+        </div>
+    </header>
+
+    <div class="container-liberi">
+
+        <aside>
+            <div class="card" style="text-align: center;">
+                <img id="userImg" src="" class="foto-perfil">
+                <h3 id="userName" style="font-size: 1.1rem; margin-bottom: 5px;">...</h3>
+                <div id="areaSelo"></div>
+                <a href="#" class="botao">Meus Recados</a>
+                <a href="#" class="botao" style="background:var(--bg-lavanda); color:var(--roxo-principal);">Meus Amigos
+                    (0)</a>
+            </div>
+        </aside>
+
+        <main>
+            <div class="card">
+                <h2>O que está na sua cabeça?</h2>
+                <textarea id="statusInput" class="textarea-neura"
+                    placeholder="Compartilhe sua neura do dia..."></textarea>
+                <button class="botao"
+                    style="width: fit-content; margin-top: 15px; padding: 10px 30px; border:none;">Postar Neura
+                    →</button>
+            </div>
+
+            <div class="card">
+                <h3 style="font-size: 1.2rem;">Comunidade: Sono do Bebê</h3>
+                <p><strong>Dica:</strong> Cada bebê tem seu tempo. Não se cobrem tanto!</p>
+                <a href="#" class="cta-link">Ver discussão completa</a>
+            </div>
+        </main>
+
+        <aside class="aside-hide">
+            <div class="card">
+                <h3 style="font-size: 1rem;">Comunidades</h3>
+                <div id="listaComunidades" style="font-size: 0.9rem;">Buscando grupos...</div>
+                <br>
+                <a href="#" class="cta-link">Ver todos os grupos →</a>
+            </div>
+
+            <div class="card">
+                <h3 style="font-size: 1rem;">Sugestões de Amizade</h3>
+                <div id="sugestoesAmigos" style="font-size: 0.85rem;">
+                    <p style="color: #888;">Buscando novas conexões...</p>
+                </div>
+            </div>
+        </aside>
+
+    </div>
+
+    <script type="module">
+        import { auth, db, doc, getDoc, collection, getDocs } from "./liberi.js";
+        import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                // Modal de Segurança
+                const modal = document.getElementById('modalSeguranca');
+                modal.style.display = 'flex';
+                document.getElementById('btnAceitar').onclick = () => modal.style.display = 'none';
+
+                // Dados do Perfil
+                document.getElementById('navNome').innerText = user.displayName;
+                document.getElementById('userName').innerText = user.displayName;
+                document.getElementById('userImg').src = user.photoURL;
+
+                // Selo Especial
+                const docRef = doc(db, "usuarios", user.uid);
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists() && docSnap.data().perfilEspecial) {
+                    document.getElementById('areaSelo').innerHTML = '<span class="selo-especial">💠 MÃE ESPECIAL</span>';
+                }
+
+                carregarComunidades();
+                carregarSugestoesAmigos(user.uid);
+            } else {
+                window.location.href = "index.html";
+            }
+        });
+
+        async function carregarComunidades() {
+            const lista = document.getElementById('listaComunidades');
+            try {
+                const querySnapshot = await getDocs(collection(db, "comunidades"));
+                lista.innerHTML = "";
+                querySnapshot.forEach((doc) => {
+                    lista.innerHTML += `<p>💜 ${doc.data().nome}</p>`;
+                });
+                if (querySnapshot.empty) lista.innerHTML = "Nenhuma comunidade ainda.";
+            } catch (e) { console.error(e); }
+        }
+
+        async function carregarSugestoesAmigos(userAtualId) {
+            const area = document.getElementById('sugestoesAmigos');
+            try {
+                const querySnapshot = await getDocs(collection(db, "usuarios"));
+                area.innerHTML = "";
+                let count = 0;
+                querySnapshot.forEach((doc) => {
+                    if (doc.id !== userAtualId && count < 3) {
+                        const u = doc.data();
+                        area.innerHTML += `
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                                <img src="${u.foto || 'https://via.placeholder.com/35'}" style="width: 35px; height: 35px; border-radius: 10px;">
+                                <div style="flex: 1;">
+                                    <span style="font-weight: 600; font-size: 0.8rem; display: block; color: var(--roxo-principal);">${u.nome || 'Mãe Líberi'}</span>
+                                    <a href="#" class="cta-link" style="font-size: 0.6rem;">+ Adicionar</a>
+                                </div>
+                            </div>`;
+                        count++;
+                    }
+                });
+                if (count === 0) area.innerHTML = "A vila está crescendo...";
+            } catch (e) { console.error(e); }
+        }
+
+        document.getElementById('btnSair').onclick = () => signOut(auth);
+    </script>
+    <script type="module" src="menu.js"></script>
+</body>
+
+</html>

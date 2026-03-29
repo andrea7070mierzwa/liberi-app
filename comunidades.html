@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Líberi - Comunidades</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Poppins:wght@400;500&family=Sora:wght@600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --roxo: #6C5CE7;
+            --bg: #F0EEFF;
+            --branco: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg);
+            margin: 0;
+            color: #4A4A4A;
+        }
+
+        header {
+            background: var(--roxo);
+            padding: 15px 5%;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .card-comunidade {
+            background: var(--branco);
+            padding: 25px;
+            border-radius: 20px;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-comunidade:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(108, 92, 231, 0.15);
+        }
+
+        .emoji {
+            font-size: 2rem;
+            background: var(--bg);
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 15px;
+        }
+
+        h2 {
+            font-family: 'Plus Jakarta Sans';
+            margin: 0;
+            font-size: 1.1rem;
+            color: var(--roxo);
+        }
+
+        .btn-perfil {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1 style="font-family: 'Plus Jakarta Sans'; font-size: 1.4rem; margin: 0;">Líberi</h1>
+        <a href="perfil.html" class="btn-perfil">Meu Perfil</a>
+    </header>
+
+    <div class="container">
+        <h2 style="font-size: 1.8rem; margin-bottom: 30px; color: #333;">Explorar Comunidades</h2>
+        <div class="grid" id="listaComunidades">
+        </div>
+    </div>
+
+    <script type="module">
+        import { db } from "./liberi.js";
+        import { collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        async function carregarComunidades() {
+            const grid = document.getElementById('listaComunidades');
+            const q = query(collection(db, "comunidades"), orderBy("nome", "asc"));
+            const snap = await getDocs(q);
+
+            grid.innerHTML = "";
+            snap.forEach(doc => {
+                const c = doc.data();
+                grid.innerHTML += `
+                    <a href="grupos.html?comu=${doc.id}" class="card-comunidade">
+                        <div class="emoji">${c.emoji}</div>
+                        <div><h2>${c.nome}</h2><p style="font-size:0.8rem; color:#888;">Entrar na comunidade</p></div>
+                    </a>`;
+            });
+        }
+        carregarComunidades();
+    </script>
+</body>
+
+</html>
