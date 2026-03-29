@@ -9,387 +9,244 @@
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Poppins:wght@400;500;600&display=swap"
         rel="stylesheet">
     <style>
-        /* Manutenção das Cores Oficiais Líberi */
         :root {
             --roxo: #6C5CE7;
-            --roxo-claro: #A29BFE;
             --bg: #F8F9FD;
             --card: #FFFFFF;
-            --text: #4A4A4A;
         }
 
         body {
             font-family: 'Poppins', sans-serif;
             background: var(--bg);
             margin: 0;
-            color: var(--text);
+            color: #4A4A4A;
         }
 
-        /* Layout em 3 colunas (Estrutura Clássica Orkut) */
-        .layout-geral {
+        .layout-orkut {
             display: grid;
             grid-template-columns: 240px 1fr 260px;
-            gap: 24px;
+            gap: 20px;
             max-width: 1200px;
-            margin: 30px auto;
+            margin: 25px auto;
             padding: 0 20px;
         }
 
         .card {
             background: var(--card);
             border-radius: 24px;
-            padding: 24px;
-            box-shadow: 0 4px 20px rgba(108, 92, 231, 0.06);
-            margin-bottom: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            transition: 0.3s;
-        }
-
-        /* TIPOGRAFIA OFICIAL */
-        h2 {
-            font-family: 'Plus Jakarta Sans';
-            color: var(--roxo);
-            font-size: 1.2rem;
-            margin-top: 0;
-            font-weight: 800;
-        }
-
-        .nome-user {
-            font-family: 'Plus Jakarta Sans';
-            font-weight: 800;
-            color: var(--roxo);
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            letter-spacing: 1.5px;
-            margin-top: 10px;
-            display: block;
-        }
-
-        .foto-perfil {
-            width: 100px;
-            height: 100px;
-            border-radius: 30px;
-            object-fit: cover;
-            border: 4px solid #FFF;
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.05);
-        }
-
-        /* COLUNA ESQUERDA (PERFIL LIGHT) */
-        .orkut-light-links {
-            list-style: none;
-            padding: 0;
-            margin: 20px 0 0;
-            text-align: left;
-        }
-
-        .orkut-light-links li {
-            margin-bottom: 12px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: #666;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .orkut-light-links b {
-            color: var(--roxo);
-        }
-
-        .sorte-box {
-            background: #F0EEFF;
-            border-radius: 16px;
-            padding: 15px;
-            margin-top: 25px;
-            text-align: left;
-        }
-
-        .sorte-box span {
-            font-size: 0.7rem;
-            color: #AAA;
-            text-transform: uppercase;
-            font-weight: 700;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .sorte-box p {
-            font-size: 0.8rem;
-            color: #666;
-            font-style: italic;
-            margin: 0;
-            line-height: 1.4;
-        }
-
-        /* EDITOR COLORIDO ESCONDIDO (Paleta 🎨) */
-        #campoPost {
-            width: 100%;
-            border: none;
-            background: #F0F2F9;
-            border-radius: 20px;
             padding: 20px;
-            font-family: 'Poppins';
-            font-size: 0.9rem;
-            min-height: 120px;
-            outline: none;
-            box-sizing: border-box;
-            transition: all 0.3s ease;
-            color: #555;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+            margin-bottom: 20px;
         }
 
-        #campoPost:focus {
-            background: white;
-            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1);
-            color: #222;
+        /* GATILHO DE CURIOSIDADE (ESTILO SORTE DO DIA) */
+        .curiosidade-box {
+            background: linear-gradient(135deg, #6C5CE7 0%, #A29BFE 100%);
+            color: white;
+            border-radius: 20px;
+            padding: 15px;
+            margin-top: 15px;
+            text-align: left;
+            cursor: pointer;
         }
 
-        .controles-post {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .curiosidade-box span {
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            opacity: 0.9;
+        }
+
+        .curiosidade-box p {
+            font-size: 0.85rem;
+            margin: 5px 0 0;
+            line-height: 1.4;
+            font-weight: 500;
+        }
+
+        /* GRADE DE AMIGOS (ESTILO ORKUT) */
+        .amigos-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
             margin-top: 15px;
         }
 
-        .toolbar-oculta {
-            display: none;
-            align-items: center;
-            gap: 10px;
-            background: #FFF;
-            padding: 6px 12px;
-            border-radius: 14px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            border: 1px solid #EEE;
-        }
-
-        .btn-toggle-tools {
-            background: white;
-            border: 1px solid #EEE;
-            padding: 8px;
+        .amigo-mini {
+            width: 100%;
+            aspect-ratio: 1;
             border-radius: 12px;
-            cursor: pointer;
-            transition: 0.3s;
-            font-size: 1.2rem;
+            object-fit: cover;
+            background: #eee;
         }
 
-        .btn-toggle-tools:hover {
-            transform: scale(1.1);
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+        /* FEED COM TRAVA DE MEMBRO */
+        .post-card {
+            border-left: 4px solid var(--roxo);
+            padding: 15px;
+            background: white;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            position: relative;
         }
 
-        .btn-tool {
-            background: #F8F9FD;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 700;
-            font-size: 0.75rem;
+        .tag-comunidade {
+            font-size: 0.7rem;
+            font-weight: 800;
             color: var(--roxo);
+            background: #F0EEFF;
+            padding: 3px 8px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            display: inline-block;
         }
 
-        .btn-tool:hover {
+        .blur-content {
+            filter: blur(4px);
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .lock-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 15px;
+            flex-direction: column;
+        }
+
+        .btn-entrar {
             background: var(--roxo);
             color: white;
-        }
-
-        .btn-postar {
-            background: linear-gradient(135deg, var(--roxo) 0%, #5649c0 100%);
-            color: white;
             border: none;
-            padding: 12px 28px;
-            border-radius: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: 0.3s;
-            box-shadow: 0 6px 15px rgba(108, 92, 231, 0.25);
-        }
-
-        .btn-postar:hover {
-            opacity: 0.9;
-            transform: translateY(-1px);
-        }
-
-        /* FEED MINIMALISTA COM BORDA ESQUERDA */
-        .post-card {
-            padding: 20px;
-            background: white;
-            border-radius: 20px;
-            margin-bottom: 16px;
-            border-left: 4px solid var(--roxo);
-            transition: 0.3s;
-        }
-
-        .post-card:hover {
-            transform: scale(1.01);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.02);
-        }
-
-        .post-conteudo {
-            font-size: 0.9rem;
-            line-height: 1.6;
-            color: #444;
-        }
-
-        .post-conteudo img {
-            max-width: 100%;
+            padding: 8px 15px;
             border-radius: 10px;
-            margin-top: 10px;
-        }
-
-        /* Atalhos Clássicos do Feed */
-        .post-links {
-            margin-top: 15px;
-            padding-top: 10px;
-            border-top: 1px solid #F8F9FD;
-            display: flex;
-            gap: 15px;
-        }
-
-        .post-links a {
-            color: var(--roxo-claro);
-            text-decoration: none;
-            font-weight: 700;
+            cursor: pointer;
+            font-weight: 600;
             font-size: 0.8rem;
-            text-transform: uppercase;
-        }
-
-        .post-links a:hover {
-            color: var(--roxo);
+            margin-top: 5px;
         }
     </style>
 </head>
 
 <body>
     <script type="module" src="menu.js"></script>
-    <main class="layout-geral">
 
+    <main class="layout-orkut">
         <aside>
             <div class="card" style="text-align: center;">
-                <img id="userFoto" src="" class="foto-perfil">
-                <span id="userName" class="nome-user">...</span>
-                <ul class="orkut-light-links">
-                    <li>💬 Recados (12)</li>
-                    <li>👥 Amigos (<b>312</b>)</li>
-                    <li>🔍 Comunidades (<b>47</b>)</li>
-                    <li>📄 Depoimentos (8)</li>
-                </ul>
-                <div style="height: 1px; background: #F0F2F9; margin: 20px 0;"></div>
-                <button
-                    style="background: none; border: none; color: #AAA; cursor: pointer; font-size: 0.8rem; font-weight: 600;"
-                    onclick="window.location.href='perfil.html'">MEU PERFIL</button>
-            </div>
+                <img id="userFoto" src=""
+                    style="width: 80px; height: 80px; border-radius: 25px; border: 3px solid #FFF; box-shadow: 0 5px 10px rgba(0,0,0,0.05);">
+                <strong id="userName"
+                    style="display: block; margin-top: 10px; color: var(--roxo); font-size: 0.9rem;">...</strong>
 
-            <div class="sorte-box">
-                <span>Sorte do Dia</span>
-                <p>"O amor transforma neuras em sorrisos. 💜"</p>
+                <div style="text-align: left; margin-top: 20px;">
+                    <span style="font-size: 0.75rem; font-weight: 800; color: #AAA; text-transform: uppercase;">Meus
+                        Amigos (9)</span>
+                    <div class="amigos-grid" id="listaAmigosMini">
+                    </div>
+                </div>
+
+                <div class="curiosidade-box" onclick="window.location.href='discussao.html?id=DICA_DIA'">
+                    <span>Você sabia? 💡</span>
+                    <p id="textoCuriosidade">O cérebro da criança aos 2 anos dobra de tamanho...</p>
+                </div>
             </div>
         </aside>
 
         <section>
             <div class="card">
-                <h2>O que há de novo? ✨</h2>
-                <div id="campoPost" contenteditable="true" placeholder="Escreva algo especial..."></div>
-
-                <div class="controles-post">
-                    <div style="display: flex; gap: 12px; align-items: center;">
-                        <button class="btn-toggle-tools" onclick="toggleTools()" title="Formatar texto">🎨</button>
-                        <div id="minhaToolbar" class="toolbar-oculta">
-                            <button class="btn-tool" onclick="formatar('bold')">B</button>
-                            <button class="btn-tool" onclick="formatar('italic')">I</button>
-                            <input type="color"
-                                style="width:25px;height:25px;border:none;background:none;cursor:pointer"
-                                onchange="mudarCor(this.value)">
-                            <button class="btn-tool" onclick="inserirImagem()">🖼️</button>
-                        </div>
-                    </div>
-                    <button id="btnPostar" class="btn-postar">Publicar</button>
+                <h2 style="font-size: 1rem; margin-bottom: 15px;">Atualizações da Vila</h2>
+                <div id="feedHibrido">
                 </div>
             </div>
-            <div id="feedPosts"></div>
         </section>
 
         <aside>
             <div class="card">
-                <h3
-                    style="font-family:'Plus Jakarta Sans'; font-size:1rem; color:#999; margin-bottom:15px; font-weight:700;">
-                    EXPLORAR</h3>
+                <span style="font-size: 0.75rem; font-weight: 800; color: #AAA; text-transform: uppercase;">Minhas
+                    Comunidades</span>
+                <div id="minhasComunidades" style="margin-top: 15px;">
+                    <p style="font-size: 0.8rem; color: #CCC;">Você ainda não participa de comunidades.</p>
+                </div>
                 <button onclick="window.location.href='comunidades.html'"
-                    style="background: #F0F2F9; border: none; color: var(--roxo); padding: 14px; border-radius: 14px; width: 100%; font-weight: 700; cursor: pointer; font-size: 0.85rem;">Ver
-                    Comunidades →</button>
+                    style="width: 100%; background: #F0EEFF; border: none; padding: 10px; border-radius: 12px; color: var(--roxo); font-weight: 700; font-size: 0.8rem; margin-top: 15px; cursor: pointer;">Explorar
+                    Mais →</button>
             </div>
         </aside>
     </main>
 
     <script type="module">
         import { db, auth } from "./liberi.js";
-        import { collection, addDoc, query, orderBy, onSnapshot, serverTimestamp, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { collection, query, orderBy, onSnapshot, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-        // Toggle da Toolbar (Mágica da Paleta 🎨)
-        window.toggleTools = () => {
-            const bar = document.getElementById('minhaToolbar');
-            bar.style.display = bar.style.display === 'flex' ? 'none' : 'flex';
-        };
+        let minhasInscricoes = []; // IDs das comunidades que eu participo
 
-        // Funções de Estilo (Nostalgia Retrô-Moderna)
-        window.formatar = (cmd) => { document.execCommand(cmd, false, null); document.getElementById('campoPost').focus(); };
-        window.mudarCor = (cor) => { document.execCommand('foreColor', false, cor); document.getElementById('campoPost').focus(); };
-        window.inserirImagem = () => {
-            const url = prompt("Link da imagem (ex: https://site.com/foto.jpg):");
-            if (url) document.execCommand('insertImage', false, url);
-        };
-
-        onAuthStateChanged(auth, (user) => {
+        onAuthStateChanged(auth, async (user) => {
             if (user) {
                 document.getElementById('userFoto').src = user.photoURL;
                 document.getElementById('userName').innerText = user.displayName;
+
+                // 1. Carregar comunidades do usuário (Gaveta do Perfil)
+                const userRef = doc(db, "usuarios", user.uid);
+                const userSnap = await getDoc(userRef);
+                if (userSnap.exists()) minhasInscricoes = userSnap.data().comunidades || [];
+
                 carregarFeed();
+                carregarMiniAmigos();
             } else { window.location.href = "index.html"; }
         });
 
         function carregarFeed() {
             const q = query(collection(db, "posts"), orderBy("data", "desc"));
             onSnapshot(q, (snapshot) => {
-                const feed = document.getElementById('feedPosts');
+                const feed = document.getElementById('feedHibrido');
                 feed.innerHTML = "";
+
                 snapshot.forEach((docSnap) => {
                     const post = docSnap.data();
-                    const eDono = auth.currentUser && (post.autorId === auth.currentUser.uid || auth.currentUser.email === "seu-email@gmail.com");
+                    const souMembro = post.comunidadeId ? minhasInscricoes.includes(post.comunidadeId) : true;
 
                     feed.insertAdjacentHTML('beforeend', `
                         <div class="post-card">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                                <div style="display: flex; align-items: center; gap: 10px;">
-                                    <img src="${post.fotoAutor}" style="width: 32px; height: 32px; border-radius: 10px;">
-                                    <strong style="color: var(--roxo); font-size: 0.85rem;">${post.autor}</strong>
+                            ${post.comunidadeNome ? `<span class="tag-comunidade">${post.comunidadeNome}</span>` : ''}
+                            <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 10px;">
+                                <img src="${post.fotoAutor}" style="width: 25px; height: 25px; border-radius: 8px;">
+                                <strong style="font-size: 0.85rem; color: var(--roxo);">${post.autor}</strong>
+                            </div>
+                            
+                            <div class="${souMembro ? '' : 'blur-content'}">
+                                <div style="font-size: 0.9rem; line-height: 1.5;">${post.texto.substring(0, 100)}...</div>
+                            </div>
+
+                            ${!souMembro ? `
+                                <div class="lock-overlay">
+                                    <span style="font-size: 0.8rem; font-weight: 700; color: #666;">Conteúdo exclusivo para membros</span>
+                                    <button class="btn-entrar" onclick="window.location.href='grupos.html?id=${post.comunidadeId}'">Participar da Comunidade</button>
                                 </div>
-                                ${eDono ? `<button onclick="window.excluirPost('${docSnap.id}')" style="background:none; border:none; color:#DDD; cursor:pointer; font-size:1rem;">&times;</button>` : ''}
-                            </div>
-                            <div class="post-conteudo">${post.texto}</div>
-                            <div class="post-links">
-                                <a href="discussao.html?id=${docSnap.id}">Conversar (8) →</a>
-                            </div>
-                        </div>`);
+                            ` : `
+                                <a href="discussao.html?id=${docSnap.id}" style="color: var(--roxo); font-size: 0.75rem; font-weight: 700; text-decoration: none; display: block; margin-top: 10px;">LER TUDO →</a>
+                            `}
+                        </div>
+                    `);
                 });
             });
         }
 
-        window.excluirPost = async (id) => { if (confirm("Apagar postagem?")) await deleteDoc(doc(db, "posts", id)); };
-
-        document.getElementById('btnPostar').onclick = async () => {
-            const campo = document.getElementById('campoPost');
-            if (!campo.innerHTML.trim() || campo.innerHTML === "<br>") return;
-            await addDoc(collection(db, "posts"), {
-                texto: campo.innerHTML,
-                autor: auth.currentUser.displayName,
-                fotoAutor: auth.currentUser.photoURL,
-                autorId: auth.currentUser.uid,
-                data: serverTimestamp()
-            });
-            campo.innerHTML = "";
-            document.getElementById('minhaToolbar').style.display = 'none'; // Esconde após postar
-        };
+        function carregarMiniAmigos() {
+            const grid = document.getElementById('listaAmigosMini');
+            // Aqui você buscaria na coleção "amigos", mas vamos simular 6 fotos para o visual Orkut
+            for (let i = 0; i < 6; i++) {
+                grid.innerHTML += `<img src="https://i.pravatar.cc/100?u=${i}" class="amigo-mini">`;
+            }
+        }
     </script>
 </body>
 
