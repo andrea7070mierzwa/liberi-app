@@ -9,22 +9,26 @@
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Poppins:wght@400;500;600&display=swap"
         rel="stylesheet">
     <style>
+        /* Manutenção das Cores Oficiais Líberi */
         :root {
             --roxo: #6C5CE7;
+            --roxo-claro: #A29BFE;
             --bg: #F8F9FD;
             --card: #FFFFFF;
+            --text: #4A4A4A;
         }
 
         body {
             font-family: 'Poppins', sans-serif;
             background: var(--bg);
             margin: 0;
-            color: #4A4A4A;
+            color: var(--text);
         }
 
+        /* Layout em 3 colunas (Estrutura Clássica Orkut) */
         .layout-geral {
             display: grid;
-            grid-template-columns: 220px 1fr 260px;
+            grid-template-columns: 240px 1fr 260px;
             gap: 24px;
             max-width: 1200px;
             margin: 30px auto;
@@ -38,12 +42,14 @@
             box-shadow: 0 4px 20px rgba(108, 92, 231, 0.06);
             margin-bottom: 24px;
             border: 1px solid rgba(255, 255, 255, 0.8);
+            transition: 0.3s;
         }
 
+        /* TIPOGRAFIA OFICIAL */
         h2 {
             font-family: 'Plus Jakarta Sans';
             color: var(--roxo);
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             margin-top: 0;
             font-weight: 800;
         }
@@ -53,22 +59,69 @@
             font-weight: 800;
             color: var(--roxo);
             text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
+            font-size: 0.85rem;
+            letter-spacing: 1.5px;
             margin-top: 10px;
             display: block;
         }
 
         .foto-perfil {
-            width: 90px;
-            height: 90px;
-            border-radius: 25px;
+            width: 100px;
+            height: 100px;
+            border-radius: 30px;
             object-fit: cover;
             border: 4px solid #FFF;
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.05);
         }
 
-        /* EDITOR LIMPO */
+        /* COLUNA ESQUERDA (PERFIL LIGHT) */
+        .orkut-light-links {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0 0;
+            text-align: left;
+        }
+
+        .orkut-light-links li {
+            margin-bottom: 12px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .orkut-light-links b {
+            color: var(--roxo);
+        }
+
+        .sorte-box {
+            background: #F0EEFF;
+            border-radius: 16px;
+            padding: 15px;
+            margin-top: 25px;
+            text-align: left;
+        }
+
+        .sorte-box span {
+            font-size: 0.7rem;
+            color: #AAA;
+            text-transform: uppercase;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .sorte-box p {
+            font-size: 0.8rem;
+            color: #666;
+            font-style: italic;
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        /* EDITOR COLORIDO ESCONDIDO (Paleta 🎨) */
         #campoPost {
             width: 100%;
             border: none;
@@ -80,7 +133,7 @@
             min-height: 120px;
             outline: none;
             box-sizing: border-box;
-            transition: 0.3s;
+            transition: all 0.3s ease;
             color: #555;
         }
 
@@ -94,16 +147,16 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 12px;
+            margin-top: 15px;
         }
 
         .toolbar-oculta {
             display: none;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             background: #FFF;
             padding: 6px 12px;
-            border-radius: 12px;
+            border-radius: 14px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
             border: 1px solid #EEE;
         }
@@ -114,35 +167,42 @@
             padding: 8px;
             border-radius: 12px;
             cursor: pointer;
-            font-size: 1.1rem;
             transition: 0.3s;
+            font-size: 1.2rem;
         }
 
         .btn-toggle-tools:hover {
             transform: scale(1.1);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
         }
 
         .btn-tool {
             background: #F8F9FD;
             border: none;
-            padding: 5px 10px;
-            border-radius: 6px;
+            padding: 6px 12px;
+            border-radius: 8px;
             cursor: pointer;
             font-weight: 700;
             font-size: 0.75rem;
             color: var(--roxo);
         }
 
-        .btn-postar {
+        .btn-tool:hover {
             background: var(--roxo);
             color: white;
+        }
+
+        .btn-postar {
+            background: linear-gradient(135deg, var(--roxo) 0%, #5649c0 100%);
+            color: white;
             border: none;
-            padding: 10px 24px;
-            border-radius: 14px;
+            padding: 12px 28px;
+            border-radius: 16px;
             font-weight: 600;
             cursor: pointer;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             transition: 0.3s;
+            box-shadow: 0 6px 15px rgba(108, 92, 231, 0.25);
         }
 
         .btn-postar:hover {
@@ -150,20 +210,52 @@
             transform: translateY(-1px);
         }
 
-        /* FEED */
+        /* FEED MINIMALISTA COM BORDA ESQUERDA */
         .post-card {
-            padding: 18px;
+            padding: 20px;
             background: white;
-            border-radius: 18px;
+            border-radius: 20px;
             margin-bottom: 16px;
             border-left: 4px solid var(--roxo);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+            transition: 0.3s;
+        }
+
+        .post-card:hover {
+            transform: scale(1.01);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.02);
         }
 
         .post-conteudo {
             font-size: 0.9rem;
-            line-height: 1.5;
+            line-height: 1.6;
             color: #444;
+        }
+
+        .post-conteudo img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        /* Atalhos Clássicos do Feed */
+        .post-links {
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px solid #F8F9FD;
+            display: flex;
+            gap: 15px;
+        }
+
+        .post-links a {
+            color: var(--roxo-claro);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .post-links a:hover {
+            color: var(--roxo);
         }
     </style>
 </head>
@@ -171,29 +263,42 @@
 <body>
     <script type="module" src="menu.js"></script>
     <main class="layout-geral">
+
         <aside>
             <div class="card" style="text-align: center;">
-                <img id="userFoto" src="https://via.placeholder.com/90" class="foto-perfil">
-                <span id="userName" class="nome-user">CARREGANDO...</span>
-                <hr style="border: 0; border-top: 1px solid #F0F2F9; margin: 15px 0;">
+                <img id="userFoto" src="" class="foto-perfil">
+                <span id="userName" class="nome-user">...</span>
+                <ul class="orkut-light-links">
+                    <li>💬 Recados (12)</li>
+                    <li>👥 Amigos (<b>312</b>)</li>
+                    <li>🔍 Comunidades (<b>47</b>)</li>
+                    <li>📄 Depoimentos (8)</li>
+                </ul>
+                <div style="height: 1px; background: #F0F2F9; margin: 20px 0;"></div>
                 <button
-                    style="background: none; border: none; color: #AAA; cursor: pointer; font-size: 0.75rem; font-weight: 600;"
+                    style="background: none; border: none; color: #AAA; cursor: pointer; font-size: 0.8rem; font-weight: 600;"
                     onclick="window.location.href='perfil.html'">MEU PERFIL</button>
+            </div>
+
+            <div class="sorte-box">
+                <span>Sorte do Dia</span>
+                <p>"O amor transforma neuras em sorrisos. 💜"</p>
             </div>
         </aside>
 
         <section>
             <div class="card">
                 <h2>O que há de novo? ✨</h2>
-                <div id="campoPost" contenteditable="true" placeholder="Compartilhe com a vila..."></div>
+                <div id="campoPost" contenteditable="true" placeholder="Escreva algo especial..."></div>
+
                 <div class="controles-post">
-                    <div style="display: flex; gap: 10px; align-items: center;">
-                        <button class="btn-toggle-tools" onclick="toggleTools()">🎨</button>
+                    <div style="display: flex; gap: 12px; align-items: center;">
+                        <button class="btn-toggle-tools" onclick="toggleTools()" title="Formatar texto">🎨</button>
                         <div id="minhaToolbar" class="toolbar-oculta">
                             <button class="btn-tool" onclick="formatar('bold')">B</button>
                             <button class="btn-tool" onclick="formatar('italic')">I</button>
                             <input type="color"
-                                style="width:20px;height:20px;border:none;background:none;cursor:pointer"
+                                style="width:25px;height:25px;border:none;background:none;cursor:pointer"
                                 onchange="mudarCor(this.value)">
                             <button class="btn-tool" onclick="inserirImagem()">🖼️</button>
                         </div>
@@ -206,10 +311,12 @@
 
         <aside>
             <div class="card">
-                <h3 style="font-size:0.9rem; color:#999; margin-bottom:12px;">EXPLORAR</h3>
+                <h3
+                    style="font-family:'Plus Jakarta Sans'; font-size:1rem; color:#999; margin-bottom:15px; font-weight:700;">
+                    EXPLORAR</h3>
                 <button onclick="window.location.href='comunidades.html'"
-                    style="background: #F0F2F9; border: none; color: var(--roxo); padding: 12px; border-radius: 12px; width: 100%; font-weight: 700; cursor: pointer; font-size: 0.8rem;">Ver
-                    Comunidades</button>
+                    style="background: #F0F2F9; border: none; color: var(--roxo); padding: 14px; border-radius: 14px; width: 100%; font-weight: 700; cursor: pointer; font-size: 0.85rem;">Ver
+                    Comunidades →</button>
             </div>
         </aside>
     </main>
@@ -219,23 +326,24 @@
         import { collection, addDoc, query, orderBy, onSnapshot, serverTimestamp, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
+        // Toggle da Toolbar (Mágica da Paleta 🎨)
         window.toggleTools = () => {
             const bar = document.getElementById('minhaToolbar');
             bar.style.display = bar.style.display === 'flex' ? 'none' : 'flex';
         };
 
+        // Funções de Estilo (Nostalgia Retrô-Moderna)
         window.formatar = (cmd) => { document.execCommand(cmd, false, null); document.getElementById('campoPost').focus(); };
         window.mudarCor = (cor) => { document.execCommand('foreColor', false, cor); document.getElementById('campoPost').focus(); };
         window.inserirImagem = () => {
-            const url = prompt("Link da imagem:");
+            const url = prompt("Link da imagem (ex: https://site.com/foto.jpg):");
             if (url) document.execCommand('insertImage', false, url);
         };
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // Pequeno ajuste para garantir que os dados do Google carreguem
-                document.getElementById('userFoto').src = user.photoURL || 'https://via.placeholder.com/90';
-                document.getElementById('userName').innerText = user.displayName ? user.displayName.split(' ')[0] : 'MEMBRO';
+                document.getElementById('userFoto').src = user.photoURL;
+                document.getElementById('userName').innerText = user.displayName;
                 carregarFeed();
             } else { window.location.href = "index.html"; }
         });
@@ -247,18 +355,21 @@
                 feed.innerHTML = "";
                 snapshot.forEach((docSnap) => {
                     const post = docSnap.data();
-                    const eDono = auth.currentUser && (post.autorId === auth.currentUser.uid || auth.currentUser.email === "andrea7070mierzwa@gmail.com");
+                    const eDono = auth.currentUser && (post.autorId === auth.currentUser.uid || auth.currentUser.email === "seu-email@gmail.com");
 
                     feed.insertAdjacentHTML('beforeend', `
                         <div class="post-card">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                                <div style="display: flex; align-items: center; gap: 8px;">
-                                    <img src="${post.fotoAutor}" style="width: 28px; height: 28px; border-radius: 8px;">
-                                    <strong style="color: var(--roxo); font-size: 0.8rem;">${post.autor}</strong>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <img src="${post.fotoAutor}" style="width: 32px; height: 32px; border-radius: 10px;">
+                                    <strong style="color: var(--roxo); font-size: 0.85rem;">${post.autor}</strong>
                                 </div>
-                                ${eDono ? `<button onclick="window.excluirPost('${docSnap.id}')" style="background:none; border:none; color:#DDD; cursor:pointer; font-size:1.1rem;">&times;</button>` : ''}
+                                ${eDono ? `<button onclick="window.excluirPost('${docSnap.id}')" style="background:none; border:none; color:#DDD; cursor:pointer; font-size:1rem;">&times;</button>` : ''}
                             </div>
                             <div class="post-conteudo">${post.texto}</div>
+                            <div class="post-links">
+                                <a href="discussao.html?id=${docSnap.id}">Conversar (8) →</a>
+                            </div>
                         </div>`);
                 });
             });
@@ -277,7 +388,7 @@
                 data: serverTimestamp()
             });
             campo.innerHTML = "";
-            document.getElementById('minhaToolbar').style.display = 'none';
+            document.getElementById('minhaToolbar').style.display = 'none'; // Esconde após postar
         };
     </script>
 </body>

@@ -3,122 +3,255 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Líberi - Perfil</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Líberi - Meu Perfil</title>
     <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=Poppins:wght@400;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Poppins:wght@400;500;600&display=swap"
         rel="stylesheet">
     <style>
         :root {
             --roxo: #6C5CE7;
-            --bg: #F0EEFF;
+            --bg: #F8F9FD;
+            --card: #FFFFFF;
         }
 
         body {
             font-family: 'Poppins', sans-serif;
             background: var(--bg);
             margin: 0;
-            padding: 40px 20px;
-            display: flex;
-            justify-content: center;
+            color: #4A4A4A;
+        }
+
+        .container-perfil {
+            max-width: 650px;
+            margin: 40px auto;
+            padding: 20px;
         }
 
         .card-perfil {
-            background: white;
+            background: var(--card);
+            border-radius: 32px;
             padding: 40px;
-            border-radius: 30px;
             text-align: center;
-            max-width: 450px;
-            width: 100%;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 40px rgba(108, 92, 231, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.7);
         }
 
-        .foto-grande {
-            width: 130px;
-            height: 130px;
-            border-radius: 45px;
-            border: 5px solid #EBE8FF;
+        .foto-perfil {
+            width: 120px;
+            height: 120px;
+            border-radius: 40px;
             object-fit: cover;
-            margin-bottom: 20px;
+            border: 4px solid #FFF;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            margin-top: -85px;
         }
 
         h2 {
             font-family: 'Plus Jakarta Sans';
             color: var(--roxo);
-            margin-bottom: 10px;
+            margin: 15px 0 5px;
+            font-weight: 800;
+            font-size: 1.5rem;
+        }
+
+        .tag-perfil {
+            background: #F0EEFF;
+            color: var(--roxo);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .bio {
+            font-size: 0.9rem;
             color: #666;
-            font-size: 0.95rem;
             line-height: 1.6;
-            margin-bottom: 25px;
+            margin: 20px 0;
+            max-width: 80%;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .stats {
-            display: flex;
-            justify-content: space-around;
-            background: #F8F7FF;
+        /* SEÇÃO FILHOS */
+        .secao-familia {
+            background: #F4F6FB;
+            border-radius: 24px;
             padding: 20px;
+            margin: 25px 0;
+            text-align: left;
+        }
+
+        .titulo-secao {
+            font-family: 'Plus Jakarta Sans';
+            font-size: 0.8rem;
+            color: #AAA;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            display: block;
+            font-weight: 700;
+        }
+
+        .filho-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: white;
+            padding: 12px 16px;
+            border-radius: 16px;
+            margin-bottom: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+        }
+
+        .info-filho strong {
+            color: var(--roxo);
+            font-size: 0.9rem;
+            display: block;
+        }
+
+        .info-filho span {
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        .tag-neuro {
+            background: #FFF4E5;
+            color: #FF9F43;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            margin-left: 5px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-box {
+            background: white;
+            padding: 15px;
             border-radius: 20px;
-            margin-bottom: 25px;
+            border: 1px solid #F0F2F9;
         }
 
         .stat-box strong {
             display: block;
+            font-size: 1.3rem;
             color: var(--roxo);
-            font-size: 1.2rem;
+            font-family: 'Plus Jakarta Sans';
         }
 
         .stat-box span {
-            font-size: 0.8rem;
-            color: #999;
+            font-size: 0.7rem;
+            color: #AAA;
+            text-transform: uppercase;
+            font-weight: 700;
         }
 
-        .btn-voltar {
+        .btn-update {
             background: var(--roxo);
             color: white;
             border: none;
-            padding: 12px 25px;
-            border-radius: 15px;
-            cursor: pointer;
+            padding: 14px;
+            border-radius: 16px;
             font-weight: 600;
+            cursor: pointer;
             width: 100%;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .btn-update:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
         }
     </style>
 </head>
 
 <body>
     <script type="module" src="menu.js"></script>
-    <div class="card-perfil">
-        <img id="pFoto" src="" class="foto-grande">
-        <h2 id="pNome">...</h2>
-        <p class="bio" id="pBio">Carregando informações do membro...</p>
 
-        <div class="stats">
-            <div class="stat-box">
-                <strong id="pPosts">0</strong>
-                <span>Posts</span>
+    <div class="container-perfil">
+        <div style="height: 100px;"></div>
+        <div class="card-perfil">
+            <img id="userFoto" src="https://via.placeholder.com/120" class="foto-perfil">
+            <h2 id="userName">Carregando...</h2>
+            <span class="tag-perfil" id="labelPerfil">Comunidade Líberi</span>
+
+            <p class="bio">"Fortalecendo conexões e compartilhando experiências na jornada parental."</p>
+
+            <div class="secao-familia">
+                <span class="titulo-secao">Membros da Família</span>
+                <div id="listaFilhos">
+                    <p style="font-size: 0.8rem; color: #bbb; text-align: center;">Nenhuma informação cadastrada.</p>
+                </div>
             </div>
-            <div class="stat-box">
-                <strong id="pComent">0</strong>
-                <span>Comentários</span>
+
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <strong id="statPosts">0</strong>
+                    <span>Posts</span>
+                </div>
+                <div class="stat-box">
+                    <strong id="statComentarios">0</strong>
+                    <span>Comentários</span>
+                </div>
             </div>
+
+            <button class="btn-update" onclick="window.location.href='cadastro_filhos.html'">Editar Informações</button>
         </div>
-
-        <button class="btn-voltar" onclick="window.location.href='dashboard.html'">Voltar ao Feed</button>
     </div>
 
     <script type="module">
-        import { auth } from "./liberi.js";
+        import { db, auth } from "./liberi.js";
+        import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-        onAuthStateChanged(auth, (user) => {
+        onAuthStateChanged(auth, async (user) => {
             if (user) {
-                document.getElementById('pNome').innerText = user.displayName;
-                document.getElementById('pFoto').src = user.photoURL;
-                document.getElementById('pBio').innerText = "Membro dedicado da comunidade Líberi, compartilhando experiências sobre a jornada parental.";
+                document.getElementById('userName').innerText = user.displayName;
+                document.getElementById('userFoto').src = user.photoURL;
+
+                const userRef = doc(db, "usuarios", user.uid);
+                const userSnap = await getDoc(userRef);
+
+                if (userSnap.exists()) {
+                    const dados = userSnap.data();
+
+                    if (dados.filhos && dados.filhos.length > 0) {
+                        const container = document.getElementById('listaFilhos');
+                        container.innerHTML = "";
+                        dados.filhos.forEach(f => {
+                            container.insertAdjacentHTML('beforeend', `
+                                <div class="filho-card">
+                                    <div class="info-filho">
+                                        <strong>${f.apelido} ${f.neuroatipico ? '<span class="tag-neuro">Neuroatípico</span>' : ''}</strong>
+                                        <span>${calcularIdade(f.nascimento)}</span>
+                                    </div>
+                                </div>
+                            `);
+                        });
+                        if (dados.perfilEspecial) document.getElementById('labelPerfil').innerText = "Perfil Especial";
+                    }
+                }
             } else { window.location.href = "index.html"; }
         });
+
+        function calcularIdade(data) {
+            const nasc = new Date(data);
+            const hoje = new Date();
+            let idade = hoje.getFullYear() - nasc.getFullYear();
+            if (hoje.getMonth() < nasc.getMonth() || (hoje.getMonth() === nasc.getMonth() && hoje.getDate() < nasc.getDate())) idade--;
+            return idade + (idade === 1 ? " ano" : " anos");
+        }
     </script>
 </body>
 
