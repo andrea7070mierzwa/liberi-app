@@ -35,52 +35,85 @@
             background: var(--card);
             border-radius: 24px;
             padding: 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.04);
             margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.8);
         }
 
-        /* GATILHO DE CURIOSIDADE (ESTILO SORTE DO DIA) */
-        .curiosidade-box {
-            background: linear-gradient(135deg, #6C5CE7 0%, #A29BFE 100%);
-            color: white;
-            border-radius: 20px;
-            padding: 15px;
+        /* GAVETA DE FOFOQUINHAS (NOTIFICAÇÕES) */
+        .fofoca-box {
+            background: #FFF4E5;
+            border-radius: 18px;
+            padding: 12px;
             margin-top: 15px;
+            border: 1px solid #FFE082;
             text-align: left;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.02);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .fofoca-box span {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: #B7791F;
+            text-transform: uppercase;
+        }
+
+        .fofoca-box p {
+            font-size: 0.8rem;
+            margin: 5px 0;
+            color: #856404;
+            font-weight: 600;
             cursor: pointer;
         }
 
-        .curiosidade-box span {
-            font-size: 0.7rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            opacity: 0.9;
+        .foto-perfil {
+            width: 80px;
+            height: 80px;
+            border-radius: 25px;
+            border: 3px solid #FFF;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
         }
 
-        .curiosidade-box p {
-            font-size: 0.85rem;
-            margin: 5px 0 0;
-            line-height: 1.4;
-            font-weight: 500;
-        }
-
-        /* GRADE DE AMIGOS (ESTILO ORKUT) */
-        .amigos-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .amigo-mini {
+        /* EDITOR E FEED */
+        #campoPost {
             width: 100%;
-            aspect-ratio: 1;
-            border-radius: 12px;
-            object-fit: cover;
-            background: #eee;
+            border: none;
+            background: #F0F2F9;
+            border-radius: 20px;
+            padding: 15px;
+            font-family: 'Poppins';
+            font-size: 0.9rem;
+            min-height: 100px;
+            outline: none;
+            box-sizing: border-box;
         }
 
-        /* FEED COM TRAVA DE MEMBRO */
+        .btn-postar {
+            background: var(--roxo);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            float: right;
+            margin-top: 10px;
+        }
+
         .post-card {
             border-left: 4px solid var(--roxo);
             padding: 15px;
@@ -90,21 +123,9 @@
             position: relative;
         }
 
-        .tag-comunidade {
-            font-size: 0.7rem;
-            font-weight: 800;
-            color: var(--roxo);
-            background: #F0EEFF;
-            padding: 3px 8px;
-            border-radius: 6px;
-            margin-bottom: 8px;
-            display: inline-block;
-        }
-
         .blur-content {
             filter: blur(4px);
             pointer-events: none;
-            user-select: none;
         }
 
         .lock-overlay {
@@ -113,24 +134,13 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.7);
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 15px;
             flex-direction: column;
-        }
-
-        .btn-entrar {
-            background: var(--roxo);
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.8rem;
-            margin-top: 5px;
+            z-index: 5;
         }
     </style>
 </head>
@@ -141,112 +151,124 @@
     <main class="layout-orkut">
         <aside>
             <div class="card" style="text-align: center;">
-                <img id="userFoto" src=""
-                    style="width: 80px; height: 80px; border-radius: 25px; border: 3px solid #FFF; box-shadow: 0 5px 10px rgba(0,0,0,0.05);">
+                <img id="userFoto" src="" class="foto-perfil">
                 <strong id="userName"
                     style="display: block; margin-top: 10px; color: var(--roxo); font-size: 0.9rem;">...</strong>
 
-                <div style="text-align: left; margin-top: 20px;">
-                    <span style="font-size: 0.75rem; font-weight: 800; color: #AAA; text-transform: uppercase;">Meus
-                        Amigos (9)</span>
-                    <div class="amigos-grid" id="listaAmigosMini">
+                <div id="gavetaFofoca" style="display: none;">
+                    <div class="fofoca-box">
+                        <span>Fofoca da Vila 🔥</span>
+                        <p id="msgFofoca"></p>
                     </div>
                 </div>
 
-                <div class="curiosidade-box" onclick="window.location.href='discussao.html?id=DICA_DIA'">
-                    <span>Você sabia? 💡</span>
-                    <p id="textoCuriosidade">O cérebro da criança aos 2 anos dobra de tamanho...</p>
+                <div style="text-align: left; margin-top: 20px;">
+                    <span style="font-size: 0.75rem; font-weight: 800; color: #AAA; text-transform: uppercase;">Novos
+                        Amigos ✨</span>
+                    <div id="miniAmigos"
+                        style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px;"></div>
                 </div>
             </div>
         </aside>
 
         <section>
             <div class="card">
-                <h2 style="font-size: 1rem; margin-bottom: 15px;">Atualizações da Vila</h2>
-                <div id="feedHibrido">
-                </div>
+                <div id="campoPost" contenteditable="true" placeholder="Mencione alguém com @..."></div>
+                <button id="btnPostar" class="btn-postar">Publicar</button>
+                <div style="clear: both;"></div>
             </div>
+            <div id="feedHibrido"></div>
         </section>
 
         <aside>
             <div class="card">
-                <span style="font-size: 0.75rem; font-weight: 800; color: #AAA; text-transform: uppercase;">Minhas
-                    Comunidades</span>
-                <div id="minhasComunidades" style="margin-top: 15px;">
-                    <p style="font-size: 0.8rem; color: #CCC;">Você ainda não participa de comunidades.</p>
-                </div>
-                <button onclick="window.location.href='comunidades.html'"
-                    style="width: 100%; background: #F0EEFF; border: none; padding: 10px; border-radius: 12px; color: var(--roxo); font-weight: 700; font-size: 0.8rem; margin-top: 15px; cursor: pointer;">Explorar
-                    Mais →</button>
+                <h3 style="font-size: 0.85rem; color: #AAA; text-transform: uppercase;">Comunidades</h3>
+                <div id="listaComus"></div>
             </div>
         </aside>
     </main>
 
     <script type="module">
         import { db, auth } from "./liberi.js";
-        import { collection, query, orderBy, onSnapshot, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { collection, addDoc, query, orderBy, onSnapshot, serverTimestamp, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-        let minhasInscricoes = []; // IDs das comunidades que eu participo
+        let minhasComus = [];
 
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 document.getElementById('userFoto').src = user.photoURL;
                 document.getElementById('userName').innerText = user.displayName;
 
-                // 1. Carregar comunidades do usuário (Gaveta do Perfil)
-                const userRef = doc(db, "usuarios", user.uid);
-                const userSnap = await getDoc(userRef);
-                if (userSnap.exists()) minhasInscricoes = userSnap.data().comunidades || [];
+                // Puxar comunidades do usuário para a "Regra de Ouro"
+                const snap = await getDoc(doc(db, "usuarios", user.uid));
+                if (snap.exists()) minhasComus = snap.data().comunidades || [];
 
+                ouvirFofocas(user.displayName);
                 carregarFeed();
-                carregarMiniAmigos();
             } else { window.location.href = "index.html"; }
         });
 
+        // ESCUTA SE ALGUÉM TE MARCOU (O Gatilho!)
+        function ouvirFofocas(meuNome) {
+            const q = query(collection(db, "notificacoes"), orderBy("data", "desc"));
+            onSnapshot(q, (snap) => {
+                snap.forEach(d => {
+                    const n = d.data();
+                    if (n.para === meuNome) {
+                        document.getElementById('gavetaFofoca').style.display = 'block';
+                        document.getElementById('msgFofoca').innerText = n.mensagem;
+                    }
+                });
+            });
+        }
+
         function carregarFeed() {
             const q = query(collection(db, "posts"), orderBy("data", "desc"));
-            onSnapshot(q, (snapshot) => {
+            onSnapshot(q, (snap) => {
                 const feed = document.getElementById('feedHibrido');
                 feed.innerHTML = "";
-
-                snapshot.forEach((docSnap) => {
-                    const post = docSnap.data();
-                    const souMembro = post.comunidadeId ? minhasInscricoes.includes(post.comunidadeId) : true;
+                snap.forEach(d => {
+                    const p = d.data();
+                    const souMembro = p.comunidadeId ? minhasComus.includes(p.comunidadeId) : true;
 
                     feed.insertAdjacentHTML('beforeend', `
                         <div class="post-card">
-                            ${post.comunidadeNome ? `<span class="tag-comunidade">${post.comunidadeNome}</span>` : ''}
-                            <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 10px;">
-                                <img src="${post.fotoAutor}" style="width: 25px; height: 25px; border-radius: 8px;">
-                                <strong style="font-size: 0.85rem; color: var(--roxo);">${post.autor}</strong>
-                            </div>
-                            
+                            <strong style="font-size: 0.8rem; color: var(--roxo);">${p.autor}</strong>
                             <div class="${souMembro ? '' : 'blur-content'}">
-                                <div style="font-size: 0.9rem; line-height: 1.5;">${post.texto.substring(0, 100)}...</div>
+                                <p style="font-size: 0.9rem;">${p.texto}</p>
                             </div>
-
-                            ${!souMembro ? `
-                                <div class="lock-overlay">
-                                    <span style="font-size: 0.8rem; font-weight: 700; color: #666;">Conteúdo exclusivo para membros</span>
-                                    <button class="btn-entrar" onclick="window.location.href='grupos.html?id=${post.comunidadeId}'">Participar da Comunidade</button>
-                                </div>
-                            ` : `
-                                <a href="discussao.html?id=${docSnap.id}" style="color: var(--roxo); font-size: 0.75rem; font-weight: 700; text-decoration: none; display: block; margin-top: 10px;">LER TUDO →</a>
-                            `}
+                            ${!souMembro ? `<div class="lock-overlay"><span>🔒 Conteúdo para membros</span></div>` : ''}
                         </div>
                     `);
                 });
             });
         }
 
-        function carregarMiniAmigos() {
-            const grid = document.getElementById('listaAmigosMini');
-            // Aqui você buscaria na coleção "amigos", mas vamos simular 6 fotos para o visual Orkut
-            for (let i = 0; i < 6; i++) {
-                grid.innerHTML += `<img src="https://i.pravatar.cc/100?u=${i}" class="amigo-mini">`;
+        document.getElementById('btnPostar').onclick = async () => {
+            const campo = document.getElementById('campoPost');
+            const texto = campo.innerText;
+            if (!texto.trim()) return;
+
+            // LÓGICA DA MARCAÇÃO @
+            const match = texto.match(/@(\w+)/);
+            if (match) {
+                await addDoc(collection(db, "notificacoes"), {
+                    para: match[1],
+                    mensagem: `${auth.currentUser.displayName} te marcou em um post!`,
+                    data: serverTimestamp()
+                });
             }
-        }
+
+            await addDoc(collection(db, "posts"), {
+                texto: texto,
+                autor: auth.currentUser.displayName,
+                fotoAutor: auth.currentUser.photoURL,
+                autorId: auth.currentUser.uid,
+                data: serverTimestamp()
+            });
+            campo.innerText = "";
+        };
     </script>
 </body>
 
