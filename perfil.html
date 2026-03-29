@@ -5,79 +5,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Líberi - Meu Perfil</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Poppins:wght@400;500&family=Sora:wght@600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=Poppins:wght@400;500;600&display=swap"
         rel="stylesheet">
-
     <style>
         :root {
-            --roxo-principal: #6C5CE7;
-            --bg-lavanda: #F0EEFF;
+            --roxo: #6C5CE7;
+            --bg: #F0EEFF;
             --branco: #FFFFFF;
-            --cinza-texto: #4A4A4A;
-            --roxo-claro: #A29BFE;
         }
 
         body {
             font-family: 'Poppins', sans-serif;
+            background: var(--bg);
             margin: 0;
-            background-color: var(--bg-lavanda);
-            color: var(--cinza-texto);
-        }
-
-        header {
-            background-color: var(--roxo-principal);
-            padding: 15px 5%;
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            color: #4A4A4A;
         }
 
         .container-perfil {
             max-width: 600px;
             margin: 40px auto;
-            padding: 0 20px;
+            padding: 20px;
         }
 
         .card-perfil {
             background: var(--branco);
             padding: 40px;
             border-radius: 30px;
-            box-shadow: 0 15px 40px rgba(108, 92, 231, 0.1);
             text-align: center;
-            position: relative;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
         }
 
-        /* FOTO DE PERFIL / AVATAR */
-        .avatar-grande {
+        .foto-perfil {
             width: 120px;
             height: 120px;
-            background: linear-gradient(135deg, var(--roxo-principal), var(--roxo-claro));
             border-radius: 40px;
-            margin: -80px auto 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 3rem;
-            font-weight: 800;
-            box-shadow: 0 10px 25px rgba(108, 92, 231, 0.3);
-            border: 5px solid var(--branco);
+            background: #EEE;
+            margin: 0 auto 20px;
+            border: 5px solid #EBE8FF;
+            object-fit: cover;
         }
 
         h2 {
             font-family: 'Plus Jakarta Sans';
-            color: var(--roxo-principal);
-            margin: 10px 0 5px;
+            color: var(--roxo);
+            margin: 10px 0;
         }
 
-        .email-user {
-            color: #999;
-            font-size: 0.9rem;
+        .bio {
+            color: #777;
+            font-size: 0.95rem;
+            line-height: 1.5;
             margin-bottom: 25px;
         }
 
@@ -85,160 +63,83 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
-            margin: 25px 0;
+            margin-bottom: 30px;
         }
 
-        .stat-box {
-            background: var(--bg-lavanda);
+        .stat-item {
+            background: #F8F7FF;
             padding: 15px;
-            border-radius: 18px;
+            border-radius: 20px;
+            border: 1px solid #EEE;
         }
 
-        .stat-box strong {
+        .stat-item strong {
             display: block;
-            color: var(--roxo-principal);
-            font-size: 1.2rem;
+            font-size: 1.4rem;
+            color: var(--roxo);
         }
 
-        .stat-box span {
-            font-size: 0.75rem;
-            color: #777;
-        }
-
-        .bio-area {
-            text-align: left;
-            margin-top: 30px;
-            border-top: 1px solid #eee;
-            padding-top: 25px;
-        }
-
-        label {
-            font-family: 'Sora';
+        .stat-item span {
             font-size: 0.8rem;
-            color: var(--roxo-principal);
+            color: #999;
+            text-transform: uppercase;
         }
 
-        textarea {
-            width: 100%;
-            border: 1px solid #f0eeff;
-            background: #fafaff;
-            border-radius: 15px;
-            padding: 15px;
-            font-family: 'Poppins';
-            margin-top: 8px;
-            resize: none;
-            box-sizing: border-box;
-        }
-
-        .botao {
-            background: var(--roxo-principal);
+        .btn-editar {
+            background: var(--roxo);
             color: white;
-            padding: 14px 30px;
-            border-radius: 15px;
             border: none;
-            font-family: 'Sora';
+            padding: 12px 25px;
+            border-radius: 15px;
             cursor: pointer;
+            font-weight: 600;
             width: 100%;
-            margin-top: 20px;
             transition: 0.3s;
-        }
-
-        .botao:hover {
-            background: #5649c0;
-            transform: translateY(-2px);
-        }
-
-        .link-voltar {
-            display: inline-block;
-            margin-top: 25px;
-            color: #aaa;
-            text-decoration: none;
-            font-size: 0.85rem;
         }
     </style>
 </head>
 
 <body>
 
+    <script type="module" src="menu.js"></script>
+
     <div class="container-perfil">
-
         <div class="card-perfil">
-            <div class="avatar-grande" id="userAvatar">A</div>
-
+            <img id="userFoto" src="" alt="Foto" class="foto-perfil">
             <h2 id="userName">Carregando...</h2>
-            <p class="email-user" id="userEmail">email@exemplo.com</p>
+            <p class="bio" id="userBio">Acreditando no poder da coletividade para educar e crescer. Pai, parceiro e
+                eterno aprendiz da jornada que é criar raízes e asas para os nossos filhos. 🌿✨</p>
 
             <div class="stats-grid">
-                <div class="stat-box">
-                    <strong id="countPost">0</strong>
-                    <span>Postagens Criadas</span>
+                <div class="stat-item">
+                    <strong id="countTopicos">0</strong>
+                    <span>Tópicos Criados</span>
                 </div>
-                <div class="stat-box">
-                    <strong id="countResp">0</strong>
-                    <span>Comentários Feitos</span>
+                <div class="stat-item">
+                    <strong id="countComentarios">0</strong>
+                    <span>Respostas dadas</span>
                 </div>
             </div>
 
-            <div class="bio-area">
-                <label>Sobre Mim</label>
-                <textarea id="userBio" rows="3" placeholder="Escreva uma breve biografia..."></textarea>
-                <button class="botao" id="btnSalvarBio">Salvar Alterações</button>
-            </div>
-
-            <a href="dashboard.html" class="link-voltar">← Voltar para o Início</a>
+            <button class="btn-editar" onclick="alert('Funcionalidade de edição em breve!')">Editar Perfil</button>
         </div>
-
     </div>
 
     <script type="module">
-        import { auth, db } from "./liberi.js";
-        import { doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-        import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { db, auth } from "./liberi.js";
+        import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
         onAuthStateChanged(auth, async (user) => {
             if (user) {
-                // Preenche dados básicos do Auth
-                const nome = user.displayName || "Mãe Líberi";
-                document.getElementById('userName').innerText = nome;
-                document.getElementById('userEmail').innerText = user.email;
-                document.getElementById('userAvatar').innerText = nome.charAt(0).toUpperCase();
-
-                // Busca Bio e Stats no Firestore
-                const userRef = doc(db, "usuarios", user.uid);
-                const snap = await getDoc(userRef);
-
-                if (snap.exists()) {
-                    const dados = snap.data();
-                    document.getElementById('userBio').value = dados.bio || "";
-                    document.getElementById('countPost').innerText = dados.posts || 0;
-                    document.getElementById('countResp').innerText = dados.respostas || 0;
-                }
+                document.getElementById('userName').innerText = user.displayName;
+                document.getElementById('userFoto').src = user.photoURL;
+                // No futuro aqui buscaremos as estatísticas reais no Firestore
             } else {
                 window.location.href = "index.html";
             }
         });
-
-        // Salvar Bio
-        document.getElementById('btnSalvarBio').onclick = async () => {
-            const user = auth.currentUser;
-            const bioTxt = document.getElementById('userBio').value;
-
-            if (user) {
-                await setDoc(doc(db, "usuarios", user.uid), {
-                    bio: bioTxt
-                }, { merge: true }); // Merge garante que não apaguemos os stats ao salvar a bio
-                alert("Perfil atualizado com carinho! ✨");
-            }
-        };
-
-        // Função de Logout
-        window.fazerLogout = () => {
-            signOut(auth).then(() => {
-                window.location.href = "index.html";
-            });
-        };
     </script>
-    <script src="menu.js"></script>
 </body>
 
 </html>
