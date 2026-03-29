@@ -4,64 +4,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Líberi - Conversa</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <title>Líberi - Comentários</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=Poppins:wght@400;500;600&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --roxo: #6C5CE7;
             --bg: #F0EEFF;
+            --card: #FFFFFF;
         }
 
         body {
             font-family: 'Poppins', sans-serif;
             background: var(--bg);
             margin: 0;
-            padding: 20px;
+            color: #4A4A4A;
         }
 
-        .container {
+        .container-discussao {
             max-width: 700px;
-            margin: 0 auto;
+            margin: 30px auto;
+            padding: 0 20px;
         }
 
-        .card-post {
-            background: white;
-            padding: 25px;
-            border-radius: 25px;
+        /* POST EM DESTAQUE */
+        .card-post-foco {
+            background: var(--card);
+            padding: 30px;
+            border-radius: 30px;
             border-left: 8px solid var(--roxo);
-            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            margin-bottom: 25px;
         }
 
-        .card-comentario {
-            background: white;
-            padding: 15px;
+        .autor-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .foto-autor {
+            width: 45px;
+            height: 45px;
             border-radius: 15px;
-            margin-bottom: 10px;
+            object-fit: cover;
         }
 
-        .area-responder {
+        .nome-autor {
+            font-weight: 600;
+            color: var(--roxo);
+        }
+
+        /* LISTA DE COMENTÁRIOS */
+        .card-comentario {
             background: white;
             padding: 20px;
             border-radius: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.02);
+        }
+
+        .btn-excluir {
+            background: none;
+            border: none;
+            color: #ff4757;
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* CAMPO DE RESPOSTA */
+        .area-comentar {
+            background: white;
+            padding: 20px;
+            border-radius: 25px;
+            margin-top: 30px;
             display: flex;
             flex-direction: column;
+            gap: 10px;
         }
 
         textarea {
+            width: 100%;
             border: none;
             background: #F8F7FF;
-            padding: 15px;
             border-radius: 15px;
+            padding: 15px;
+            font-family: 'Poppins';
             resize: none;
-            margin-bottom: 10px;
+            outline: none;
+            box-sizing: border-box;
         }
 
-        .btn {
+        .btn-enviar {
             background: var(--roxo);
             color: white;
             border: none;
-            padding: 10px;
-            border-radius: 10px;
+            padding: 12px 25px;
+            border-radius: 15px;
+            font-weight: 600;
             cursor: pointer;
             align-self: flex-end;
         }
@@ -69,63 +113,109 @@
 </head>
 
 <body>
-    <div class="container">
-        <a href="dashboard.html" style="text-decoration:none; color:var(--roxo)">← Voltar</a>
-        <div id="postOriginal" class="card-post">Carregando...</div>
-        <div id="listaComentarios"></div>
-        <div class="area-responder">
-            <textarea id="textoResposta" placeholder="Dê seu apoio..."></textarea>
-            <button id="btnResponder" class="btn">Responder ✨</button>
+
+    <script type="module" src="menu.js"></script>
+
+    <main class="container-discussao">
+        <a href="dashboard.html" style="text-decoration: none; color: var(--roxo); font-weight: 600;">← Voltar para o
+            Feed</a>
+
+        <div id="postPrincipal" class="card-post-foco">
+            <p>Carregando publicação...</p>
         </div>
-    </div>
+
+        <section>
+            <h3 style="font-family: 'Plus Jakarta Sans'; color: var(--roxo);">Comentários</h3>
+            <div id="listaComentarios"></div>
+        </section>
+
+        <div class="area-comentar">
+            <textarea id="textoComentario" placeholder="Escreva um comentário carinhoso..."></textarea>
+            <button id="btnEnviarComentario" class="btn-enviar">Publicar Comentário ✨</button>
+        </div>
+    </main>
 
     <script type="module">
         import { db, auth } from "./liberi.js";
         import { doc, getDoc, collection, addDoc, query, where, orderBy, onSnapshot, serverTimestamp, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-        const topicoId = new URLSearchParams(window.location.search).get('id');
+        const urlParams = new URLSearchParams(window.location.search);
+        const postId = urlParams.get('id');
 
-        async function carregarPost() {
-            const snap = await getDoc(doc(db, "topicos", topicoId));
-            if (snap.exists()) {
-                const p = snap.data();
-                document.getElementById('postOriginal').innerHTML = `<strong>${p.autor}</strong><p>${p.texto}</p>`;
+        onAuthStateChanged(auth, (user) => {
+            if (user && postId) {
+                carregarPostInfo();
+                carregarComentarios();
+            } else if (!postId) {
+                window.location.href = "dashboard.html";
+            }
+        });
+
+        async function carregarPostInfo() {
+            const docRef = doc(db, "posts", postId);
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                const post = docSnap.data();
+                document.getElementById('postPrincipal').innerHTML = `
+                    <div class="autor-info">
+                        <img src="${post.fotoAutor}" class="foto-autor">
+                        <span class="nome-autor">${post.autor}</span>
+                    </div>
+                    <p style="font-size: 1.1rem; margin:0;">${post.texto}</p>
+                `;
             }
         }
 
         function carregarComentarios() {
-            const q = query(collection(db, "comentarios"), where("topicoId", "==", topicoId), orderBy("data", "asc"));
-            onSnapshot(q, (snap) => {
+            const q = query(collection(db, "comentarios"), where("postId", "==", postId), orderBy("data", "asc"));
+            onSnapshot(q, (snapshot) => {
                 const lista = document.getElementById('listaComentarios');
-                lista.innerHTML = "";
-                snap.forEach(d => {
-                    const c = d.data();
-                    const eDono = auth.currentUser && c.autorId === auth.currentUser.uid;
+                const user = auth.currentUser;
+                lista.innerHTML = snapshot.empty ? "<p style='color:#999'>Seja a primeira a comentar!</p>" : "";
+
+                snapshot.forEach(docSnap => {
+                    const c = docSnap.data();
+                    const idC = docSnap.id;
+                    const eDono = user && (c.autorId === user.uid || user.email === "SEU_EMAIL_AQUI@gmail.com");
+
                     lista.insertAdjacentHTML('beforeend', `
                         <div class="card-comentario">
-                            <div style="display:flex; justify-content:space-between">
-                                <strong>${c.autor}</strong>
-                                ${eDono ? `<button onclick="window.apagarComent('${d.id}')" style="border:none; background:none; cursor:pointer">🗑️</button>` : ''}
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div class="autor-info" style="margin-bottom: 5px;">
+                                    <img src="${c.fotoAutor}" class="foto-autor" style="width:30px; height:30px; border-radius: 10px;">
+                                    <span class="nome-autor" style="font-size:0.85rem">${c.autor}</span>
+                                </div>
+                                ${eDono ? `<button onclick="window.excluirItem('${idC}')" class="btn-excluir">🗑️</button>` : ''}
                             </div>
-                            <p>${c.texto}</p>
-                        </div>`);
+                            <p style="margin:5px 0 0 0; font-size: 0.95rem;">${c.texto}</p>
+                        </div>
+                    `);
                 });
             });
         }
 
-        window.apagarComent = async (id) => { if (confirm("Apagar?")) await deleteDoc(doc(db, "comentarios", id)); };
+        window.excluirItem = async (id) => {
+            if (confirm("Apagar este comentário?")) {
+                await deleteDoc(doc(db, "comentarios", id));
+            }
+        };
 
-        document.getElementById('btnResponder').onclick = async () => {
-            const campo = document.getElementById('textoResposta');
-            if (!campo.value) return;
+        document.getElementById('btnEnviarComentario').onclick = async () => {
+            const campo = document.getElementById('textoComentario');
+            const user = auth.currentUser;
+            if (!campo.value.trim()) return;
+
             await addDoc(collection(db, "comentarios"), {
-                topicoId, texto: campo.value, autor: auth.currentUser.displayName,
-                autorId: auth.currentUser.uid, fotoAutor: auth.currentUser.photoURL, data: serverTimestamp()
+                postId: postId,
+                texto: campo.value,
+                autor: user.displayName,
+                fotoAutor: user.photoURL,
+                autorId: user.uid,
+                data: serverTimestamp()
             });
             campo.value = "";
         };
-
-        carregarPost(); carregarComentarios();
     </script>
 </body>
 

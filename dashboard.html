@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Líberi - Vila de Apoio</title>
+    <title>Líberi - Dashboard</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=Poppins:wght@400;500;600&display=swap"
         rel="stylesheet">
@@ -22,7 +22,7 @@
             color: #4A4A4A;
         }
 
-        .layout-vila {
+        .layout-geral {
             display: grid;
             grid-template-columns: 280px 1fr 300px;
             gap: 25px;
@@ -83,19 +83,12 @@
             float: right;
         }
 
-        .post-real {
+        .post-card {
             border-left: 5px solid var(--roxo);
             padding: 20px;
             margin-bottom: 20px;
             background: white;
             border-radius: 20px;
-        }
-
-        .link-discussao {
-            color: var(--roxo);
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 0.9rem;
         }
 
         .btn-excluir {
@@ -106,12 +99,19 @@
             font-size: 0.8rem;
             font-weight: 600;
         }
+
+        .link-comentarios {
+            color: var(--roxo);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 
 <body>
     <script type="module" src="menu.js"></script>
-    <main class="layout-vila">
+    <main class="layout-geral">
         <aside>
             <div class="card" style="text-align: center;">
                 <img id="userFoto" src="" class="foto-perfil">
@@ -119,26 +119,25 @@
                 <button class="card" style="width: 100%; cursor: pointer; border: none;"
                     onclick="window.location.href='perfil.html'">👤 Meu Perfil</button>
                 <button class="card" style="width: 100%; cursor: pointer; border: none;"
-                    onclick="window.location.href='recados.html'">📬 Meus Recados</button>
+                    onclick="window.location.href='amigos.html'">🤝 Amigos</button>
             </div>
         </aside>
 
         <section>
             <div class="card">
-                <h2 style="font-family: 'Plus Jakarta Sans'; color: var(--roxo); margin-top:0;">O que está na sua
-                    cabeça?</h2>
-                <textarea id="campoNeura" placeholder="Compartilhe sua neura do dia..."></textarea>
-                <button id="btnPostarNeura" class="btn-postar">Postar Neura →</button>
+                <h2 style="font-family: 'Plus Jakarta Sans'; color: var(--roxo); margin-top:0;">Criar Postagem</h2>
+                <textarea id="campoPost" placeholder="O que você quer compartilhar com a comunidade?"></textarea>
+                <button id="btnPostar" class="btn-postar">Publicar Post →</button>
                 <div style="clear: both;"></div>
             </div>
-            <div id="feedReal"></div>
+            <div id="feedPosts"></div>
         </section>
 
         <aside>
             <div class="card">
-                <h3 style="font-family: 'Plus Jakarta Sans'; color: var(--roxo);">🔍 Explorar</h3>
-                <a href="comunidades.html" style="color: #6C5CE7; text-decoration: none; font-weight: 600;">Ver todas as
-                    vilas →</a>
+                <h3 style="font-family: 'Plus Jakarta Sans'; color: var(--roxo);">🔍 Comunidades</h3>
+                <a href="comunidades.html" style="color: #6C5CE7; text-decoration: none; font-weight: 600;">Explorar
+                    Comunidades →</a>
             </div>
         </aside>
     </main>
@@ -157,41 +156,39 @@
         });
 
         function carregarFeed() {
-            const q = query(collection(db, "topicos"), orderBy("data", "desc"));
+            const q = query(collection(db, "posts"), orderBy("data", "desc"));
             onSnapshot(q, (snapshot) => {
-                const feed = document.getElementById('feedReal');
+                const feed = document.getElementById('feedPosts');
                 feed.innerHTML = "";
-                const user = auth.currentUser;
-
                 snapshot.forEach((docSnap) => {
                     const post = docSnap.data();
                     const id = docSnap.id;
-                    const eDono = user && (post.autorId === user.uid || user.email === "ANDREA_ADMIN@gmail.com");
+                    const eDono = auth.currentUser && (post.autorId === auth.currentUser.uid || auth.currentUser.email === "ANDREA_ADMIN@gmail.com");
 
                     feed.insertAdjacentHTML('beforeend', `
-                        <div class="post-real card">
+                        <div class="post-card card">
                             <div style="display: flex; justify-content: space-between;">
-                                <div style="display: flex; align-items: center; gap: 10px;">
+                                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
                                     <img src="${post.fotoAutor}" style="width: 30px; height: 30px; border-radius: 10px;">
                                     <strong style="color: #6C5CE7;">${post.autor}</strong>
                                 </div>
-                                ${eDono ? `<button onclick="window.excluirItem('${id}', 'topicos')" class="btn-excluir">🗑️</button>` : ''}
+                                ${eDono ? `<button onclick="window.excluirPost('${id}')" class="btn-excluir">🗑️ Excluir</button>` : ''}
                             </div>
                             <p>${post.texto}</p>
-                            <a href="discussao.html?id=${id}" class="link-discussao">💬 Ver discussão</a>
+                            <a href="discussao.html?id=${id}" class="link-comentarios">💬 Ver comentários</a>
                         </div>`);
                 });
             });
         }
 
-        window.excluirItem = async (id, col) => {
-            if (confirm("Apagar postagem?")) await deleteDoc(doc(db, col, id));
+        window.excluirPost = async (id) => {
+            if (confirm("Deseja apagar este post permanentemente?")) await deleteDoc(doc(db, "posts", id));
         };
 
-        document.getElementById('btnPostarNeura').onclick = async () => {
-            const campo = document.getElementById('campoNeura');
-            if (!campo.value) return;
-            await addDoc(collection(db, "topicos"), {
+        document.getElementById('btnPostar').onclick = async () => {
+            const campo = document.getElementById('campoPost');
+            if (!campo.value.trim()) return;
+            await addDoc(collection(db, "posts"), {
                 texto: campo.value, autor: auth.currentUser.displayName,
                 fotoAutor: auth.currentUser.photoURL, autorId: auth.currentUser.uid,
                 data: serverTimestamp()

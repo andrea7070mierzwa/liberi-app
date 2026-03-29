@@ -4,62 +4,119 @@
 <head>
     <meta charset="UTF-8">
     <title>Líberi - Perfil</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=Poppins:wght@400;600&display=swap"
+        rel="stylesheet">
     <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: #F0EEFF;
-            display: flex;
-            justify-content: center;
-            padding-top: 50px;
+        :root {
+            --roxo: #6C5CE7;
+            --bg: #F0EEFF;
         }
 
-        .card {
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .card-perfil {
             background: white;
             padding: 40px;
             border-radius: 30px;
             text-align: center;
-            max-width: 400px;
+            max-width: 450px;
+            width: 100%;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
         }
 
-        .foto {
-            width: 120px;
-            height: 120px;
-            border-radius: 40px;
+        .foto-grande {
+            width: 130px;
+            height: 130px;
+            border-radius: 45px;
             border: 5px solid #EBE8FF;
             object-fit: cover;
+            margin-bottom: 20px;
         }
 
         h2 {
-            color: #6C5CE7;
+            font-family: 'Plus Jakarta Sans';
+            color: var(--roxo);
+            margin-bottom: 10px;
         }
 
         .bio {
-            color: #777;
-            font-size: 0.9rem;
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            background: #F8F7FF;
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+        }
+
+        .stat-box strong {
+            display: block;
+            color: var(--roxo);
+            font-size: 1.2rem;
+        }
+
+        .stat-box span {
+            font-size: 0.8rem;
+            color: #999;
+        }
+
+        .btn-voltar {
+            background: var(--roxo);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
         }
     </style>
 </head>
 
 <body>
-    <div class="card">
-        <img id="uFoto" src="" class="foto">
-        <h2 id="uNome">...</h2>
-        <p class="bio">Acreditando no poder da coletividade para educar e crescer. Pai, parceiro e aprendiz. 🌿</p>
-        <button onclick="window.location.href='dashboard.html'"
-            style="background:#6C5CE7; color:white; border:none; padding:10px 20px; border-radius:10px; cursor:pointer">Voltar
-            para a Vila</button>
+    <div class="card-perfil">
+        <img id="pFoto" src="" class="foto-grande">
+        <h2 id="pNome">...</h2>
+        <p class="bio" id="pBio">Carregando informações do membro...</p>
+
+        <div class="stats">
+            <div class="stat-box">
+                <strong id="pPosts">0</strong>
+                <span>Posts</span>
+            </div>
+            <div class="stat-box">
+                <strong id="pComent">0</strong>
+                <span>Comentários</span>
+            </div>
+        </div>
+
+        <button class="btn-voltar" onclick="window.location.href='dashboard.html'">Voltar ao Feed</button>
     </div>
 
     <script type="module">
         import { auth } from "./liberi.js";
         import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                document.getElementById('uNome').innerText = user.displayName;
-                document.getElementById('uFoto').src = user.photoURL;
-            }
+                document.getElementById('pNome').innerText = user.displayName;
+                document.getElementById('pFoto').src = user.photoURL;
+                document.getElementById('pBio').innerText = "Membro dedicado da comunidade Líberi, compartilhando experiências sobre a jornada parental.";
+            } else { window.location.href = "index.html"; }
         });
     </script>
 </body>
