@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Líberi - Membros da Vila</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=Poppins:wght@400;500;600&display=swap"
         rel="stylesheet">
@@ -24,75 +23,90 @@
         }
 
         .container-amigos {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 40px auto;
             padding: 0 20px;
         }
 
-        h1 {
+        .cabecalho {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .cabecalho h1 {
             font-family: 'Plus Jakarta Sans';
             color: var(--roxo);
-            margin-bottom: 30px;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .cabecalho p {
+            color: #777;
+            font-size: 1.1rem;
         }
 
         .grid-amigos {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 25px;
         }
 
-        /* CARD DE AMIGO */
+        /* CARD DO VIZINHO */
         .card-amigo {
             background: var(--card);
-            padding: 25px;
-            border-radius: 25px;
+            padding: 30px;
+            border-radius: 30px;
             text-align: center;
-            box-shadow: 0 10px 25px rgba(108, 92, 231, 0.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
             transition: 0.3s;
+            border: 2px solid transparent;
         }
 
         .card-amigo:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px);
+            border-color: var(--roxo);
+            box-shadow: 0 15px 35px rgba(108, 92, 231, 0.1);
         }
 
         .foto-amigo {
-            width: 80px;
-            height: 80px;
+            width: 90px;
+            height: 90px;
             border-radius: 30px;
-            margin-bottom: 15px;
             object-fit: cover;
-            border: 3px solid #EBE8FF;
+            margin-bottom: 15px;
+            border: 3px solid #F0EEFF;
         }
 
         .nome-amigo {
-            font-weight: 600;
-            color: var(--roxo);
             display: block;
+            font-family: 'Plus Jakarta Sans';
+            font-weight: 700;
+            color: var(--roxo);
+            font-size: 1.1rem;
             margin-bottom: 15px;
         }
 
         .btn-conectar {
-            background: #EBE8FF;
-            color: var(--roxo);
+            background: var(--roxo);
+            color: white;
             border: none;
-            padding: 8px 15px;
+            padding: 10px 20px;
             border-radius: 12px;
             font-weight: 600;
             cursor: pointer;
-            font-size: 0.85rem;
             width: 100%;
+            transition: 0.3s;
         }
 
         .btn-conectar:hover {
-            background: var(--roxo);
-            color: white;
+            background: #5649c0;
         }
 
         .vazio {
-            grid-column: 1 / -1;
             text-align: center;
             padding: 50px;
-            color: #888;
+            color: #999;
+            grid-column: 1 / -1;
         }
     </style>
 </head>
@@ -102,16 +116,19 @@
     <script type="module" src="menu.js"></script>
 
     <main class="container-amigos">
-        <h1>🤝 Membros da Vila</h1>
+        <div class="cabecalho">
+            <h1>Membros da Vila</h1>
+            <p>Conheça outras famílias que estão na mesma jornada que você. ✨</p>
+        </div>
 
-        <div id="gridAmigos" class="grid-amigos">
-            <div class="vazio">Buscando vizinhos...</div>
+        <div class="grid-amigos" id="gridAmigos">
+            <p style="text-align: center; grid-column: 1/-1;">Buscando vizinhos...</p>
         </div>
     </main>
 
     <script type="module">
         import { db, auth } from "./liberi.js";
-        import { collection, query, onSnapshot, where } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { collection, query, where, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
         onAuthStateChanged(auth, (user) => {
@@ -125,29 +142,42 @@
         function carregarMembros(meuId) {
             const grid = document.getElementById('gridAmigos');
 
-            // Busca todos os usuários cadastrados (menos você mesmo)
+            // Busca todos os usuários, exceto você mesmo
             const q = query(collection(db, "usuarios"), where("__name__", "!=", meuId));
 
             onSnapshot(q, (snapshot) => {
                 if (snapshot.empty) {
-                    grid.innerHTML = "<div class='vazio'>Você é o primeiro morador desta vila! 🌱</div>";
+                    grid.innerHTML = `
+                        <div class="vazio">
+                            <h3 style="color: var(--roxo)">A Vila ainda está crescendo!</h3>
+                            <p>Convide outros pais para fazerem parte dessa rede.</p>
+                        </div>`;
                     return;
                 }
 
                 grid.innerHTML = "";
-                snapshot.forEach((doc) => {
-                    const amigo = doc.data();
+                snapshot.forEach((docSnap) => {
+                    const amigo = docSnap.data();
+                    const idAmigo = docSnap.id;
+
                     const html = `
                         <div class="card-amigo">
-                            <img src="${amigo.foto || 'https://via.placeholder.com/80'}" class="foto-amigo">
+                            <img src="${amigo.foto || 'https://via.placeholder.com/90'}" class="foto-amigo">
                             <span class="nome-amigo">${amigo.nome}</span>
-                            <button class="btn-conectar" onclick="alert('Pedido de amizade enviado!')">Conectar</button>
+                            <button class="btn-conectar" onclick="conectarAmigo('${idAmigo}', '${amigo.nome}')">
+                                👋 Dizer Oi
+                            </button>
                         </div>
                     `;
                     grid.insertAdjacentHTML('beforeend', html);
                 });
             });
         }
+
+        window.conectarAmigo = (id, nome) => {
+            alert(`Que legal! Enviamos um aceno para ${nome}. Em breve vocês poderão trocar recados diretos!`);
+            // Aqui futuramente criaremos uma notificação na coleção "notificacoes"
+        };
     </script>
 </body>
 

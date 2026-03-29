@@ -1,32 +1,43 @@
-// Este arquivo cria o menu automaticamente, mas ignora a página de login
 import { auth } from "./liberi.js";
-import { signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import {
+  onAuthStateChanged,
+  signOut,
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-// 1. Verifica se é a página de login (index.html)
-const ePaginaLogin =
-  window.location.pathname.endsWith("index.html") ||
-  window.location.pathname === "/liberi-app/";
+// O SEU E-MAIL DE ADMIN (Ajuste para o seu e-mail real do Google)
+const EMAIL_ADMIN = "andrea7070mierzwa@gmail.com";
 
-if (!ePaginaLogin) {
-  const menuHTML = `
-    <nav style="background: #6C5CE7; padding: 10px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000;">
-        <div style="display: flex; align-items: center; gap: 20px;">
-            <h1 style="font-family: 'Plus Jakarta Sans'; color: white; margin: 0; font-size: 1.4rem; cursor: pointer;" onclick="window.location.href='comunidades.html'">Líberi</h1>
-            <a href="comunidades.html" style="color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.9rem; font-weight: 500;">Comunidades</a>
-        </div>
+const menuHTML = `
+<nav style="background: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); font-family: 'Poppins', sans-serif;">
+    <div style="font-family: 'Plus Jakarta Sans'; font-weight: 800; color: #6C5CE7; font-size: 1.5rem; cursor:pointer;" onclick="window.location.href='dashboard.html'">Líberi</div>
+    
+    <div style="display: flex; gap: 20px; align-items: center;">
+        <a href="dashboard.html" style="text-decoration: none; color: #666; font-weight: 500;">Início</a>
+        <a href="comunidades.html" style="text-decoration: none; color: #666; font-weight: 500;">Comunidades</a>
+        <a href="amigos.html" style="text-decoration: none; color: #666; font-weight: 500;">Vila</a>
+        <a href="recados.html" style="text-decoration: none; color: #666; font-weight: 500;">Recados</a>
         
-        <div style="display: flex; align-items: center; gap: 15px;">
-            <a href="perfil.html" style="background: rgba(255,255,255,0.15); color: white; padding: 8px 18px; border-radius: 12px; text-decoration: none; font-size: 0.85rem; font-weight: 600; transition: 0.3s;">👤 Meu Perfil</a>
-            <button id="btnSair" style="background: none; border: 1px solid rgba(255,255,255,0.4); color: white; padding: 7px 12px; border-radius: 10px; cursor: pointer; font-size: 0.8rem;">Sair</button>
-        </div>
-    </nav>
-    `;
+        <a href="admin.html" id="linkAdmin" style="display: none; text-decoration: none; background: #ffeaa7; color: #d63031; padding: 5px 12px; border-radius: 8px; font-weight: 700; font-size: 0.8rem;">⚠️ ADM</a>
+        
+        <button id="btnSair" style="background: #f0eeff; border: none; color: #6C5CE7; padding: 8px 15px; border-radius: 10px; cursor: pointer; font-weight: 600;">Sair</button>
+    </div>
+</nav>
+`;
 
-  document.body.insertAdjacentHTML("afterbegin", menuHTML);
+// Insere o menu no topo da página
+document.body.insertAdjacentHTML("afterbegin", menuHTML);
 
-  document.getElementById("btnSair").onclick = () => {
-    if (confirm("Deseja sair da Líberi?")) {
-      signOut(auth).then(() => (window.location.href = "index.html"));
+// Lógica de verificação do usuário
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // Se o e-mail for o seu, mostra o botão de ADM
+    if (user.email === EMAIL_ADMIN) {
+      document.getElementById("linkAdmin").style.display = "block";
     }
-  };
-}
+  }
+});
+
+// Botão Sair
+document.getElementById("btnSair").onclick = () => {
+  signOut(auth).then(() => (window.location.href = "index.html"));
+};

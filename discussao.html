@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Líberi - Comentários</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=Poppins:wght@400;500;600&display=swap"
         rel="stylesheet">
@@ -24,12 +23,12 @@
         }
 
         .container-discussao {
-            max-width: 700px;
+            max-width: 750px;
             margin: 30px auto;
             padding: 0 20px;
         }
 
-        /* POST EM DESTAQUE */
+        /* POST EM DESTAQUE (PADRÃO LÍBERI) */
         .card-post-foco {
             background: var(--card);
             padding: 30px;
@@ -58,13 +57,18 @@
             color: var(--roxo);
         }
 
-        /* LISTA DE COMENTÁRIOS */
+        /* LISTA DE COMENTÁRIOS (COM CORES DO USUÁRIO) */
         .card-comentario {
             background: white;
             padding: 20px;
             border-radius: 20px;
             margin-bottom: 15px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.02);
+        }
+
+        .conteudo-coment {
+            line-height: 1.6;
+            word-wrap: break-word;
         }
 
         .btn-excluir {
@@ -76,27 +80,61 @@
             font-weight: 600;
         }
 
-        /* CAMPO DE RESPOSTA */
+        /* EDITOR DE RESPOSTA */
         .area-comentar {
             background: white;
             padding: 20px;
             border-radius: 25px;
             margin-top: 30px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
         }
 
-        textarea {
-            width: 100%;
+        .toolbar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            background: #f8f7ff;
+            padding: 10px;
+            border-radius: 15px;
+        }
+
+        .btn-tool {
+            background: white;
+            border: 1px solid #ddd;
+            padding: 4px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-family: 'Poppins';
+            font-size: 0.9rem;
+        }
+
+        .input-cor {
             border: none;
-            background: #F8F7FF;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            background: none;
+            padding: 0;
+        }
+
+        #textoComentario {
+            width: 100%;
+            border: 2px solid #f8f7ff;
+            background: #f8f7ff;
             border-radius: 15px;
             padding: 15px;
             font-family: 'Poppins';
-            resize: none;
+            min-height: 120px;
             outline: none;
             box-sizing: border-box;
+            overflow-y: auto;
+        }
+
+        #textoComentario:focus {
+            background: white;
+            border-color: var(--roxo);
         }
 
         .btn-enviar {
@@ -107,7 +145,8 @@
             border-radius: 15px;
             font-weight: 600;
             cursor: pointer;
-            align-self: flex-end;
+            margin-top: 15px;
+            float: right;
         }
     </style>
 </head>
@@ -117,21 +156,31 @@
     <script type="module" src="menu.js"></script>
 
     <main class="container-discussao">
-        <a href="dashboard.html" style="text-decoration: none; color: var(--roxo); font-weight: 600;">← Voltar para o
-            Feed</a>
+        <a href="dashboard.html"
+            style="text-decoration: none; color: var(--roxo); font-weight: 600; display: inline-block; margin-bottom: 20px;">←
+            Voltar ao Feed</a>
 
         <div id="postPrincipal" class="card-post-foco">
-            <p>Carregando publicação...</p>
+            <p>Carregando postagem...</p>
         </div>
 
         <section>
-            <h3 style="font-family: 'Plus Jakarta Sans'; color: var(--roxo);">Comentários</h3>
+            <h3 style="font-family: 'Plus Jakarta Sans'; color: var(--roxo); margin-left: 10px;">Comentários da
+                Comunidade</h3>
             <div id="listaComentarios"></div>
         </section>
 
         <div class="area-comentar">
-            <textarea id="textoComentario" placeholder="Escreva um comentário carinhoso..."></textarea>
-            <button id="btnEnviarComentario" class="btn-enviar">Publicar Comentário ✨</button>
+            <div class="toolbar">
+                <button class="btn-tool" onclick="formatar('bold')">B</button>
+                <button class="btn-tool" onclick="formatar('italic')">I</button>
+                <input type="color" class="input-cor" id="corComent" onchange="mudarCor(this.value)"
+                    title="Cor do texto">
+                <button class="btn-tool" onclick="inserirImagem()" style="margin-left: auto;">🖼️ Imagem</button>
+            </div>
+            <div id="textoComentario" contenteditable="true"></div>
+            <button id="btnEnviarComentario" class="btn-enviar">Responder ✨</button>
+            <div style="clear: both;"></div>
         </div>
     </main>
 
@@ -142,6 +191,14 @@
 
         const urlParams = new URLSearchParams(window.location.search);
         const postId = urlParams.get('id');
+
+        // Funções de Estilo
+        window.formatar = (cmd) => { document.execCommand(cmd, false, null); document.getElementById('textoComentario').focus(); };
+        window.mudarCor = (cor) => { document.execCommand('foreColor', false, cor); document.getElementById('textoComentario').focus(); };
+        window.inserirImagem = () => {
+            const url = prompt("Link da imagem:");
+            if (url) document.execCommand('insertImage', false, url);
+        };
 
         onAuthStateChanged(auth, (user) => {
             if (user && postId) {
@@ -162,7 +219,7 @@
                         <img src="${post.fotoAutor}" class="foto-autor">
                         <span class="nome-autor">${post.autor}</span>
                     </div>
-                    <p style="font-size: 1.1rem; margin:0;">${post.texto}</p>
+                    <div class="conteudo-coment" style="font-size: 1.1rem;">${post.texto}</div>
                 `;
             }
         }
@@ -171,50 +228,45 @@
             const q = query(collection(db, "comentarios"), where("postId", "==", postId), orderBy("data", "asc"));
             onSnapshot(q, (snapshot) => {
                 const lista = document.getElementById('listaComentarios');
-                const user = auth.currentUser;
-                lista.innerHTML = snapshot.empty ? "<p style='color:#999'>Seja a primeira a comentar!</p>" : "";
+                lista.innerHTML = snapshot.empty ? "<p style='padding: 20px; color:#999'>Nenhum comentário ainda. Comece a conversa! 🌱</p>" : "";
 
                 snapshot.forEach(docSnap => {
                     const c = docSnap.data();
-                    const idC = docSnap.id;
-                    const eDono = user && (c.autorId === user.uid || user.email === "SEU_EMAIL_AQUI@gmail.com");
+                    const eDono = auth.currentUser && (c.autorId === auth.currentUser.uid || auth.currentUser.email === "ANDREA_ADMIN@gmail.com");
 
                     lista.insertAdjacentHTML('beforeend', `
                         <div class="card-comentario">
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <div class="autor-info" style="margin-bottom: 5px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                <div class="autor-info" style="margin-bottom: 0;">
                                     <img src="${c.fotoAutor}" class="foto-autor" style="width:30px; height:30px; border-radius: 10px;">
                                     <span class="nome-autor" style="font-size:0.85rem">${c.autor}</span>
                                 </div>
-                                ${eDono ? `<button onclick="window.excluirItem('${idC}')" class="btn-excluir">🗑️</button>` : ''}
+                                ${eDono ? `<button onclick="window.excluirComent('${docSnap.id}')" class="btn-excluir">🗑️</button>` : ''}
                             </div>
-                            <p style="margin:5px 0 0 0; font-size: 0.95rem;">${c.texto}</p>
+                            <div class="conteudo-coment">${c.texto}</div>
                         </div>
                     `);
                 });
             });
         }
 
-        window.excluirItem = async (id) => {
-            if (confirm("Apagar este comentário?")) {
-                await deleteDoc(doc(db, "comentarios", id));
-            }
+        window.excluirComent = async (id) => {
+            if (confirm("Apagar comentário?")) await deleteDoc(doc(db, "comentarios", id));
         };
 
         document.getElementById('btnEnviarComentario').onclick = async () => {
             const campo = document.getElementById('textoComentario');
-            const user = auth.currentUser;
-            if (!campo.value.trim()) return;
+            if (!campo.innerHTML.trim() || campo.innerHTML === "<br>") return;
 
             await addDoc(collection(db, "comentarios"), {
                 postId: postId,
-                texto: campo.value,
-                autor: user.displayName,
-                fotoAutor: user.photoURL,
-                autorId: user.uid,
+                texto: campo.innerHTML,
+                autor: auth.currentUser.displayName,
+                fotoAutor: auth.currentUser.photoURL,
+                autorId: auth.currentUser.uid,
                 data: serverTimestamp()
             });
-            campo.value = "";
+            campo.innerHTML = "";
         };
     </script>
 </body>

@@ -4,10 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Líberi - Grupos da Comunidade</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <title>Líberi - Tópicos do Grupo</title>
     <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Poppins:wght@400;500&family=Sora:wght@600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Poppins:wght@400;500;600&display=swap"
         rel="stylesheet">
     <style>
         :root {
@@ -23,107 +22,56 @@
             color: #4A4A4A;
         }
 
-        header {
-            background: var(--roxo);
-            padding: 15px 5%;
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .layout-main {
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            max-width: 1200px;
+        .container {
+            max-width: 900px;
             margin: 30px auto;
-            gap: 30px;
             padding: 0 20px;
         }
 
-        /* BARRA LATERAL (GRUPOS) */
-        .sidebar {
-            background: var(--branco);
-            padding: 25px;
-            border-radius: 24px;
-            height: fit-content;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-        }
-
-        .item-grupo {
-            display: block;
-            padding: 12px;
-            margin-bottom: 8px;
-            border-radius: 12px;
-            text-decoration: none;
-            color: #666;
-            transition: 0.3s;
-        }
-
-        .item-grupo:hover,
-        .item-grupo.active {
-            background: var(--bg);
-            color: var(--roxo);
-            font-weight: 600;
-        }
-
-        /* ÁREA DE CONTEÚDO (FEED/ÍNDICE) */
-        .feed-container {
-            background: var(--branco);
-            padding: 35px;
-            border-radius: 28px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        th {
-            text-align: left;
-            padding: 15px;
-            border-bottom: 2px solid var(--bg);
-            color: var(--roxo);
-            font-family: 'Sora';
-            font-size: 0.9rem;
-        }
-
-        td {
-            padding: 15px;
-            border-bottom: 1px solid #f9f9f9;
-            font-size: 0.95rem;
-        }
-
-        .link-topico {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-        }
-
-        .link-topico:hover {
-            color: var(--roxo);
-        }
-
-        .btn-postar {
+        .cabecalho-grupo {
             background: var(--roxo);
             color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 14px;
-            cursor: pointer;
-            font-family: 'Sora';
-            font-weight: 600;
+            padding: 40px;
+            border-radius: 30px;
+            margin-bottom: 30px;
+        }
+
+        .cabecalho-grupo h1 {
+            font-family: 'Plus Jakarta Sans';
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        /* LISTA DE TÓPICOS */
+        .card-topico {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-decoration: none;
+            color: inherit;
             transition: 0.3s;
+            border-left: 6px solid transparent;
         }
 
-        .btn-postar:hover {
-            transform: scale(1.03);
-            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
+        .card-topico:hover {
+            border-left-color: var(--roxo);
+            transform: translateX(5px);
         }
 
-        /* MODAL SIMPLES */
+        .titulo-topico {
+            font-family: 'Plus Jakarta Sans';
+            font-weight: 700;
+            color: var(--roxo);
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        /* MODAL E EDITOR */
         .modal {
             display: none;
             position: fixed;
@@ -134,159 +82,203 @@
             background: rgba(0, 0, 0, 0.5);
             align-items: center;
             justify-content: center;
+            z-index: 1000;
         }
 
         .modal-content {
             background: white;
             padding: 30px;
-            border-radius: 20px;
+            border-radius: 30px;
             width: 90%;
-            max-width: 500px;
+            max-width: 600px;
         }
 
-        input,
-        textarea {
+        .input-padrao {
             width: 100%;
             padding: 12px;
-            margin: 10px 0;
-            border: 1px solid #ddd;
-            border-radius: 10px;
+            border: 2px solid #eee;
+            border-radius: 12px;
+            margin-bottom: 15px;
             font-family: 'Poppins';
             box-sizing: border-box;
+        }
+
+        .toolbar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            background: #f8f7ff;
+            padding: 10px;
+            border-radius: 12px;
+        }
+
+        .btn-tool {
+            background: white;
+            border: 1px solid #ddd;
+            padding: 5px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .input-cor {
+            border: none;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            background: none;
+        }
+
+        #editorTexto {
+            width: 100%;
+            border: 2px solid #eee;
+            border-radius: 15px;
+            padding: 15px;
+            min-height: 200px;
+            outline: none;
+            background: #fafafa;
+            box-sizing: border-box;
+        }
+
+        #editorTexto:focus {
+            border-color: var(--roxo);
+            background: white;
+        }
+
+        .btn-acao {
+            background: var(--roxo);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 15px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-add {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            background: var(--roxo);
+            color: white;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(108, 92, 231, 0.4);
         }
     </style>
 </head>
 
 <body>
 
-    <div class="layout-main">
-        <aside class="sidebar">
-            <h3 style="font-family: 'Plus Jakarta Sans'; font-size: 1.1rem; margin-top:0;">Grupos</h3>
-            <div id="listaGrupos">
-                <p style="font-size: 0.8rem; color: #999;">Carregando grupos...</p>
-            </div>
-        </aside>
+    <script type="module" src="menu.js"></script>
 
-        <main class="feed-container">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <h2 id="tituloGrupoAtual" style="font-family: 'Plus Jakarta Sans'; margin:0;">Início</h2>
-                <button class="btn-postar" onclick="abrirModal()">+ Nova Postagem</button>
-            </div>
+    <div class="container">
+        <div class="cabecalho-grupo">
+            <span id="nomeComunidade"
+                style="font-size: 0.9rem; opacity: 0.8; text-transform: uppercase;">Comunidade</span>
+            <h1 id="tituloGrupo">Carregando...</h1>
+        </div>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th width="60%">Tópico de Conversa</th>
-                        <th>Autora</th>
-                        <th style="text-align: center;">Respostas</th>
-                    </tr>
-                </thead>
-                <tbody id="corpoIndice">
-                </tbody>
-            </table>
-        </main>
+        <div id="listaTopicos"></div>
     </div>
 
-    <div id="modalPost" class="modal">
+    <button class="btn-add" onclick="abrirModal()">+</button>
+
+    <div class="modal" id="modalPost">
         <div class="modal-content">
-            <h3 style="font-family: 'Plus Jakarta Sans'; color: var(--roxo); margin-top:0;">Criar Nova Postagem</h3>
-            <input type="text" id="inputTitulo" placeholder="Título da conversa">
-            <textarea id="inputTexto" rows="5" placeholder="O que você quer compartilhar com o grupo?"></textarea>
-            <div style="display: flex; gap: 10px;">
-                <button class="btn-postar" id="btnSalvarPost" style="flex: 2;">Publicar</button>
-                <button class="btn-postar" onclick="fecharModal()" style="background:#ccc; flex: 1;">Cancelar</button>
+            <h2 style="font-family: 'Plus Jakarta Sans'; color: var(--roxo); margin-top: 0;">Novo Tópico</h2>
+
+            <input type="text" id="inputTitulo" class="input-padrao"
+                placeholder="Título do Tópico (Ficará no padrão Líberi)">
+
+            <div class="toolbar">
+                <button class="btn-tool" onclick="formatar('bold')">B</button>
+                <button class="btn-tool" onclick="formatar('italic')">I</button>
+                <input type="color" class="input-cor" id="corTexto" onchange="mudarCor(this.value)">
+                <button class="btn-tool" onclick="inserirImagem()" style="margin-left: auto;">🖼️ Imagem</button>
+            </div>
+
+            <div id="editorTexto" contenteditable="true"></div>
+
+            <div style="margin-top: 20px; display: flex; justify-content: flex-end; gap: 10px;">
+                <button class="btn-acao" style="background: #eee; color: #666;"
+                    onclick="fecharModal()">Cancelar</button>
+                <button class="btn-acao" id="btnPublicar">Publicar ✨</button>
             </div>
         </div>
     </div>
 
     <script type="module">
         import { db, auth } from "./liberi.js";
-        import { collection, addDoc, doc, getDoc, getDocs, query, orderBy, onSnapshot, updateDoc, increment, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-        // 1. Identificar onde estamos
-        const params = new URLSearchParams(window.location.search);
-        const idComu = params.get('comu') || 'maes40'; // Fallback para maes40 se der erro
+        const urlParams = new URLSearchParams(window.location.search);
+        const grupoId = urlParams.get('grupo');
 
-        // 2. Carregar Nome da Comunidade e Grupos
-        async function setupPagina() {
-            const comuSnap = await getDoc(doc(db, "comunidades", idComu));
-            if (comuSnap.exists()) {
-                document.getElementById('nomeComunidade').innerText = "Líberi - " + comuSnap.data().nome;
-            }
-
-            // Listar grupos (ex: Geral, Dicas, Desabafos)
-            const gruposSnap = await getDocs(collection(db, "comunidades", idComu, "grupos"));
-            const divGrupos = document.getElementById('listaGrupos');
-            divGrupos.innerHTML = "";
-
-            gruposSnap.forEach(gDoc => {
-                const g = gDoc.data();
-                divGrupos.innerHTML += `<a href="#" class="item-grupo" onclick="carregarTopicos('${gDoc.id}', '${g.nome}')">${g.nome}</a>`;
-            });
-
-            // Carrega o primeiro grupo por padrão (geralmente o 'geral')
-            carregarTopicos('geral', 'Início');
-        }
-
-        // 3. CARREGAR TÓPICOS (O Feed Dinâmico)
-        window.carregarTopicos = (idGrupo, nomeGrupo) => {
-            document.getElementById('tituloGrupoAtual').innerText = nomeGrupo;
-
-            const q = query(collection(db, `comunidades/${idComu}/grupos/${idGrupo}/topicos`), orderBy("data", "desc"));
-
-            onSnapshot(q, (snap) => {
-                const tabela = document.getElementById('corpoIndice');
-                tabela.innerHTML = "";
-                snap.forEach(tDoc => {
-                    const t = tDoc.data();
-                    tabela.innerHTML += `
-                        <tr>
-                            <td><a href="topico.html?comu=${idComu}&grupo=${idGrupo}&id=${tDoc.id}" class="link-topico">${t.titulo}</a></td>
-                            <td style="color:#666; font-size:0.85rem;">${t.autor}</td>
-                            <td align="center"><span style="background:var(--bg); padding:4px 10px; border-radius:20px; font-size:0.8rem; font-weight:bold; color:var(--roxo);">${t.respostas || 0}</span></td>
-                        </tr>`;
-                });
-            });
-
-            // Salva o grupo atual no botão de postar
-            document.getElementById('btnSalvarPost').onclick = () => realizarPostagem(idGrupo);
+        // Editor
+        window.formatar = (cmd) => { document.execCommand(cmd, false, null); document.getElementById('editorTexto').focus(); };
+        window.mudarCor = (cor) => { document.execCommand('foreColor', false, cor); document.getElementById('editorTexto').focus(); };
+        window.inserirImagem = () => {
+            const url = prompt("Link da imagem:");
+            if (url) document.execCommand('insertImage', false, url);
         };
 
-        // 4. REALIZAR POSTAGEM (CONTADOR +1)
-        async function realizarPostagem(idGrupo) {
-            const titulo = document.getElementById('inputTitulo').value;
-            const texto = document.getElementById('inputTexto').value;
-            const user = auth.currentUser;
-
-            if (!titulo || !texto || !user) return alert("Verifique se preencheu tudo e se está logada!");
-
-            try {
-                // Criar Tópico
-                await addDoc(collection(db, `comunidades/${idComu}/grupos/${idGrupo}/topicos`), {
-                    titulo, texto,
-                    autor: user.displayName || "Mãe Líberi",
-                    autorId: user.uid,
-                    data: serverTimestamp(),
-                    respostas: 0
-                });
-
-                // ATUALIZAR CONTADOR NO PERFIL
-                await updateDoc(doc(db, "usuarios", user.uid), {
-                    postagens: increment(1)
-                });
-
-                fecharModal();
-                alert("Postagem publicada com sucesso! ✨");
-            } catch (e) { console.error(e); }
-        }
-
-        // Modais
         window.abrirModal = () => document.getElementById('modalPost').style.display = 'flex';
         window.fecharModal = () => document.getElementById('modalPost').style.display = 'none';
 
-        setupPagina();
+        onAuthStateChanged(auth, (user) => {
+            if (user && grupoId) {
+                document.getElementById('tituloGrupo').innerText = "Tópicos de Discussão";
+                carregarTopicos();
+            } else { window.location.href = "index.html"; }
+        });
+
+        function carregarTopicos() {
+            const q = query(collection(db, "posts"), orderBy("data", "desc")); // Usando a mesma coleção centralizada
+            onSnapshot(q, (snapshot) => {
+                const lista = document.getElementById('listaTopicos');
+                lista.innerHTML = "";
+                snapshot.forEach(docSnap => {
+                    const t = docSnap.data();
+                    lista.insertAdjacentHTML('beforeend', `
+                        <a href="discussao.html?id=${docSnap.id}" class="card-topico">
+                            <div>
+                                <span class="titulo-topico">${t.titulo || 'Postagem da Comunidade'}</span>
+                                <small>Por: ${t.autor}</small>
+                            </div>
+                            <span style="color: var(--roxo); font-weight: bold;">→</span>
+                        </a>
+                    `);
+                });
+            });
+        }
+
+        document.getElementById('btnPublicar').onclick = async () => {
+            const titulo = document.getElementById('inputTitulo').value;
+            const campo = document.getElementById('editorTexto');
+
+            if (!titulo || !campo.innerHTML.trim()) return alert("Preencha o título e o conteúdo!");
+
+            await addDoc(collection(db, "posts"), {
+                titulo: titulo, // Título padronizado
+                texto: campo.innerHTML, // Texto livre e colorido
+                autor: auth.currentUser.displayName,
+                fotoAutor: auth.currentUser.photoURL,
+                autorId: auth.currentUser.uid,
+                data: serverTimestamp()
+            });
+
+            fecharModal();
+            campo.innerHTML = "";
+            document.getElementById('inputTitulo').value = "";
+        };
     </script>
-    <script src="menu.js"></script>
 </body>
 
 </html>
