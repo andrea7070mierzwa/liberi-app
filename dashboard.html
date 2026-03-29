@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Líberi - Vila de Apoio</title>
+    <title>Líberi - Discussão na Vila</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=Poppins:wght@400;500;600&display=swap"
@@ -23,40 +23,68 @@
             color: #4A4A4A;
         }
 
-        .layout-vila {
-            display: grid;
-            grid-template-columns: 280px 1fr 300px;
-            gap: 25px;
-            max-width: 1250px;
+        .container-discussao {
+            max-width: 700px;
             margin: 30px auto;
             padding: 0 20px;
         }
 
-        .card {
+        /* POST PRINCIPAL */
+        .card-post {
             background: var(--card);
-            border-radius: 25px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(108, 92, 231, 0.05);
-            margin-bottom: 25px;
+            padding: 30px;
+            border-radius: 30px;
+            border-left: 8px solid var(--roxo);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
         }
 
-        .foto-perfil {
-            width: 100px;
-            height: 100px;
-            border-radius: 35px;
-            background: #EEE;
-            border: 4px solid #EBE8FF;
-            object-fit: cover;
+        .autor-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
             margin-bottom: 15px;
         }
 
-        .nome-user {
-            font-family: 'Plus Jakarta Sans';
-            font-weight: 800;
+        .foto-autor {
+            width: 45px;
+            height: 45px;
+            border-radius: 15px;
+            object-fit: cover;
+        }
+
+        .nome-autor {
+            font-weight: 600;
             color: var(--roxo);
-            display: block;
-            margin-bottom: 20px;
-            text-align: center;
+        }
+
+        /* COMENTÁRIOS */
+        .card-comentario {
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.02);
+        }
+
+        .btn-excluir {
+            background: none;
+            border: none;
+            color: #ff4757;
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* AREA DE RESPOSTA */
+        .area-responder {
+            background: white;
+            padding: 20px;
+            border-radius: 25px;
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
         textarea {
@@ -66,14 +94,12 @@
             border-radius: 15px;
             padding: 15px;
             font-family: 'Poppins';
-            font-size: 1rem;
             resize: none;
-            min-height: 100px;
             outline: none;
             box-sizing: border-box;
         }
 
-        .btn-postar {
+        .btn-responder {
             background: var(--roxo);
             color: white;
             border: none;
@@ -81,23 +107,7 @@
             border-radius: 15px;
             font-weight: 600;
             cursor: pointer;
-            margin-top: 15px;
-            float: right;
-        }
-
-        .post-real {
-            border-left: 5px solid var(--roxo);
-            padding: 20px;
-            margin-bottom: 20px;
-            background: white;
-            border-radius: 20px;
-        }
-
-        .link-discussao {
-            color: var(--roxo);
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 0.9rem;
+            align-self: flex-end;
         }
     </style>
 </head>
@@ -106,86 +116,102 @@
 
     <script type="module" src="menu.js"></script>
 
-    <main class="layout-vila">
-        <aside>
-            <div class="card" style="text-align: center;">
-                <img id="userFoto" src="" class="foto-perfil">
-                <span id="userName" class="nome-user">...</span>
-                <button class="card" style="width: 100%; cursor: pointer;"
-                    onclick="window.location.href='recados.html'">📬 Meus Recados</button>
-            </div>
-        </aside>
+    <main class="container-discussao">
+        <a href="dashboard.html" style="text-decoration: none; color: var(--roxo); font-weight: 600;">← Voltar para a
+            Vila</a>
 
-        <section>
-            <div class="card">
-                <h2 style="font-family: 'Plus Jakarta Sans'; color: var(--roxo);">O que está na sua cabeça?</h2>
-                <textarea id="campoNeura" placeholder="Compartilhe sua neura do dia..."></textarea>
-                <button id="btnPostarNeura" class="btn-postar">Postar Neura →</button>
-                <div style="clear: both;"></div>
-            </div>
+        <div id="postOriginal" class="card-post">
+            <p>Carregando neura...</p>
+        </div>
 
-            <div id="feedReal">
-                <p style="text-align: center; color: #999;">Carregando neuras da vila...</p>
-            </div>
+        <section id="sessaoComentarios">
+            <h3 style="font-family: 'Plus Jakarta Sans'; color: var(--roxo);">Respostas da Vila</h3>
+            <div id="listaComentarios"></div>
         </section>
 
-        <aside>
-            <div class="card">
-                <h3 style="font-family: 'Plus Jakarta Sans'; color: var(--roxo);">🔍 Explorar Comunidades</h3>
-                <a href="comunidades.html" style="color: #6C5CE7; text-decoration: none; font-size: 0.9rem;">Ver todas
-                    as vilas →</a>
-            </div>
-        </aside>
+        <div class="area-responder">
+            <textarea id="textoResposta" placeholder="Escreva seu apoio..."></textarea>
+            <button id="btnResponder" class="btn-responder">Enviar Apoio ✨</button>
+        </div>
     </main>
 
     <script type="module">
         import { db, auth } from "./liberi.js";
-        import { collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { doc, getDoc, collection, addDoc, query, where, orderBy, onSnapshot, serverTimestamp, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
+        const urlParams = new URLSearchParams(window.location.search);
+        const topicoId = urlParams.get('id');
+
         onAuthStateChanged(auth, (user) => {
-            if (user) {
-                document.getElementById('userFoto').src = user.photoURL;
-                document.getElementById('userName').innerText = user.displayName.split(' ')[0];
-                carregarFeed(); // Chamar a função de carregar posts
-            } else {
-                window.location.href = "index.html";
+            if (user && topicoId) {
+                carregarPostPrincipal();
+                carregarComentarios();
+            } else if (!topicoId) {
+                window.location.href = "dashboard.html";
             }
         });
 
-        // FUNÇÃO QUE CARREGA O FEED REAL
-        function carregarFeed() {
-            const q = query(collection(db, "topicos"), orderBy("data", "desc"));
+        async function carregarPostPrincipal() {
+            const docRef = doc(db, "topicos", topicoId);
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                const post = docSnap.data();
+                document.getElementById('postOriginal').innerHTML = `
+                    <div class="autor-info">
+                        <img src="${post.fotoAutor}" class="foto-autor">
+                        <span class="nome-autor">${post.autor}</span>
+                    </div>
+                    <p style="font-size: 1.1rem;">${post.texto}</p>
+                `;
+            }
+        }
+
+        function carregarComentarios() {
+            const q = query(collection(db, "comentarios"), where("topicoId", "==", topicoId), orderBy("data", "asc"));
             onSnapshot(q, (snapshot) => {
-                const feed = document.getElementById('feedReal');
-                feed.innerHTML = ""; // Limpa o "Carregando..."
+                const lista = document.getElementById('listaComentarios');
+                const user = auth.currentUser;
+                lista.innerHTML = snapshot.empty ? "<p style='color:#999'>Nenhum apoio ainda.</p>" : "";
 
-                snapshot.forEach((doc) => {
-                    const post = doc.data();
-                    const id = doc.id; // Esse é o ID que inserimos no link abaixo!
+                snapshot.forEach(docSnap => {
+                    const c = docSnap.data();
+                    const idC = docSnap.id;
+                    // Lógica: é o dono ou é a Andrea (Admin)
+                    const eDono = user && (c.autorId === user.uid || user.email === "seu-email@gmail.com");
 
-                    const htmlPost = `
-                        <div class="post-real card">
-                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-                                <img src="${post.fotoAutor}" style="width: 30px; height: 30px; border-radius: 10px;">
-                                <strong style="color: #6C5CE7; font-size: 0.9rem;">${post.autor}</strong>
+                    lista.insertAdjacentHTML('beforeend', `
+                        <div class="card-comentario">
+                            <div style="display: flex; justify-content: space-between;">
+                                <div class="autor-info">
+                                    <img src="${c.fotoAutor}" class="foto-autor" style="width:30px; height:30px">
+                                    <span class="nome-autor" style="font-size:0.85rem">${c.autor}</span>
+                                </div>
+                                ${eDono ? `<button onclick="window.excluirItem('${idC}', 'comentarios')" class="btn-excluir">🗑️ Excluir</button>` : ''}
                             </div>
-                            <p style="margin-bottom: 15px;">${post.texto}</p>
-                            <a href="discussao.html?id=${id}" class="link-discussao">💬 Ver discussão completa</a>
+                            <p style="margin:5px 0 0 0">${c.texto}</p>
                         </div>
-                    `;
-                    feed.insertAdjacentHTML('beforeend', htmlPost);
+                    `);
                 });
             });
         }
 
-        // FUNÇÃO DE POSTAR
-        document.getElementById('btnPostarNeura').onclick = async () => {
-            const campo = document.getElementById('campoNeura');
+        // Função Global de Exclusão
+        window.excluirItem = async (id, colecao) => {
+            if (confirm("Deseja apagar este comentário?")) {
+                try {
+                    await deleteDoc(doc(db, colecao, id));
+                } catch (e) { console.error(e); }
+            }
+        };
+
+        document.getElementById('btnResponder').onclick = async () => {
+            const campo = document.getElementById('textoResposta');
             const user = auth.currentUser;
             if (!campo.value) return;
 
-            await addDoc(collection(db, "topicos"), {
+            await addDoc(collection(db, "comentarios"), {
+                topicoId: topicoId,
                 texto: campo.value,
                 autor: user.displayName,
                 fotoAutor: user.photoURL,
