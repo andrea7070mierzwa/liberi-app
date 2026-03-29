@@ -4,296 +4,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Líberi - Neuras de Mãe</title>
-
+    <title>Líberi - Vila de Apoio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Poppins:wght@400;500&family=Sora:wght@600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=Poppins:wght@400;500;600&display=swap"
         rel="stylesheet">
-
     <style>
         :root {
-            --roxo-principal: #6C5CE7;
-            --roxo-escuro: #2D3436;
-            --bg-lavanda: #F0EEFF;
-            --branco: #FFFFFF;
-            --cinza-texto: #4A4A4A;
+            --roxo: #6C5CE7;
+            --bg: #F0EEFF;
+            --card: #FFFFFF;
         }
 
         body {
             font-family: 'Poppins', sans-serif;
-            line-height: 1.6;
-            color: var(--cinza-texto);
+            background: var(--bg);
             margin: 0;
-            background-color: var(--bg-lavanda);
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+            color: #4A4A4A;
         }
 
-        /* HEADER */
-        header {
-            background-color: var(--roxo-principal);
-            padding: 15px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: var(--branco);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        header h1 {
-            font-family: 'Plus Jakarta Sans';
-            font-size: 1.5rem;
-            margin: 0;
-            color: var(--branco);
-            letter-spacing: -1px;
-        }
-
-        /* CONTAINER 3 COLUNAS */
-        .container-liberi {
+        .layout-vila {
             display: grid;
-            grid-template-columns: 240px 1fr 280px;
-            gap: 20px;
-            max-width: 1200px;
+            grid-template-columns: 280px 1fr 300px;
+            gap: 25px;
+            max-width: 1250px;
             margin: 30px auto;
             padding: 0 20px;
-            width: 100%;
         }
 
-        /* CARDS */
         .card {
-            background: var(--branco);
+            background: var(--card);
+            border-radius: 25px;
             padding: 25px;
-            border-radius: 20px;
-            box-shadow: 0 8px 20px rgba(108, 92, 231, 0.05);
-            margin-bottom: 20px;
-        }
-
-        h2,
-        h3 {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            color: var(--roxo-principal);
-            font-weight: 800;
-            margin-top: 0;
-        }
-
-        .botao {
-            display: block;
-            text-align: center;
-            background-color: var(--roxo-principal);
-            color: white;
-            padding: 12px;
-            border-radius: 12px;
-            font-family: 'Sora', sans-serif;
-            text-decoration: none;
-            margin-top: 10px;
-            font-size: 0.85rem;
-            transition: 0.2s;
-            cursor: pointer;
-            border: none;
-        }
-
-        .botao:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.2);
+            box-shadow: 0 10px 30px rgba(108, 92, 231, 0.05);
+            margin-bottom: 25px;
         }
 
         .foto-perfil {
-            width: 120px;
-            height: 120px;
-            background: var(--bg-lavanda);
-            border-radius: 30px;
-            margin: 0 auto 15px;
+            width: 100px;
+            height: 100px;
+            border-radius: 35px;
+            background: #EEE;
+            border: 4px solid #EBE8FF;
             object-fit: cover;
-            display: block;
+            margin-bottom: 15px;
         }
 
-        .textarea-neura {
+        .nome-user {
+            font-family: 'Plus Jakarta Sans';
+            font-weight: 800;
+            color: var(--roxo);
+            display: block;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        textarea {
             width: 100%;
             border: none;
-            background-color: var(--bg-lavanda);
+            background: #F8F7FF;
             border-radius: 15px;
             padding: 15px;
             font-family: 'Poppins';
+            font-size: 1rem;
             resize: none;
+            min-height: 100px;
+            outline: none;
+            box-sizing: border-box;
         }
 
-        .cta-link {
-            font-family: 'Sora', sans-serif;
-            font-size: 0.75rem;
-            color: var(--roxo-principal);
-            text-decoration: none;
+        .btn-postar {
+            background: var(--roxo);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 15px;
             font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            float: right;
         }
 
-        .selo-especial {
-            font-family: 'Sora';
-            font-size: 0.7rem;
-            background: var(--bg-lavanda);
-            color: var(--roxo-principal);
-            padding: 5px 10px;
+        .post-real {
+            border-left: 5px solid var(--roxo);
+            padding: 20px;
+            margin-bottom: 20px;
+            background: white;
             border-radius: 20px;
-            font-weight: bold;
-            display: inline-block;
-            margin-bottom: 10px;
         }
 
-        /* MODAL SEGURANÇA */
-        #modalSeguranca {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(45, 52, 54, 0.9);
-            z-index: 10000;
-            align-items: center;
-            justify-content: center;
-        }
-
-        @media (max-width: 950px) {
-            .container-liberi {
-                grid-template-columns: 1fr;
-            }
-
-            .aside-hide {
-                display: none;
-            }
+        .link-discussao {
+            color: var(--roxo);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
         }
     </style>
 </head>
 
 <body>
 
-    <div id="modalSeguranca">
-        <div class="card" style="max-width: 500px; text-align: center; border: 4px solid var(--roxo-principal);">
-            <h2>💠 Compromisso do Ninho</h2>
-            <p>Para mantermos a <strong>Líberi</strong> segura, a responsabilidade pela imagem dos seus filhos é
-                exclusiva dos pais (ECA Digital).</p>
-            <button id="btnAceitar" class="botao" style="width:100%;">Eu aceito e me sinto segura</button>
-        </div>
-    </div>
+    <script type="module" src="menu.js"></script>
 
-    <div class="container-liberi">
-
+    <main class="layout-vila">
         <aside>
             <div class="card" style="text-align: center;">
-                <img id="userImg" src="" class="foto-perfil">
-                <h3 id="userName" style="font-size: 1.1rem; margin-bottom: 5px;">...</h3>
-                <div id="areaSelo"></div>
-                <a href="#" class="botao">Meus Recados</a>
-                <a href="#" class="botao" style="background:var(--bg-lavanda); color:var(--roxo-principal);">Meus Amigos
-                    (0)</a>
+                <img id="userFoto" src="" class="foto-perfil">
+                <span id="userName" class="nome-user">...</span>
+                <button class="card" style="width: 100%; cursor: pointer;"
+                    onclick="window.location.href='recados.html'">📬 Meus Recados</button>
             </div>
         </aside>
 
-        <main>
+        <section>
             <div class="card">
-                <h2>O que está na sua cabeça?</h2>
-                <textarea id="statusInput" class="textarea-neura"
-                    placeholder="Compartilhe sua neura do dia..."></textarea>
-                <button class="botao"
-                    style="width: fit-content; margin-top: 15px; padding: 10px 30px; border:none;">Postar Neura
-                    →</button>
+                <h2 style="font-family: 'Plus Jakarta Sans'; color: var(--roxo);">O que está na sua cabeça?</h2>
+                <textarea id="campoNeura" placeholder="Compartilhe sua neura do dia..."></textarea>
+                <button id="btnPostarNeura" class="btn-postar">Postar Neura →</button>
+                <div style="clear: both;"></div>
             </div>
 
-            <div class="card">
-                <h3 style="font-size: 1.2rem;">Comunidade: Sono do Bebê</h3>
-                <p><strong>Dica:</strong> Cada bebê tem seu tempo. Não se cobrem tanto!</p>
-                <a href="#" class="cta-link">Ver discussão completa</a>
+            <div id="feedReal">
+                <p style="text-align: center; color: #999;">Carregando neuras da vila...</p>
             </div>
-        </main>
+        </section>
 
-        <aside class="aside-hide">
+        <aside>
             <div class="card">
-                <h3 style="font-size: 1rem;">Comunidades</h3>
-                <div id="listaComunidades" style="font-size: 0.9rem;">Buscando grupos...</div>
-                <br>
-                <a href="#" class="cta-link">Ver todos os grupos →</a>
-            </div>
-
-            <div class="card">
-                <h3 style="font-size: 1rem;">Sugestões de Amizade</h3>
-                <div id="sugestoesAmigos" style="font-size: 0.85rem;">
-                    <p style="color: #888;">Buscando novas conexões...</p>
-                </div>
+                <h3 style="font-family: 'Plus Jakarta Sans'; color: var(--roxo);">🔍 Explorar Comunidades</h3>
+                <a href="comunidades.html" style="color: #6C5CE7; text-decoration: none; font-size: 0.9rem;">Ver todas
+                    as vilas →</a>
             </div>
         </aside>
-
-    </div>
+    </main>
 
     <script type="module">
-        import { auth, db, doc, getDoc, collection, getDocs } from "./liberi.js";
-        import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { db, auth } from "./liberi.js";
+        import { collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-        onAuthStateChanged(auth, async (user) => {
+        onAuthStateChanged(auth, (user) => {
             if (user) {
-                // Modal de Segurança
-                const modal = document.getElementById('modalSeguranca');
-                modal.style.display = 'flex';
-                document.getElementById('btnAceitar').onclick = () => modal.style.display = 'none';
-
-                // Dados do Perfil
-                document.getElementById('navNome').innerText = user.displayName;
-                document.getElementById('userName').innerText = user.displayName;
-                document.getElementById('userImg').src = user.photoURL;
-
-                // Selo Especial
-                const docRef = doc(db, "usuarios", user.uid);
-                const docSnap = await getDoc(docRef);
-                if (docSnap.exists() && docSnap.data().perfilEspecial) {
-                    document.getElementById('areaSelo').innerHTML = '<span class="selo-especial">💠 MÃE ESPECIAL</span>';
-                }
-
-                carregarComunidades();
-                carregarSugestoesAmigos(user.uid);
+                document.getElementById('userFoto').src = user.photoURL;
+                document.getElementById('userName').innerText = user.displayName.split(' ')[0];
+                carregarFeed(); // Chamar a função de carregar posts
             } else {
                 window.location.href = "index.html";
             }
         });
 
-        async function carregarComunidades() {
-            const lista = document.getElementById('listaComunidades');
-            try {
-                const querySnapshot = await getDocs(collection(db, "comunidades"));
-                lista.innerHTML = "";
-                querySnapshot.forEach((doc) => {
-                    lista.innerHTML += `<p>💜 ${doc.data().nome}</p>`;
+        // FUNÇÃO QUE CARREGA O FEED REAL
+        function carregarFeed() {
+            const q = query(collection(db, "topicos"), orderBy("data", "desc"));
+            onSnapshot(q, (snapshot) => {
+                const feed = document.getElementById('feedReal');
+                feed.innerHTML = ""; // Limpa o "Carregando..."
+
+                snapshot.forEach((doc) => {
+                    const post = doc.data();
+                    const id = doc.id; // Esse é o ID que inserimos no link abaixo!
+
+                    const htmlPost = `
+                        <div class="post-real card">
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                <img src="${post.fotoAutor}" style="width: 30px; height: 30px; border-radius: 10px;">
+                                <strong style="color: #6C5CE7; font-size: 0.9rem;">${post.autor}</strong>
+                            </div>
+                            <p style="margin-bottom: 15px;">${post.texto}</p>
+                            <a href="discussao.html?id=${id}" class="link-discussao">💬 Ver discussão completa</a>
+                        </div>
+                    `;
+                    feed.insertAdjacentHTML('beforeend', htmlPost);
                 });
-                if (querySnapshot.empty) lista.innerHTML = "Nenhuma comunidade ainda.";
-            } catch (e) { console.error(e); }
+            });
         }
 
-        async function carregarSugestoesAmigos(userAtualId) {
-            const area = document.getElementById('sugestoesAmigos');
-            try {
-                const querySnapshot = await getDocs(collection(db, "usuarios"));
-                area.innerHTML = "";
-                let count = 0;
-                querySnapshot.forEach((doc) => {
-                    if (doc.id !== userAtualId && count < 3) {
-                        const u = doc.data();
-                        area.innerHTML += `
-                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
-                                <img src="${u.foto || 'https://via.placeholder.com/35'}" style="width: 35px; height: 35px; border-radius: 10px;">
-                                <div style="flex: 1;">
-                                    <span style="font-weight: 600; font-size: 0.8rem; display: block; color: var(--roxo-principal);">${u.nome || 'Mãe Líberi'}</span>
-                                    <a href="#" class="cta-link" style="font-size: 0.6rem;">+ Adicionar</a>
-                                </div>
-                            </div>`;
-                        count++;
-                    }
-                });
-                if (count === 0) area.innerHTML = "A vila está crescendo...";
-            } catch (e) { console.error(e); }
-        }
+        // FUNÇÃO DE POSTAR
+        document.getElementById('btnPostarNeura').onclick = async () => {
+            const campo = document.getElementById('campoNeura');
+            const user = auth.currentUser;
+            if (!campo.value) return;
 
-        document.getElementById('btnSair').onclick = () => signOut(auth);
+            await addDoc(collection(db, "topicos"), {
+                texto: campo.value,
+                autor: user.displayName,
+                fotoAutor: user.photoURL,
+                autorId: user.uid,
+                data: serverTimestamp()
+            });
+            campo.value = "";
+        };
     </script>
-    <script type="module" src="menu.js"></script>
 </body>
 
 </html>

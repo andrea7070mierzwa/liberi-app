@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Líberi - Vila de Apoio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=Poppins:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --roxo: #6C5CE7;
+            --bg: #F0EEFF;
+            --card: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg);
+            margin: 0;
+            color: #4A4A4A;
+        }
+
+        .container-discussao {
+            max-width: 700px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* POST PRINCIPAL */
+        .card-post {
+            background: var(--card);
+            padding: 30px;
+            border-radius: 30px;
+            border-left: 8px solid var(--roxo);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+
+        .autor-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .foto-autor {
+            width: 45px;
+            height: 45px;
+            border-radius: 15px;
+            object-fit: cover;
+        }
+
+        .nome-autor {
+            font-weight: 600;
+            color: var(--roxo);
+        }
+
+        /* ÁREA DE COMENTÁRIOS */
+        .sessao-comentarios {
+            margin-top: 40px;
+        }
+
+        .titulo-comentarios {
+            font-family: 'Plus Jakarta Sans';
+            font-size: 1.2rem;
+            color: var(--roxo);
+            margin-bottom: 20px;
+        }
+
+        .card-comentario {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        /* CAMPO DE RESPOSTA */
+        .area-responder {
+            background: white;
+            padding: 20px;
+            border-radius: 25px;
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            border: none;
+            background: #F8F7FF;
+            border-radius: 15px;
+            padding: 15px;
+            font-family: 'Poppins';
+            resize: none;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        .btn-responder {
+            background: var(--roxo);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            align-self: flex-end;
+        }
+    </style>
+</head>
+
+<body>
+
+    <script type="module" src="menu.js"></script>
+
+    <main class="container-discussao">
+        <a href="dashboard.html"
+            style="text-decoration: none; color: var(--roxo); font-weight: 600; font-size: 0.9rem;">← Voltar para a
+            Vila</a>
+
+        <div id="postOriginal" class="card-post">
+            <p>Carregando neura...</p>
+        </div>
+
+        <section class="sessao-comentarios">
+            <h3 class="titulo-comentarios">Respostas da Vila</h3>
+            <div id="listaComentarios">
+            </div>
+        </section>
+
+        <div class="area-responder">
+            <textarea id="textoResposta" placeholder="Escreva um apoio ou conselho..."></textarea>
+            <button id="btnResponder" class="btn-responder">Enviar Apoio</button>
+        </div>
+    </main>
+
+    <script type="module">
+        import { db, auth } from "./liberi.js";
+        import { doc, getDoc, collection, addDoc, query, where, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        // 1. Pegar o ID da neura pela URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const topicoId = urlParams.get('id');
+
+        onAuthStateChanged(auth, (user) => {
+            if (user && topicoId) {
+                carregarPostPrincipal();
+                carregarComentarios();
+            } else if (!topicoId) {
+                window.location.href = "dashboard.html";
+            }
+        });
+
+        async function carregarPostPrincipal() {
+            const docRef = doc(db, "topicos", topicoId);
+            const docSnap = await getDoc(docRef);
+
+            if (docSnap.exists()) {
+                const post = docSnap.data();
+                document.getElementById('postOriginal').innerHTML = `
+                    <div class="autor-info">
+                        <img src="${post.fotoAutor}" class="foto-autor">
+                        <span class="nome-autor">${post.autor}</span>
+                    </div>
+                    <p style="font-size: 1.1rem; line-height: 1.6;">${post.texto}</p>
+                `;
+            }
+        }
+
+        function carregarComentarios() {
+            const q = query(collection(db, "comentarios"), where("topicoId", "==", topicoId), orderBy("data", "asc"));
+            onSnapshot(q, (snapshot) => {
+                const lista = document.getElementById('listaComentarios');
+                lista.innerHTML = snapshot.empty ? "<p style='color:#999'>Seja a primeira a dar apoio! ❤️</p>" : "";
+                snapshot.forEach(doc => {
+                    const c = doc.data();
+                    lista.insertAdjacentHTML('beforeend', `
+                        <div class="card-comentario">
+                            <div class="autor-info">
+                                <img src="${c.fotoAutor}" class="foto-autor" style="width:30px; height:30px">
+                                <span class="nome-autor" style="font-size:0.85rem">${c.autor}</span>
+                            </div>
+                            <p style="margin:5px 0 0 0">${c.texto}</p>
+                        </div>
+                    `);
+                });
+            });
+        }
+
+        document.getElementById('btnResponder').onclick = async () => {
+            const texto = document.getElementById('textoResposta').value;
+            const user = auth.currentUser;
+            if (!texto) return;
+
+            await addDoc(collection(db, "comentarios"), {
+                topicoId: topicoId,
+                texto: texto,
+                autor: user.displayName,
+                fotoAutor: user.photoURL,
+                autorId: user.uid,
+                data: serverTimestamp()
+            });
+
+            document.getElementById('textoResposta').value = "";
+        };
+    </script>
+</body>
+
+</html>

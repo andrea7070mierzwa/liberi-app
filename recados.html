@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Líberi - Meus Recados</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=Poppins:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --roxo: #6C5CE7;
+            --bg: #F0EEFF;
+            --card: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg);
+            margin: 0;
+            color: #4A4A4A;
+        }
+
+        .container-recados {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        h1 {
+            font-family: 'Plus Jakarta Sans';
+            color: var(--roxo);
+            font-size: 2rem;
+            margin-bottom: 30px;
+        }
+
+        .lista-recados {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* ESTILO DO CARD DE RECADO */
+        .card-recado {
+            background: var(--card);
+            padding: 20px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.05);
+            transition: 0.3s;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .card-recado:hover {
+            border-color: #EBE8FF;
+            transform: translateY(-2px);
+        }
+
+        .foto-autor {
+            width: 50px;
+            height: 50px;
+            border-radius: 15px;
+            object-fit: cover;
+            background: #EEE;
+        }
+
+        .conteudo-recado {
+            flex: 1;
+        }
+
+        .texto-principal {
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        .texto-principal strong {
+            color: var(--roxo);
+        }
+
+        .data-recado {
+            font-size: 0.75rem;
+            color: #AAA;
+            margin-top: 5px;
+            display: block;
+        }
+
+        .vazio {
+            text-align: center;
+            padding: 50px;
+            color: #888;
+        }
+    </style>
+</head>
+
+<body>
+
+    <script type="module" src="menu.js"></script>
+
+    <main class="container-recados">
+        <h1>📬 Meus Recados</h1>
+
+        <div id="listaRecados" class="lista-recados">
+            <div class="vazio">Buscando seus recados na vila...</div>
+        </div>
+    </main>
+
+    <script type="module">
+        import { db, auth } from "./liberi.js";
+        import { collection, query, where, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                carregarRecados(user.uid);
+            } else {
+                window.location.href = "index.html";
+            }
+        });
+
+        function carregarRecados(userId) {
+            const listaElement = document.getElementById('listaRecados');
+
+            // Busca notificações onde o "destino" é o usuário atual
+            // (Ajustaremos a lógica de salvar notificações conforme as respostas forem criadas)
+            const q = query(
+                collection(db, "notificacoes"),
+                where("paraId", "==", userId),
+                orderBy("data", "desc")
+            );
+
+            onSnapshot(q, (snapshot) => {
+                if (snapshot.empty) {
+                    listaElement.innerHTML = `
+                        <div class="vazio">
+                            <p>Nenhum recado por enquanto.</p>
+                            <small>Quando alguém interagir com suas neuras, você verá aqui!</small>
+                        </div>`;
+                    return;
+                }
+
+                listaElement.innerHTML = "";
+                snapshot.forEach((doc) => {
+                    const recado = doc.data();
+                    const html = `
+                        <div class="card-recado">
+                            <img src="${recado.fotoAutor || ''}" class="foto-autor">
+                            <div class="conteudo-recado">
+                                <p class="texto-principal">
+                                    <strong>${recado.autorNome}</strong> ${recado.mensagem}
+                                </p>
+                                <span class="data-recado">${recado.data?.toDate().toLocaleString() || 'Agora mesmo'}</span>
+                            </div>
+                        </div>
+                    `;
+                    listaElement.insertAdjacentHTML('beforeend', html);
+                });
+            });
+        }
+    </script>
+</body>
+
+</html>
