@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Líberi</title>
+    <title>Líberi - Login</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=Poppins:wght@400;500&display=swap"
@@ -26,42 +26,26 @@
             overflow: hidden;
         }
 
-        /* Patrocinador posicionado fixo no topo */
-        .patrocinador-topo {
-            position: fixed;
-            top: 20px;
-            background: white;
-            padding: 10px 25px;
-            border-radius: 50px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            font-size: 0.85rem;
-            color: #666;
-            z-index: 10;
-        }
-
         .login-card {
             background: white;
-            padding: 60px 40px;
+            padding: 50px;
             border-radius: 40px;
-            box-shadow: 0 25px 60px rgba(108, 92, 231, 0.15);
             text-align: center;
-            max-width: 420px;
-            width: 85%;
-            z-index: 5;
+            max-width: 400px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
         }
 
         h1 {
             font-family: 'Plus Jakarta Sans';
             color: var(--roxo);
-            font-size: 2.8rem;
-            margin: 0 0 10px;
-            letter-spacing: -2px;
+            font-size: 3rem;
+            margin-bottom: 10px;
         }
 
         p {
             color: #777;
-            margin-bottom: 40px;
-            font-size: 1.1rem;
+            margin-bottom: 30px;
+            line-height: 1.5;
         }
 
         .btn-google {
@@ -81,7 +65,6 @@
 
         .btn-google:hover {
             transform: translateY(-4px);
-            box-shadow: 0 15px 35px rgba(108, 92, 231, 0.4);
             background: #5649c0;
         }
     </style>
@@ -89,26 +72,42 @@
 
 <body>
 
-    <div class="patrocinador-topo">
-        ✨ Patrocinador Master: Marcas que cuidam da infância
-    </div>
-
     <main class="login-card">
         <h1>Líberi</h1>
-        <p>Conectando famílias, compartilhando experiências e fortalecendo a comunidade parental.</p>
+        <p>Conectando famílias e fortalecendo a comunidade parental.</p>
         <button class="btn-google" id="btnLogar">Entrar com Google</button>
     </main>
 
     <script type="module">
-        import { auth, provider } from "./liberi.js";
+        import { auth, provider, db } from "./liberi.js";
         import { signInWithPopup } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         document.getElementById('btnLogar').onclick = async () => {
             try {
-                await signInWithPopup(auth, provider);
-                window.location.href = "comunidades.html";
+                const result = await signInWithPopup(auth, provider);
+                const user = result.user;
+
+                // Referência do usuário no Firestore
+                const userRef = doc(db, "usuarios", user.uid);
+                const userSnap = await getDoc(userRef);
+
+                // Se o usuário não existir no banco, criamos o perfil básico dele agora
+                if (!userSnap.exists()) {
+                    await setDoc(userRef, {
+                        nome: user.displayName,
+                        email: user.email,
+                        foto: user.photoURL,
+                        dataCadastro: new Date().toISOString()
+                    });
+                }
+
+                // Redirecionamento direto para o Perfil, sem passar por cadastro de filhos
+                window.location.href = "perfil.html";
+
             } catch (error) {
-                console.error("Erro ao logar:", error);
+                console.error("Erro no login:", error);
+                alert("Ops! Ocorreu um erro ao entrar. Verifique sua conexão.");
             }
         };
     </script>
