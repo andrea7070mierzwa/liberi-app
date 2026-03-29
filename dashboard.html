@@ -4,13 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Líberi - Dashboard</title>
+    <title>Líberi - Dashboard Oficial</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Poppins:wght@400;500;600&display=swap"
         rel="stylesheet">
     <style>
         :root {
             --roxo: #6C5CE7;
+            --roxo-claro: #A29BFE;
             --bg: #F8F9FD;
             --card: #FFFFFF;
         }
@@ -22,82 +23,133 @@
             color: #4A4A4A;
         }
 
-        .layout-orkut {
+        /* LAYOUT ORKUT */
+        .layout-geral {
             display: grid;
             grid-template-columns: 260px 1fr 260px;
             gap: 20px;
             max-width: 1200px;
-            margin: 25px auto;
+            margin: 30px auto;
             padding: 0 20px;
         }
 
         .card {
             background: var(--card);
-            border-radius: 24px;
+            border-radius: 28px;
             padding: 20px;
-            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.04);
-            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(108, 92, 231, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.8);
+            margin-bottom: 20px;
         }
 
-        /* SEÇÃO DE DEPOIMENTOS (APOIO) */
-        .apoio-box {
-            background: #F0EEFF;
-            border-radius: 20px;
-            padding: 15px;
-            margin-top: 20px;
-            text-align: left;
-            border: 1px dashed var(--roxo);
+        /* COLUNA ESQUERDA: PERFIL & LINKS */
+        .foto-perfil {
+            width: 100px;
+            height: 100px;
+            border-radius: 35px;
+            border: 4px solid #FFF;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.06);
+            object-fit: cover;
         }
 
-        .apoio-box span {
-            font-size: 0.7rem;
+        .nome-user {
+            font-family: 'Plus Jakarta Sans';
             font-weight: 800;
             color: var(--roxo);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            font-size: 0.9rem;
+            margin-top: 15px;
+            display: block;
+        }
+
+        .orkut-links {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .orkut-links li {
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+            color: #666;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+
+        .orkut-links b {
+            color: var(--roxo);
+        }
+
+        /* GATILHO DE FOFOCA (NOTIFICAÇÃO) */
+        .fofoca-box {
+            background: #FFF4E5;
+            border: 1px solid #FFE082;
+            border-radius: 18px;
+            padding: 12px;
+            margin-bottom: 15px;
+            display: none;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.02);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* REDE DE APOIO (DEPOIMENTOS) */
+        .apoio-box {
+            background: #F0EEFF;
+            border: 1px dashed var(--roxo);
+            border-radius: 20px;
+            padding: 15px;
+            text-align: left;
         }
 
         .depoimento-item {
-            font-size: 0.8rem;
-            color: #555;
-            font-style: italic;
-            margin-top: 10px;
-            line-height: 1.4;
-            border-bottom: 1px solid #E0DBFF;
-            padding-bottom: 8px;
-        }
-
-        .autor-depo {
-            font-size: 0.7rem;
-            font-weight: 700;
-            color: var(--roxo);
-            display: block;
-            margin-top: 4px;
-            text-align: right;
-        }
-
-        .btn-enviar-apoio {
-            background: none;
-            border: none;
-            color: var(--roxo);
             font-size: 0.75rem;
-            font-weight: 700;
-            cursor: pointer;
+            font-style: italic;
+            color: #555;
+            margin-top: 8px;
+            border-bottom: 1px solid #E0DBFF;
+            padding-bottom: 5px;
+        }
+
+        /* EDITOR COLORIDO */
+        #campoPost {
+            width: 100%;
+            min-height: 100px;
+            background: #F0F2F9;
+            border-radius: 20px;
+            padding: 15px;
+            outline: none;
+            font-size: 0.9rem;
+            box-sizing: border-box;
+        }
+
+        .toolbar {
+            display: none;
+            gap: 10px;
             margin-top: 10px;
-            text-decoration: underline;
+            background: white;
+            padding: 8px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
         }
 
-        /* FOTO E STATUS */
-        .foto-perfil {
-            width: 90px;
-            height: 90px;
-            border-radius: 30px;
-            border: 3px solid #FFF;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-
-        /* FEED E LOCK */
+        /* FEED & REGRA DE OURO */
         .post-card {
             border-left: 4px solid var(--roxo);
             padding: 15px;
@@ -110,129 +162,151 @@
         .blur-content {
             filter: blur(5px);
             pointer-events: none;
+            user-select: none;
+        }
+
+        .lock-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+            border-radius: 18px;
+            flex-direction: column;
         }
     </style>
 </head>
 
 <body>
     <script type="module" src="menu.js"></script>
+    <main class="layout-geral">
 
-    <main class="layout-orkut">
         <aside>
             <div class="card" style="text-align: center;">
                 <img id="userFoto" src="" class="foto-perfil">
-                <strong id="userName"
-                    style="display: block; margin-top: 12px; color: var(--roxo); font-family: 'Plus Jakarta Sans';">...</strong>
+                <span id="userName" class="nome-user">...</span>
 
-                <div class="apoio-box">
-                    <span>Rede de Apoio 💜</span>
-                    <div id="listaDepoimentos">
-                        <p class="depoimento-item">"Você é uma mãe incrível, Andrea! O Neuras hoje vai ser só gratidão."
-                            <span class="autor-depo">- Roberto</span></p>
-                    </div>
-                    <button class="btn-enviar-apoio" onclick="enviarDepoimento()">+ Deixar um carinho</button>
+                <ul class="orkut-links">
+                    <li>💬 Recados (12)</li>
+                    <li>👥 Amigos (<b>312</b>)</li>
+                    <li>🔍 Comunidades (<b>47</b>)</li>
+                    <li>📄 Depoimentos (8)</li>
+                </ul>
+
+                <div class="fofoca-box" id="gavetaFofoca">
+                    <span style="font-size:0.6rem; font-weight:800; color:#B7791F;">FOFOCA DA VILA 🔥</span>
+                    <p id="msgFofoca" style="font-size:0.8rem; margin:5px 0; color:#856404; font-weight:600;"></p>
                 </div>
 
-                <div style="text-align: left; margin-top: 25px;">
-                    <span style="font-size: 0.7rem; font-weight: 800; color: #AAA; text-transform: uppercase;">Amigos
-                        (9)</span>
-                    <div id="miniAmigos"
-                        style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px;">
-                        <img src="https://i.pravatar.cc/80?u=1" style="width:100%; border-radius:10px;">
-                        <img src="https://i.pravatar.cc/80?u=2" style="width:100%; border-radius:10px;">
-                        <img src="https://i.pravatar.cc/80?u=3" style="width:100%; border-radius:10px;">
-                    </div>
+                <div class="apoio-box">
+                    <span style="font-size:0.7rem; font-weight:800; color:var(--roxo);">REDE DE APOIO 💜</span>
+                    <div id="listaDepoimentos"></div>
+                    <button onclick="window.location.href='perfil.html'"
+                        style="background:none; border:none; color:var(--roxo); font-size:0.7rem; font-weight:700; cursor:pointer; margin-top:10px; text-decoration:underline;">+
+                        Deixar carinho</button>
                 </div>
             </div>
         </aside>
 
         <section>
             <div class="card">
-                <div id="campoPost" contenteditable="true"
-                    style="width: 100%; min-height: 80px; outline: none; font-size: 0.9rem;"
-                    placeholder="Compartilhe um momento..."></div>
-                <button id="btnPostar"
-                    style="background: var(--roxo); color:white; border:none; padding:10px 20px; border-radius:12px; font-weight:600; cursor:pointer; float:right; margin-top:10px;">Publicar</button>
-                <div style="clear:both;"></div>
+                <div id="campoPost" contenteditable="true" placeholder="Mencione com @ ou use a paleta 🎨"></div>
+                <div class="toolbar" id="tools">
+                    <button onclick="document.execCommand('bold')"><b>B</b></button>
+                    <button onclick="document.execCommand('italic')"><i>I</i></button>
+                    <input type="color" onchange="document.execCommand('foreColor', false, this.value)">
+                </div>
+                <div style="display:flex; justify-content:space-between; margin-top:10px; align-items:center;">
+                    <button onclick="togleTools()"
+                        style="background:none; border:none; font-size:1.2rem; cursor:pointer;">🎨</button>
+                    <button id="btnPostar"
+                        style="background:var(--roxo); color:white; border:none; padding:10px 25px; border-radius:15px; font-weight:600; cursor:pointer;">Publicar</button>
+                </div>
             </div>
             <div id="feedHibrido"></div>
         </section>
 
         <aside>
             <div class="card">
-                <h3
-                    style="font-size: 0.8rem; color: #AAA; text-transform: uppercase; font-family: 'Plus Jakarta Sans';">
-                    Comunidades</h3>
-                <div id="listaComusRapidas">
-                    <p
-                        style="font-size: 0.85rem; font-weight: 600; color: var(--roxo); margin-bottom: 8px; cursor:pointer;">
-                        🧩 Mães Atípicas</p>
-                    <p
-                        style="font-size: 0.85rem; font-weight: 600; color: var(--roxo); margin-bottom: 8px; cursor:pointer;">
-                        🤱 Aleitamento Materno</p>
-                </div>
+                <h3 style="font-size:0.8rem; color:#AAA; text-transform:uppercase;">Explorar</h3>
+                <button onclick="window.location.href='comunidades.html'"
+                    style="width:100%; background:#F0EEFF; border:none; padding:12px; border-radius:15px; color:var(--roxo); font-weight:700; cursor:pointer;">Ver
+                    Comunidades</button>
             </div>
         </aside>
     </main>
 
     <script type="module">
         import { db, auth } from "./liberi.js";
-        import { collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { collection, addDoc, query, orderBy, onSnapshot, serverTimestamp, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-        onAuthStateChanged(auth, (user) => {
+        window.togleTools = () => { const t = document.getElementById('tools'); t.style.display = t.style.display === 'flex' ? 'none' : 'flex'; };
+
+        let minhasComus = [];
+
+        onAuthStateChanged(auth, async (user) => {
             if (user) {
                 document.getElementById('userFoto').src = user.photoURL;
                 document.getElementById('userName').innerText = user.displayName;
+                const snap = await getDoc(doc(db, "usuarios", user.uid));
+                if (snap.exists()) minhasComus = snap.data().comunidades || [];
                 carregarFeed();
+                ouvirFofocas(user.displayName);
                 ouvirDepoimentos(user.uid);
             } else { window.location.href = "index.html"; }
         });
 
-        // Função para enviar depoimento (Carinho)
-        window.enviarDepoimento = async () => {
-            const msg = prompt("Deixe uma mensagem de apoio para Andrea:");
-            if (msg) {
-                await addDoc(collection(db, "depoimentos"), {
-                    para: auth.currentUser.uid,
-                    de: auth.currentUser.displayName,
-                    texto: msg,
-                    data: serverTimestamp()
-                });
-            }
-        };
-
-        function ouvirDepoimentos(uid) {
-            const q = query(collection(db, "depoimentos"), orderBy("data", "desc"));
-            onSnapshot(q, (snap) => {
-                const lista = document.getElementById('listaDepoimentos');
-                lista.innerHTML = "";
-                snap.forEach(d => {
-                    const dep = d.data();
-                    lista.insertAdjacentHTML('beforeend', `
-                        <p class="depoimento-item">"${dep.texto}" <span class="autor-depo">- ${dep.de}</span></p>
-                    `);
-                });
-            });
-        }
-
-        // Função simplificada de Feed para teste
         function carregarFeed() {
-            const q = query(collection(db, "posts"), orderBy("data", "desc"));
-            onSnapshot(q, (snap) => {
+            onSnapshot(query(collection(db, "posts"), orderBy("data", "desc")), (snap) => {
                 const feed = document.getElementById('feedHibrido');
                 feed.innerHTML = "";
                 snap.forEach(d => {
                     const p = d.data();
+                    const souMembro = p.comunidadeId ? minhasComus.includes(p.comunidadeId) : true;
                     feed.insertAdjacentHTML('beforeend', `
                         <div class="post-card">
                             <strong style="font-size:0.8rem; color:var(--roxo);">${p.autor}</strong>
-                            <p style="font-size:0.9rem;">${p.texto}</p>
-                        </div>
-                    `);
+                            <div class="${souMembro ? '' : 'blur-content'}">${p.texto}</div>
+                            ${!souMembro ? `<div class="lock-overlay"><button onclick="window.location.href='comunidades.html'" style="background:var(--roxo); color:white; border:none; padding:8px 15px; border-radius:10px; cursor:pointer;">Participar para ler</button></div>` : ''}
+                        </div>`);
                 });
             });
         }
+
+        function ouvirFofocas(nome) {
+            onSnapshot(collection(db, "notificacoes"), (snap) => {
+                snap.forEach(d => {
+                    if (d.data().para === nome) {
+                        document.getElementById('gavetaFofoca').style.display = 'block';
+                        document.getElementById('msgFofoca').innerText = d.data().mensagem;
+                    }
+                });
+            });
+        }
+
+        function ouvirDepoimentos(uid) {
+            onSnapshot(query(collection(db, "depoimentos"), orderBy("data", "desc")), (snap) => {
+                const lista = document.getElementById('listaDepoimentos');
+                lista.innerHTML = "";
+                snap.forEach(d => { lista.insertAdjacentHTML('beforeend', `<p class="depoimento-item">"${d.data().texto}" <b style="color:var(--roxo);">- ${d.data().de}</b></p>`); });
+            });
+        }
+
+        document.getElementById('btnPostar').onclick = async () => {
+            const campo = document.getElementById('campoPost');
+            const texto = campo.innerHTML;
+            if (!texto.trim()) return;
+            const match = texto.match(/@(\w+)/);
+            if (match) await addDoc(collection(db, "notificacoes"), { para: match[1], mensagem: `${auth.currentUser.displayName} te marcou!`, data: serverTimestamp() });
+            await addDoc(collection(db, "posts"), { texto: texto, autor: auth.currentUser.displayName, fotoAutor: auth.currentUser.photoURL, autorId: auth.currentUser.uid, data: serverTimestamp() });
+            campo.innerHTML = "";
+        };
     </script>
 </body>
 
