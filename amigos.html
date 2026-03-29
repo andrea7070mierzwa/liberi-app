@@ -4,14 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Líberi - Membros da Vila</title>
+    <title>Líberi - Sugestões de Amizade</title>
     <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=Poppins:wght@400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Poppins:wght@400;500;600&display=swap"
         rel="stylesheet">
     <style>
         :root {
             --roxo: #6C5CE7;
-            --bg: #F0EEFF;
+            --bg: #F8F9FD;
             --card: #FFFFFF;
         }
 
@@ -22,67 +22,68 @@
             color: #4A4A4A;
         }
 
-        .container-amigos {
+        .container {
             max-width: 1000px;
             margin: 40px auto;
             padding: 0 20px;
         }
 
+        /* CABEÇALHO REFINADO */
         .cabecalho {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 35px;
         }
 
         .cabecalho h1 {
             font-family: 'Plus Jakarta Sans';
             color: var(--roxo);
-            font-size: 2.5rem;
-            margin-bottom: 10px;
+            font-size: 1.8rem;
+            margin-bottom: 8px;
         }
 
         .cabecalho p {
-            color: #777;
-            font-size: 1.1rem;
+            color: #888;
+            font-size: 0.95rem;
         }
 
         .grid-amigos {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
         }
 
-        /* CARD DO VIZINHO */
+        /* CARD ESTILO ORKUT-MODERNO */
         .card-amigo {
             background: var(--card);
-            padding: 30px;
-            border-radius: 30px;
+            border-radius: 24px;
+            padding: 25px;
             text-align: center;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.8);
             transition: 0.3s;
-            border: 2px solid transparent;
         }
 
         .card-amigo:hover {
-            transform: translateY(-10px);
-            border-color: var(--roxo);
-            box-shadow: 0 15px 35px rgba(108, 92, 231, 0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(108, 92, 231, 0.08);
         }
 
         .foto-amigo {
-            width: 90px;
-            height: 90px;
-            border-radius: 30px;
+            width: 85px;
+            height: 85px;
+            border-radius: 28px;
             object-fit: cover;
-            margin-bottom: 15px;
             border: 3px solid #F0EEFF;
+            margin-bottom: 12px;
         }
 
+        /* FONTES REFINADAS */
         .nome-amigo {
             display: block;
             font-family: 'Plus Jakarta Sans';
             font-weight: 700;
             color: var(--roxo);
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             margin-bottom: 15px;
         }
 
@@ -90,93 +91,92 @@
             background: var(--roxo);
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 10px 15px;
             border-radius: 12px;
             font-weight: 600;
             cursor: pointer;
             width: 100%;
+            font-size: 0.8rem;
             transition: 0.3s;
         }
 
         .btn-conectar:hover {
-            background: #5649c0;
+            opacity: 0.9;
         }
 
-        .vazio {
-            text-align: center;
-            padding: 50px;
-            color: #999;
-            grid-column: 1 / -1;
+        /* TAGS DE AFINIDADE (GATILHO DE CURIOSIDADE) */
+        .tag-afinidade {
+            display: inline-block;
+            background: #F0EEFF;
+            color: var(--roxo);
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
         }
     </style>
 </head>
 
 <body>
-
     <script type="module" src="menu.js"></script>
 
-    <main class="container-amigos">
+    <main class="container">
         <div class="cabecalho">
-            <h1>Membros da Vila</h1>
-            <p>Conheça outras famílias que estão na mesma jornada que você. ✨</p>
+            <h1>Que tal novos amigos? ✨</h1>
+            <p>Famílias com interesses parecidos com os seus.</p>
         </div>
 
         <div class="grid-amigos" id="gridAmigos">
-            <p style="text-align: center; grid-column: 1/-1;">Buscando vizinhos...</p>
+            <p style="text-align: center; grid-column: 1/-1; color: #BBB;">Buscando pessoas incríveis...</p>
         </div>
     </main>
 
     <script type="module">
         import { db, auth } from "./liberi.js";
-        import { collection, query, where, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { collection, query, where, onSnapshot, limit } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                carregarMembros(user.uid);
+                carregarNovosAmigos(user.uid);
             } else {
                 window.location.href = "index.html";
             }
         });
 
-        function carregarMembros(meuId) {
+        function carregarNovosAmigos(meuId) {
             const grid = document.getElementById('gridAmigos');
-
-            // Busca todos os usuários, exceto você mesmo
-            const q = query(collection(db, "usuarios"), where("__name__", "!=", meuId));
+            // Busca usuários, exceto você mesmo
+            const q = query(collection(db, "usuarios"), limit(12));
 
             onSnapshot(q, (snapshot) => {
-                if (snapshot.empty) {
-                    grid.innerHTML = `
-                        <div class="vazio">
-                            <h3 style="color: var(--roxo)">A Vila ainda está crescendo!</h3>
-                            <p>Convide outros pais para fazerem parte dessa rede.</p>
-                        </div>`;
-                    return;
-                }
-
                 grid.innerHTML = "";
                 snapshot.forEach((docSnap) => {
-                    const amigo = docSnap.data();
-                    const idAmigo = docSnap.id;
+                    const dados = docSnap.data();
+                    if (docSnap.id === meuId) return; // Não mostra você mesmo na lista
 
-                    const html = `
+                    // Proteção contra undefined (Lógica de segurança)
+                    const nome = dados.nome || dados.displayName || "Membro Líberi";
+                    const foto = dados.foto || dados.photoURL || "https://via.placeholder.com/85?text=Avatar";
+
+                    grid.insertAdjacentHTML('beforeend', `
                         <div class="card-amigo">
-                            <img src="${amigo.foto || 'https://via.placeholder.com/90'}" class="foto-amigo">
-                            <span class="nome-amigo">${amigo.nome}</span>
-                            <button class="btn-conectar" onclick="conectarAmigo('${idAmigo}', '${amigo.nome}')">
+                            <img src="${foto}" class="foto-amigo">
+                            <span class="nome-amigo">${nome}</span>
+                            ${dados.afinidade ? `<span class="tag-afinidade">${dados.afinidade}</span>` : ''}
+                            <button class="btn-conectar" onclick="dizerOi('${nome}')">
                                 👋 Dizer Oi
                             </button>
                         </div>
-                    `;
-                    grid.insertAdjacentHTML('beforeend', html);
+                    `);
                 });
             });
         }
 
-        window.conectarAmigo = (id, nome) => {
-            alert(`Que legal! Enviamos um aceno para ${nome}. Em breve vocês poderão trocar recados diretos!`);
-            // Aqui futuramente criaremos uma notificação na coleção "notificacoes"
+        window.dizerOi = (nome) => {
+            alert(`Aceno enviado para ${nome}! Conexões reais começam com um pequeno gesto. ✨`);
         };
     </script>
 </body>
