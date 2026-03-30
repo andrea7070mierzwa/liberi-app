@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel do Neuras - Injeção de Sabedoria</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root { --roxo: #6C5CE7; --bg: #F8F9FD; }
+        body { font-family: 'Poppins', sans-serif; background: var(--bg); padding: 40px; display: flex; flex-direction: column; align-items: center; }
+        .admin-card { background: white; padding: 30px; border-radius: 28px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); max-width: 600px; width: 100%; text-align: center; }
+        h1 { font-family: 'Plus Jakarta Sans'; color: var(--roxo); }
+        textarea { width: 100%; height: 200px; padding: 15px; border-radius: 15px; border: 1px solid #DDD; margin: 20px 0; font-family: monospace; font-size: 0.8rem; box-sizing: border-box; }
+        .btn-injeta { background: var(--roxo); color: white; border: none; padding: 15px 30px; border-radius: 15px; font-weight: 700; cursor: pointer; width: 100%; font-size: 1rem; transition: 0.3s; }
+        .btn-injeta:hover { background: #5a4bcf; transform: scale(1.02); }
+        #status { margin-top: 20px; font-weight: 600; color: #666; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+    <div class="admin-card">
+        <h1>Painel do Bálsamo 🧠</h1>
+        <p>Cole o conteúdo do seu arquivo .txt (JSON) abaixo para alimentar o Neuras.</p>
+        
+        <textarea id="jsonInput" placeholder="Cole aqui os dados entre colchetes [ ... ]"></textarea>
+        
+        <button class="btn-injeta" id="btnProcessar">Injetar Lote no Banco</button>
+        
+        <div id="status">Aguardando comando...</div>
+    </div>
+
+    <script type="module">
+        import { db, collection, addDoc, serverTimestamp } from "./liberi.js";
+
+        const btn = document.getElementById('btnProcessar');
+        const input = document.getElementById('jsonInput');
+        const status = document.getElementById('status');
+
+        btn.onclick = async () => {
+            let dados;
+            try {
+                dados = JSON.parse(input.value);
+            } catch (e) {
+                return alert("Erro no formato do texto! Verifique se copiou os colchetes [ ] corretamente.");
+            }
+
+            if (!Array.isArray(dados)) return alert("O conteúdo precisa ser uma lista [ ].");
+
+            btn.disabled = true;
+            btn.innerText = "Processando...";
+            let cont = 0;
+
+            for (const item of dados) {
+                try {
+                    // Mapeamento inteligente para aceitar campos diferentes de cada arquivo
+                    await addDoc(collection(db, "neuras_conhecimento"), {
+                        pergunta: item.pergunta || item.tema || "Sem título",
+                        resposta: item.resposta_simples || item.visao_neuro || "Consulte o especialista.",
+                        o_que_fazer: item.o_que_fazer || item.dica_mestre || "",
+                        pilar: item.categoria || item.tema || "Geral",
+                        faixaEtaria: item.idade_alvo || "0-12m",
+                        fonte: item.fonte || "Neuras de Mãe",
+                        criadoEm: serverTimestamp()
+                    });
+                    cont++;
+                    status.innerText = `✅ Injetando: ${cont} de ${dados.length}...`;
+                } catch (e) {
+                    console.error("Erro no item:", item, e);
+                }
+            }
+
+            status.innerText = `🏁 Missão cumprida! ${cont} itens salvos na nuvem.`;
+            btn.disabled = false;
+            btn.innerText = "Injetar outro Lote";
+            input.value = "";
+        };
+    </script>
+</body>
+</html>

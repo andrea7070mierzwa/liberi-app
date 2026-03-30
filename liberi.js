@@ -1,9 +1,10 @@
-// 1. IMPORTAÇÕES (Tudo organizado em uma única vez por origem)
+// 1. IMPORTAÇÕES COMPLETAS
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import {
   getAuth,
   GoogleAuthProvider,
   signInWithPopup,
+  onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import {
   getFirestore,
@@ -11,10 +12,16 @@ import {
   setDoc,
   getDoc,
   collection,
+  addDoc,
   getDocs,
+  query,
+  where,
+  orderBy,
+  onSnapshot,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-// 2. CONFIGURAÇÃO
+// 2. CONFIGURAÇÃO (Suas chaves oficiais do Líberi)
 const firebaseConfig = {
   apiKey: "AIzaSyAaLzIJ6LgFMOvEmzpmBo8d2Owh_DIyfWI",
   authDomain: "liberi-e377c.firebaseapp.com",
@@ -30,15 +37,22 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
 
-// 4. EXPORTAÇÃO (Uma única linha com TODAS as ferramentas para as outras páginas)
+// 4. EXPORTAÇÃO TURBINADA (Agora com addDoc e ferramentas de tempo)
 export {
   auth,
   db,
   provider,
   signInWithPopup,
+  onAuthStateChanged,
   doc,
   setDoc,
   getDoc,
   collection,
+  addDoc,
   getDocs,
+  query,
+  where,
+  orderBy,
+  onSnapshot,
+  serverTimestamp
 };

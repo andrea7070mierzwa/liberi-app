@@ -1,0 +1,603 @@
+[
+{
+    "id": "051",
+    "pergunta": "Por que meu bebê chora desesperado quando eu saio do campo de visão dele?",
+    "restposta_simples": "Isso é a 'Ansiedade de Separação'. O cérebro dele descobriu que você é uma pessoa separada dele, mas ainda não entende que você vai voltar. Para ele, se você sumiu, você deixou de existir. É um medo real de perda que faz parte do amadurecimento emocional.",
+    "o_que_fazer": "Brinque muito de 'esconder e achar' com paninhos ou as mãos. Isso ensina ao cérebro dele que as coisas somem, mas reaparecem. Sempre se despeça antes de sair para criar confiança.",
+    "fonte": "Teoria do Apego (Mary Ainsworth)",
+    "categoria": "Emoções",
+    "idade_alvo": "7-10 meses"
+  },
+  {
+    "id": "052",
+    "pergunta": "Meu bebê começou a morder tudo e todos, ele está ficando agressivo?",
+    "resposta_simples": "De jeito nenhum! Morder nessa fase é uma forma de exploração sensorial e, às vezes, de comunicação. O cérebro dele ainda não tem controle sobre os impulsos e ele usa a boca para 'sentir' a resistência das coisas e das pessoas.",
+    "o_que_fazer": "Diga 'não' com firmeza, mas sem gritar, e ofereça um mordedor gelado. Explique que 'morder dói'. O cérebro dele precisa de repetição para aprender a empatia.",
+    "fonte": "Desenvolvimento Sensório-Motor",
+    "categoria": "Comportamento",
+    "idade_alvo": "8-12 meses"
+  },
+  {
+    "id": "053",
+    "pergunta": "Por que ele joga a comida no chão e fica olhando para ela?",
+    "resposta_simples": "Ele está testando as leis da física! O cérebro está aprendendo sobre gravidade, distância e som. Além disso, ele está observando a sua reação para entender o poder que ele tem sobre o ambiente ao redor.",
+    "o_que_fazer": "Não leve para o lado pessoal. É um experimento científico. Se a bagunça incomodar, ofereça apenas um pedaço de alimento por vez para ele explorar no prato.",
+    "fonte": "Desenvolvimento Cognitivo (Piaget)",
+    "categoria": "Desenvolvimento",
+    "idade_alvo": "6-12 meses"
+  },
+  {
+    "id": "054",
+    "pergunta": "O bebê já entende o nome dele ou ele atende por costume?",
+    "resposta_simples": "Por volta dos 7 a 9 meses, o cérebro já consegue isolar o som do nome dele de outros ruídos. Ele entende que aquele som específico se refere a ele e ao corpo dele. É um marco enorme da consciência de si mesmo.",
+    "o_que_fazer": "Chame-o pelo nome com frequência e sorria quando ele olhar. Evite usar apenas apelidos o tempo todo para ajudar o cérebro dele a fixar essa identidade sonora.",
+    "fonte": "Neuropsicologia da Linguagem",
+    "categoria": "Cérebro",
+    "idade_alvo": "7-9 meses"
+  },
+  {
+    "id": "055",
+    "pergunta": "Por que o sono piora quando o bebê aprende a engatinhar ou ficar em pé?",
+    "resposta_simples": "O cérebro está tão animado com a nova habilidade que não quer 'desligar'. À noite, os neurônios ficam revisando os movimentos, e o bebê pode acabar engatinhando ou tentando levantar dormindo! É uma sobrecarga de aprendizado motor.",
+    "o_que_fazer": "Dê muito espaço para ele praticar o movimento durante o dia. À noite, redobre a calma e o acolhimento, sabendo que é uma fase temporária de 'reorganização' do cérebro.",
+    "fonte": "Higiene do Sono Infantil",
+    "categoria": "Sono",
+    "idade_alvo": "8-11 meses"
+  },
+  {
+    "id": "056",
+    "pergunta": "Meu bebê parou de comer o que comia antes. É frescura?",
+    "resposta_simples": "Pode ser a 'Neofobia Alimentar' começando ou apenas o cérebro exercitando a vontade própria. O bebê está descobrindo que pode dizer 'não' e que tem controle sobre o que entra no corpo dele. É um exercício de autonomia.",
+    "o_que_fazer": "Continue oferecendo sem forçar. O cérebro precisa ver o mesmo alimento várias vezes antes de decidir que ele é seguro e gostoso novamente.",
+    "fonte": "Psicologia da Nutrição Infantil",
+    "categoria": "Comportamento",
+    "idade_alvo": "10-12 meses"
+  },
+  {
+    "id": "057",
+    "pergunta": "O bebê de 9 meses já entende quando eu aponto para algo?",
+    "resposta_simples": "Sim! Isso se chama 'Atenção Compartilhada'. É um salto gigante: o cérebro dele entende que você está vendo algo interessante e ele quer ver também. É a base da comunicação social e da empatia.",
+    "o_que_fazer": "Aponte para pássaros, carros ou objetos e fale o nome deles. Isso 'abre' as janelas do cérebro para o aprendizado de palavras novas.",
+    "fonte": "Desenvolvimento da Comunicação Social",
+    "categoria": "Linguagem",
+    "idade_alvo": "9-12 meses"
+  },
+  {
+    "id": "058",
+    "pergunta": "Por que ele fica bravo quando eu tiro um objeto perigoso da mão dele?",
+    "resposta_simples": "Porque o cérebro dele ainda não tem o 'freio' emocional (córtex pré-frontal). Ele foca intensamente no que quer e, quando o desejo é interrompido, o sistema de frustração dispara um alarme imediato. Ele não sabe se acalmar sozinho.",
+    "o_que_fazer": "Em vez de apenas tirar, tente trocar o objeto perigoso por um brinquedo interessante. O redirecionamento de atenção funciona melhor para o cérebro nessa idade.",
+    "fonte": "Neurobiologia das Emoções",
+    "categoria": "Comportamento",
+    "idade_alvo": "9-12 meses"
+  },
+  {
+    "id": "059",
+    "pergunta": "Bebês dessa idade já sentem medo de coisas específicas (como o aspirador)?",
+    "resposta_simples": "Sim. Como o cérebro está processando melhor os sons e o espaço, ele começa a perceber o que é 'grande' ou 'barulhento demais'. O medo é o cérebro tentando protegê-lo de algo que ele ainda não entende como funciona.",
+    "o_que_fazer": "Não force o contato com o que ele tem medo. Deixe-o observar de longe, no seu colo seguro, até que o cérebro dele processe que aquele barulho não é um perigo.",
+    "fonte": "Desenvolvimento Psicológico Infantil",
+    "categoria": "Emoções",
+    "idade_alvo": "8-12 meses"
+  },
+  {
+    "id": "060",
+    "pergunta": "O que acontece no cérebro quando o bebê começa a dar os primeiros passos?",
+    "resposta_simples": "É uma explosão de conexões no cerebelo (parte do cérebro que cuida do equilíbrio). O bebê precisa processar a visão, o equilíbrio, a força muscular e a coragem, tudo ao mesmo tempo. É um dos maiores exercícios de inteligência da vida humana.",
+    "o_que_fazer": "Crie um ambiente seguro para ele cair sem se machucar feio. O erro e a queda fazem parte do aprendizado dos neurônios para ajustar o equilíbrio.",
+    "fonte": "Neurociência Motora",
+    "categoria": "Desenvolvimento",
+    "idade_alvo": "10-12 meses"
+  }
+,
+  {
+    "id": "061",
+    "pergunta": "Por que meu bebê parou de aceitar a colher e quer pegar a comida com a mão?",
+    "resposta_simples": "Isso é o cérebro pedindo autonomia! Ele descobriu que tem mãos e quer sentir a textura, a temperatura e o peso do que vai comer. Para o cérebro, esmagar a comida é uma aula de ciência e tato antes de ser uma refeição.",
+    "o_que_fazer": "Deixe ele explorar! Coloque um pouco de comida no prato para ele pegar e outra colher na sua mão. O aprendizado pelo toque diminui a chance de ele ser uma criança seletiva no futuro.",
+    "fonte": "Introdução Alimentar (Abordagem BLW)",
+    "categoria": "Desenvolvimento",
+    "idade_alvo": "6-9 meses"
+  },
+  {
+    "id": "062",
+    "pergunta": "O bebê de 8 meses já sabe quando está fazendo algo 'errado'?",
+    "resposta_simples": "Ele ainda não tem noção de moral (certo ou errado), mas ele é um mestre em ler a sua reação. Se ele faz algo e você faz uma cara séria, o cérebro dele registra: 'isso causa uma reação diferente'. Ele repete para testar se a sua reação será a mesma sempre.",
+    "o_que_fazer": "Mantenha a calma e seja constante. Se ele puxar o seu cabelo, diga 'não, isso dói' e tire a mão dele. Repetir a mesma reação ajuda o cérebro a criar o limite.",
+    "fonte": "Neuropsicologia do Comportamento",
+    "categoria": "Comportamento",
+    "idade_alvo": "8-12 meses"
+  },
+  {
+    "id": "063",
+    "pergunta": "Por que o bebê fica 'tagarelando' (bababa, dadada) sem parar agora?",
+    "resposta_simples": "Isso se chama 'Balbucio Canônico'. O cérebro está treinando os músculos da boca e da língua para formar sílabas. Ele está testando os sons e esperando que você responda, como se fosse uma conversa de verdade.",
+    "o_que_fazer": "Responda a ele! Se ele disser 'ba-ba', diga 'Sim, a bola!'. Essa 'conversa' de ida e volta é o que faz os neurônios da fala crescerem e se conectarem.",
+    "fonte": "Desenvolvimento da Linguagem (Harvard)",
+    "categoria": "Linguagem",
+    "idade_alvo": "6-10 meses"
+  },
+  {
+    "id": "064",
+    "pergunta": "Meu bebê começou a bater os brinquedos uns nos outros. O que é isso?",
+    "resposta_simples": "O cérebro está aprendendo sobre a resistência dos materiais e sobre o som. Ele está descobrindo que pode criar um efeito no mundo usando dois objetos. É um sinal de que a coordenação entre as duas mãos e os dois lados do cérebro está melhorando.",
+    "o_que_fazer": "Ofereça objetos de sons diferentes (uma colher de pau e uma de metal). Isso enriquece o 'banco de dados' sonoro do cérebro dele.",
+    "fonte": "Desenvolvimento Sensório-Motor",
+    "categoria": "Cérebro",
+    "idade_alvo": "7-9 meses"
+  },
+  {
+    "id": "065",
+    "pergunta": "Por que ele chora quando eu coloco ele no cadeirão ou no carrinho?",
+    "resposta_simples": "Nessa idade, o bebê quer movimento. O cérebro está programado para explorar o espaço (engatinhar, rolar). Ser 'preso' em um cinto parece uma interrupção de uma missão muito importante de aprendizado para ele.",
+    "o_que_fazer": "Tente distrair o cérebro dele com um brinquedo interessante ou uma música enquanto o prende. Explique o que vai acontecer: 'Agora vamos passear!'. A previsibilidade ajuda a acalmar o sistema de alerta.",
+    "fonte": "Psicologia do Desenvolvimento",
+    "categoria": "Comportamento",
+    "idade_alvo": "8-12 meses"
+  },
+  {
+    "id": "066",
+    "pergunta": "O bebê entende o que é um 'tchau' ou 'mandar beijo'?",
+    "resposta_simples": "Sim! Por volta dos 9 meses, o cérebro começa a associar gestos a significados sociais. Ele entende que o movimento da mão significa uma despedida. É a comunicação por gestos, que vem antes das palavras.",
+    "o_que_fazer": "Continue fazendo os gestos e comemorando quando ele repetir. Isso mostra ao cérebro dele que a comunicação funciona e é divertida.",
+    "fonte": "Marcos do Desenvolvimento Social",
+    "categoria": "Linguagem",
+    "idade_alvo": "9-11 meses"
+  },
+  {
+    "id": "067",
+    "pergunta": "Por que meu bebê parece 'ignorar' quando eu chamo, mas olha se ouve o barulho de um desenho?",
+    "resposta_simples": "O cérebro do bebê às vezes entra em 'foco seletivo'. Se ele está concentrado em algo, ele literalmente 'desliga' o resto. Já sons eletrônicos de desenhos são feitos para serem hipnóticos e 'sequestrarem' a atenção do cérebro de forma artificial.",
+    "o_que_fazer": "Toque suavemente no bebê antes de falar com ele para 'chamar' o cérebro dele de volta. Evite telas, pois elas treinam o cérebro para só prestar atenção em estímulos muito fortes.",
+    "fonte": "Neurociência da Atenção",
+    "categoria": "Cérebro",
+    "idade_alvo": "6-12 meses"
+  },
+  {
+    "id": "068",
+    "pergunta": "O bebê de 10 meses já consegue sentir culpa?",
+    "resposta_simples": "Não. O cérebro ainda não tem a parte que processa a culpa (o julgamento moral). Se ele faz algo que você não gosta e chora quando você briga, ele está chorando pelo seu tom de voz e pelo medo de perder a sua conexão, não por arrependimento.",
+    "o_que_fazer": "Não espere que ele peça desculpas ou entenda o erro. Foque em mostrar o que ele **pode** fazer em vez de focar apenas no que ele não pode.",
+    "fonte": "Desenvolvimento Moral Infantil",
+    "categoria": "Emoções",
+    "idade_alvo": "10-12 meses"
+  },
+  {
+    "id": "069",
+    "pergunta": "Por que ele fica apontando para tudo o que vê?",
+    "resposta_simples": "Apontar é como se ele estivesse dizendo: 'Olha que legal! Você está vendo o que eu estou vendo?'. É o nascimento da 'atenção conjunta'. O cérebro dele quer compartilhar a experiência do mundo com você.",
+    "o_que_fazer": "Nomeie tudo o que ele apontar! 'Sim, é o Totó!', 'Sim, é a árvore!'. Isso é o combustível mais potente para o vocabulário dele explodir nos próximos meses.",
+    "fonte": "Psicologia Cognitiva Social",
+    "categoria": "Linguagem",
+    "idade_alvo": "9-12 meses"
+  },
+  {
+    "id": "070",
+    "pergunta": "Meu bebê tem medo de banho de repente, o que aconteceu?",
+    "resposta_simples": "O cérebro dele agora percebe melhor o perigo e o espaço. Ele pode ter medo do barulho da água escorrendo pelo ralo (achando que ele também pode ir por ali) ou de cair. É um medo comum de quem está descobrindo como o mundo físico funciona.",
+    "o_que_fazer": "Não force. Use uma bacia menor dentro da banheira ou tome banho com ele no colo para que o cérebro dele sinta a segurança do seu corpo novamente.",
+    "fonte": "Desenvolvimento Emocional Infantil",
+    "categoria": "Emoções",
+    "idade_alvo": "8-12 meses"
+  }
+,
+  {
+    "id": "071",
+    "pergunta": "Por que o bebê fica 'oferecendo' o brinquedo e depois puxa de volta?",
+    "resposta_simples": "Isso é o cérebro testando a interação social! Ele está aprendendo sobre o 'dar e receber'. Ele quer ver a sua reação quando ele te dá algo e a sua reação quando ele retira. É um treino de controle e de conexão com você.",
+    "o_que_fazer": "Finja que aceita e agradeça: 'Obrigada!'. Se ele puxar de volta, sorria. Esse jogo fortalece os neurônios da empatia e da troca social.",
+    "fonte": "Desenvolvimento Socioemocional (Erikson)",
+    "categoria": "Vínculo",
+    "idade_alvo": "9-12 meses"
+  },
+  {
+    "id": "072",
+    "pergunta": "Meu bebê de 10 meses faz 'birra' quando eu tiro o celular dele?",
+    "resposta_simples": "Não é birra por maldade. O cérebro dele recebe uma descarga de prazer (dopamina) com as luzes da tela. Quando você tira, o nível de prazer cai bruscamente e o sistema de frustração 'explode'. Ele ainda não tem maturidade para lidar com essa perda.",
+    "o_que_fazer": "Evite dar o celular. Se ele pegar, troque por algo físico e interessante (uma caixa com tampas, por exemplo). Distrair o foco do cérebro funciona melhor do que apenas proibir.",
+    "fonte": "Neurobiologia do Vício em Telas",
+    "categoria": "Comportamento",
+    "idade_alvo": "6-12 meses"
+  },
+  {
+    "id": "073",
+    "pergunta": "Por que o bebê começa a bater palminhas sozinho de repente?",
+    "resposta_simples": "Bater palmas exige que os dois lados do cérebro trabalhem juntos perfeitamente (coordenação bilateral). Quando ele consegue, o cérebro dele sente uma satisfação enorme por ter dominado esse movimento complexo.",
+    "o_que_fazer": "Comemore com ele! Bater palmas de volta valida o esforço que o cérebro dele fez para coordenar as duas mãos ao mesmo tempo.",
+    "fonte": "Desenvolvimento Psicomotor",
+    "categoria": "Cérebro",
+    "idade_alvo": "9-11 meses"
+  },
+  {
+    "id": "074",
+    "pergunta": "O bebê de 11 meses já sabe que o 'espelho' é ele?",
+    "resposta_simples": "Ele está quase lá! Ele começa a perceber que os movimentos do 'bebê do espelho' são iguais aos dele. O cérebro está finalizando a construção da 'autoimagem'. É o início da consciência de que ele é um indivíduo único no mundo.",
+    "o_que_fazer": "Coloque uma fitinha ou um pingo de tinta no nariz dele e mostre no espelho. Se ele tentar tocar o próprio nariz (e não o do espelho), é sinal de que o cérebro já se reconheceu!",
+    "fonte": "Teste da Mancha (Gordon Gallup Jr.)",
+    "categoria": "Cérebro",
+    "idade_alvo": "11-12 meses"
+  },
+  {
+    "id": "075",
+    "pergunta": "Por que o bebê parece 'ignorar' o perigo (como a beirada do sofá)?",
+    "resposta_simples": "O cérebro dele ainda não tem a percepção de profundidade totalmente pronta e, mais importante, ele não tem o 'freio' do medo. A curiosidade de explorar é muito mais forte do que o instinto de preservação nessa idade.",
+    "o_que_fazer": "Seja o 'córtex pré-frontal' (o freio) dele. Garanta um ambiente seguro onde ele possa cair sem se machucar, mas esteja sempre por perto para evitar quedas perigosas.",
+    "fonte": "Neuropsicologia do Desenvolvimento",
+    "categoria": "Saúde Cerebral",
+    "idade_alvo": "8-12 meses"
+  },
+  {
+    "id": "076",
+    "pergunta": "Meu bebê faz muita 'bagunça' na hora de comer. Devo proibir?",
+    "resposta_simples": "A bagunça é o jeito do cérebro aprender! Sentir a textura da banana amassada ou do arroz entre os dedos envia informações sensoriais riquíssimas para o cérebro. Isso diminui a chance de ele ter nojo de texturas no futuro.",
+    "o_que_fazer": "Forre o chão e relaxe. Deixe ele 'fazer arte' com a comida. O cérebro dele agradece essa aula prática de texturas e sabores.",
+    "fonte": "Integração Sensorial na Alimentação",
+    "categoria": "Desenvolvimento",
+    "idade_alvo": "6-12 meses"
+  },
+  {
+    "id": "077",
+    "pergunta": "O bebê entende quando eu peço para ele 'pegar a bola'?",
+    "resposta_simples": "Se ele já conhece o objeto 'bola', o cérebro dele consegue ligar o som da palavra à imagem do objeto. Ele já entende ordens simples, mesmo que ainda não consiga falar a palavra. A compreensão vem sempre antes da fala.",
+    "o_que_fazer": "Dê comandos simples e claros. 'Cadê o sapato?', 'Pega o brinquedo'. Comemore quando ele acertar para fortalecer essas conexões de linguagem.",
+    "fonte": "Neurobiologia da Linguagem",
+    "categoria": "Linguagem",
+    "idade_alvo": "10-12 meses"
+  },
+  {
+    "id": "078",
+    "pergunta": "Por que o bebê fica 'irritado' quando está tentando aprender algo novo?",
+    "resposta_simples": "Aprender uma habilidade nova (como encaixar um bloco) exige muito esforço dos neurônios. Quando não sai de primeira, o cérebro libera um pouco de estresse. É a frustração do aprendizado, algo que todos nós sentimos.",
+    "o_que_fazer": "Não faça por ele, mas dê uma 'ajudinha' para ele conseguir terminar. O sucesso final libera prazer no cérebro e ensina a persistência.",
+    "fonte": "Psicologia da Aprendizagem",
+    "categoria": "Comportamento",
+    "idade_alvo": "9-12 meses"
+  },
+  {
+    "id": "079",
+    "pergunta": "O bebê de um ano já pode ter 'amigos'?",
+    "resposta_simples": "Eles praticam o 'Brincar Paralelo'. O cérebro social ainda não sabe brincar **com** o outro (trocando papéis), mas ele adora brincar **ao lado** de outra criança. Eles se observam e imitam um ao outro, o que é o início da socialização.",
+    "o_que_fazer": "Coloque-o perto de outras crianças, mas não force a interação. Só de observar o outro, o cérebro dele já está aprendendo muito sobre comportamento social.",
+    "fonte": "Estágios do Brincar (Mildred Parten)",
+    "categoria": "Emoções",
+    "idade_alvo": "12 meses"
+  },
+  {
+    "id": "080",
+    "pergunta": "Por que o bebê chora quando vê outra criança chorando?",
+    "resposta_simples": "Isso são os 'Neurônios-Espelho' em ação novamente! O cérebro do bebê sente o sofrimento do outro como se fosse dele. É a forma mais pura e primitiva de empatia. Ele ainda não sabe separar a emoção do outro da dele.",
+    "o_que_fazer": "Acolha o seu bebê e explique: 'O amiguinho está triste, mas vai passar'. Isso ajuda o cérebro dele a começar a diferenciar as próprias emoções das dos outros.",
+    "fonte": "Neurociência da Empatia",
+    "categoria": "Emoções",
+    "idade_alvo": "10-12 meses"
+  }
+,
+  {
+    "id": "081",
+    "pergunta": "Por que o bebê fica 'gritando' mesmo sem estar com dor ou fome?",
+    "resposta_simples": "Ele descobriu a potência da própria voz! O cérebro está testando o volume e vendo como você reage. Para ele, o grito é uma ferramenta nova de comunicação: 'Olha o que eu consigo fazer!'.",
+    "o_que_fazer": "Não grite de volta. Responda com voz calma: 'Nossa, que voz forte!'. Isso ensina ao cérebro dele que ele não precisa gritar para ser ouvido.",
+    "fonte": "Desenvolvimento da Fala e Linguagem",
+    "categoria": "Linguagem",
+    "idade_alvo": "7-10 meses"
+  },
+  {
+    "id": "082",
+    "pergunta": "O bebê de 10 meses já entende o que é 'perigoso'?",
+    "resposta_simples": "Não totalmente. O cérebro dele foca na curiosidade de explorar. Ele entende o seu 'Não' pelo tom de voz assustado, mas a memória de curto prazo dele é curta; ele pode esquecer o perigo segundos depois de você avisar.",
+    "o_que_fazer": "Repetição e proteção física são a chave. O cérebro precisa de centenas de repetições para gravar que algo realmente oferece risco.",
+    "fonte": "Neuropsicologia do Desenvolvimento",
+    "categoria": "Comportamento",
+    "idade_alvo": "9-12 meses"
+  },
+  {
+    "id": "083",
+    "pergunta": "Por que o bebê gosta tanto de brincar de 'Cadê? Achou!'?",
+    "resposta_simples": "Isso treina a 'Permanência do Objeto'. O cérebro está aprendendo que as coisas continuam existindo mesmo quando ele não as vê. A alegria do 'Achou!' é o alívio do cérebro ao confirmar que o mundo é previsível.",
+    "o_que_fazer": "Brinque muito! Isso ajuda a diminuir a ansiedade de separação, pois o cérebro entende que você também 'reaparece'.",
+    "fonte": "Psicologia Cognitiva (Piaget)",
+    "categoria": "Cérebro",
+    "idade_alvo": "6-10 meses"
+  },
+  {
+    "id": "084",
+    "pergunta": "Meu bebê começou a ter 'medo' de coisas bobas, como o barulho da chuva?",
+    "resposta_simples": "O cérebro dele agora processa sons com mais detalhes, mas ainda não tem lógica para explicá-los. O medo é uma resposta de proteção do sistema nervoso contra o desconhecido.",
+    "o_que_fazer": "Acolha sem rir do medo. Diga: 'É só a chuva, a mamãe está aqui'. O seu colo é o 'seguro' que o cérebro dele precisa para processar o medo.",
+    "fonte": "Neurobiologia das Emoções",
+    "categoria": "Emoções",
+    "idade_alvo": "8-12 meses"
+  },
+  {
+    "id": "085",
+    "pergunta": "Por que o bebê fica 'balançando' o corpo quando ouve música?",
+    "resposta_simples": "O cérebro dele está conectando o sistema auditivo com o sistema motor (movimento). Balançar é a forma do cérebro 'sentir' o ritmo e organizar o equilíbrio do corpo.",
+    "o_que_fazer": "Dance com ele! Esse estímulo rítmico ajuda na coordenação motora e na felicidade cerebral (libera endorfina).",
+    "fonte": "Neurociência da Música",
+    "categoria": "Desenvolvimento",
+    "idade_alvo": "6-12 meses"
+  },
+  {
+    "id": "086",
+    "pergunta": "O bebê de 11 meses já entende ordens como 'Dá para a mamãe'?",
+    "resposta_simples": "Sim! O cérebro já consegue associar uma ação a um pedido verbal. Ele entende a intenção da sua frase antes mesmo de conseguir falar. É o início da cooperação social.",
+    "o_que_fazer": "Peça coisas simples e agradeça sempre. Isso reforça os circuitos de recompensa no cérebro dele, incentivando a colaboração.",
+    "fonte": "Desenvolvimento Socioemocional",
+    "categoria": "Comportamento",
+    "idade_alvo": "10-12 meses"
+  },
+  {
+    "id": "087",
+    "pergunta": "Por que o bebê quer comer a comida do meu prato e não a dele?",
+    "resposta_simples": "Isso se chama 'Aprendizado por Observação'. O cérebro dele pensa: 'Se a mamãe está comendo aquilo, deve ser seguro e bom'. É um instinto de sobrevivência para aprender o que é comestível.",
+    "o_que_fazer": "Coma junto com ele as mesmas coisas saudáveis. Ver você comer é o melhor incentivo para o cérebro dele aceitar novos sabores.",
+    "fonte": "Nutrição Infantil e Comportamento",
+    "categoria": "Desenvolvimento",
+    "idade_alvo": "6-12 meses"
+  },
+  {
+    "id": "088",
+    "pergunta": "O bebê sente quando eu estou triste ou chorando?",
+    "resposta_simples": "Sente sim. Através dos 'Neurônios-Espelho', o cérebro do bebê 'copia' o seu estado emocional. Ele não entende o motivo, mas sente a tensão ou a tristeza no seu corpo e na sua voz.",
+    "o_que_fazer": "Não precisa esconder suas emoções, mas explique com calma: 'A mamãe está um pouco triste agora, mas vai ficar bem'. Isso ensina inteligência emocional desde cedo.",
+    "fonte": "Neurociência do Afeto",
+    "categoria": "Vínculo",
+    "idade_alvo": "0-12 meses"
+  },
+  {
+    "id": "089",
+    "pergunta": "Por que o bebê 'esquece' um brinquedo rápido e quer outro?",
+    "resposta_simples": "A janela de atenção dele ainda é muito curta (poucos minutos). O cérebro dele é programado para buscar novidades constantes para aprender o máximo possível no menor tempo.",
+    "o_que_fazer": "Não ofereça muitos brinquedos de uma vez. O excesso 'frita' a atenção. Ofereça um, e quando ele cansar, troque por outro.",
+    "fonte": "Neuropsicologia da Atenção",
+    "categoria": "Desenvolvimento",
+    "idade_alvo": "6-12 meses"
+  },
+  {
+    "id": "090",
+    "pergunta": "Por que o bebê começou a ter dificuldade para dormir se antes dormia bem?",
+    "resposta_simples": "Muitas vezes é um 'salto de desenvolvimento'. O cérebro está tão focado em aprender a engatinhar ou falar que não quer 'perder tempo' dormindo. É uma agitação cerebral temporária.",
+    "o_que_fazer": "Mantenha a rotina firme. O cérebro precisa de previsibilidade para se acalmar em meio a tantas novidades internas.",
+    "fonte": "Medicina do Sono Infantil",
+    "categoria": "Sono",
+    "idade_alvo": "8-11 meses"
+  }
+,
+  {
+    "id": "091",
+    "pergunta": "Por que o bebê aponta para o que quer e grita ao mesmo tempo?",
+    "resposta_simples": "Isso se chama 'Comunicação Intencional'. O cérebro dele já sabe o que quer, mas como ainda não tem as palavras, ele usa o corpo (apontar) e o som (grito) para garantir que você entenda. É um sinal de que os neurônios da linguagem estão prontos para 'explodir' em palavras em breve.",
+    "o_que_fazer": "Dê nome ao que ele aponta: 'Ah, você quer a água? Aqui está a água'. Isso ensina ao cérebro o som certo para aquele desejo.",
+    "fonte": "Desenvolvimento da Comunicação (Tomasello)",
+    "categoria": "Linguagem",
+    "idade_alvo": "10-12 meses"
+  },
+  {
+    "id": "092",
+    "pergunta": "Meu bebê de 1 ano já entende quando eu digo 'Não pode'?",
+    "resposta_simples": "Ele entende o seu tom de voz e a sua expressão séria, mas o cérebro dele ainda não tem o 'freio' (controle inibitório) para parar o que está fazendo por vontade própria. Ele para pelo susto ou pela sua interrupção, não porque 'aprendeu' a regra.",
+    "o_que_fazer": "Seja persistente e paciente. Em vez de apenas dizer 'não', tire-o da situação ou ofereça algo que ele 'possa' fazer. O cérebro aprende mais pelo que é permitido.",
+    "fonte": "Neuropsicologia das Funções Executivas",
+    "categoria": "Comportamento",
+    "idade_alvo": "12 meses"
+  },
+  {
+    "id": "093",
+    "pergunta": "Por que o bebê fica 'fascinado' por buracos, tomadas e frestas?",
+    "resposta_simples": "O cérebro está explorando a 'profundidade' e o conceito de 'dentro e fora'. Buracos são mistérios visuais que desafiam a inteligência dele. Ele quer saber: 'O que tem ali? Meus dedos cabem?'.",
+    "o_que_fazer": "Proteja todas as tomadas, claro! Mas ofereça brinquedos de encaixe ou caixas com furos para ele explorar essa curiosidade de forma segura.",
+    "fonte": "Desenvolvimento Sensório-Motor",
+    "categoria": "Desenvolvimento",
+    "idade_alvo": "9-12 meses"
+  },
+  {
+    "id": "094",
+    "pergunta": "O bebê de 1 ano já consegue ter 'senso de humor'?",
+    "resposta_simples": "Sim! O cérebro já entende o que é o 'esperado' e o que é o 'absurdo'. Se você coloca uma meia na mão ou faz um barulho engraçado na hora errada, ele ri porque o cérebro dele percebeu a quebra da rotina. É um sinal de inteligência cognitiva.",
+    "o_que_fazer": "Brinque muito de bobices! Rir junto fortalece o vínculo e ensina ao cérebro que o mundo social pode ser leve e divertido.",
+    "fonte": "Psicologia do Humor Infantil",
+    "categoria": "Emoções",
+    "idade_alvo": "10-12 meses"
+  },
+  {
+    "id": "095",
+    "pergunta": "Por que o bebê morde o próprio braço ou a mão quando está bravo?",
+    "resposta_simples": "Como ele ainda não sabe falar 'estou com raiva', a emoção transborda para o corpo. Ele morde a si mesmo porque é a forma mais rápida de sentir uma sensação física que 'distraia' o cérebro daquela frustração interna que ele não sabe controlar.",
+    "o_que_fazer": "Acolha-o e ajude-o a se acalmar. Diga: 'Eu sei que você está bravo'. Com o tempo e o carinho, o cérebro dele aprenderá a lidar com a raiva de formas mais calmas.",
+    "fonte": "Neurobiologia da Autorregulação",
+    "categoria": "Emoções",
+    "idade_alvo": "11-12 meses"
+  },
+  {
+    "id": "096",
+    "pergunta": "O bebê de um ano já entende o conceito de 'meu'?",
+    "resposta_simples": "Está começando. O cérebro está construindo a noção de posse como uma extensão do 'eu'. Se ele não quer emprestar um brinquedo, não é porque ele é egoísta, é porque para o cérebro dele, aquele objeto faz parte da segurança dele.",
+    "o_que_fazer": "Não force o compartilhamento agora. Deixe que ele se sinta seguro com o que é dele para que, no futuro, ele tenha confiança para dividir com os outros.",
+    "fonte": "Desenvolvimento da Personalidade (Wallon)",
+    "categoria": "Comportamento",
+    "idade_alvo": "12 meses"
+  },
+  {
+    "id": "097",
+    "pergunta": "Por que o bebê prefere brincar com as chaves ou o controle remoto do que com os brinquedos caros?",
+    "resposta_simples": "O cérebro do bebê é programado para a sobrevivência. Ele quer aprender a usar as ferramentas que **você** usa. Brinquedos de plástico não têm o mesmo 'peso' de realidade que os objetos que ele vê os adultos manuseando com tanta atenção.",
+    "o_que_fazer": "Ofereça objetos reais e seguros (colheres de metal, potes de cozinha, chaves velhas limpas). Isso satisfaz o desejo do cérebro de 'ser gente grande'.",
+    "fonte": "Aprendizado por Imitação Social",
+    "categoria": "Cérebro",
+    "idade_alvo": "9-12 meses"
+  },
+  {
+    "id": "098",
+    "pergunta": "O bebê de um ano já sente saudade?",
+    "resposta_simples": "Sim. Agora que o cérebro já tem a 'permanência do objeto' bem formada, ele consegue guardar a sua imagem na mente. Quando você não está, ele sente a falta daquela segurança e o cérebro envia sinais de alerta (choro ou busca).",
+    "o_que_fazer": "Deixe objetos com o seu cheiro com ele quando precisar sair. Isso ajuda o cérebro dele a manter a sensação de que você ainda está por perto emocionalmente.",
+    "fonte": "Neurobiologia do Vínculo Afetivo",
+    "categoria": "Vínculo",
+    "idade_alvo": "10-12 meses"
+  },
+  {
+    "id": "099",
+    "pergunta": "Por que o bebê começa a 'balançar a cabeça negativamente' para tudo?",
+    "resposta_simples": "O 'Não' é a primeira grande descoberta do poder social do bebê. O cérebro descobriu que ele pode negar algo e mudar o que acontece. É um exercício fascinante de vontade própria e independência.",
+    "o_que_fazer": "Não leve para o pessoal. É uma fase importante. Ofereça escolhas simples ('Você quer a blusa azul ou a vermelha?') para que o cérebro dele sinta que tem algum controle.",
+    "fonte": "Desenvolvimento da Autonomia",
+    "categoria": "Comportamento",
+    "idade_alvo": "11-12 meses"
+  },
+  {
+    "id": "100",
+    "pergunta": "Qual o segredo para um cérebro feliz ao completar 1 ano?",
+    "resposta_simples": "Equilíbrio entre exploração e colo. O cérebro precisa de liberdade para engatinhar e descobrir o mundo, mas precisa saber que o 'porto seguro' (você) está sempre ali para quando ele se cansar ou se assustar.",
+    "o_que_fazer": "Continue sendo a base segura dele. Um bebê que se sente amado aos 12 meses terá um cérebro muito mais resiliente para os desafios dos próximos anos.",
+    "fonte": "Centro de Desenvolvimento Infantil (Harvard)",
+    "categoria": "Cérebro",
+    "idade_alvo": "12 meses"
+  }
+]
+
+
+[
+  {
+    "id": "PAI01",
+    "pergunta": "Sinto que sou 'coadjuvante' e que o bebê só quer a mãe. É normal se sentir excluído?",
+    "resposta_simples": "É biológico, mas temporário. Nos primeiros meses, o bebê busca o cheiro e a voz da mãe como porto seguro. O cérebro do pai pode interpretar isso como rejeição, gerando frustração. Mas entenda: você não é coadjuvante, você é o 'suporte do suporte'.",
+    "o_que_fazer": "Crie momentos exclusivos de toque (banho, troca de fralda, ninar). Isso ensina ao cérebro do bebê que o seu colo também é um lugar de segurança e prazer.",
+    "fonte": "Psicologia do Vínculo Paterno"
+  },
+  {
+    "id": "PAI02",
+    "pergunta": "Sinto uma pressão enorme para 'dar conta de tudo' financeiramente e emocionalmente. Estou exausto.",
+    "resposta_simples": "O cérebro masculino muitas vezes ativa o modo 'provedor/protetor' sob estresse, o que gera uma carga mental altíssima. Se você não descansa, seu nível de cortisol sobe, e você acaba ficando reativo ou impaciente com a parceira e o bebê.",
+    "o_que_fazer": "Admita a exaustão. Ser pai não é ser super-herói. Divida as angústias com a parceira ou amigos que também são pais. O desabafo reduz a pressão cerebral.",
+    "fonte": "Saúde Mental do Homem na Parentalidade"
+  },
+  {
+    "id": "PAI03",
+    "pergunta": "Por que sinto irritação ou raiva quando o bebê chora muito?",
+    "resposta_simples": "O choro do bebê é feito para incomodar o cérebro e gerar ação. Se você está cansado, esse som ativa a sua 'amígdala' (centro do medo e raiva) em vez do sistema de cuidado. É uma resposta de estresse do seu sistema nervoso.",
+    "o_que_facer": "Se sentir que vai explodir, coloque o bebê em um lugar seguro (berço), saia do quarto por 2 minutos, respire fundo e beba água. Volte quando seu cérebro sair do modo 'luta ou fuga'.",
+    "fonte": "Neurobiologia da Reatividade Paternal"
+  },
+  {
+    "id": "PAI04",
+    "pergunta": "Minha parceira critica tudo o que eu faço com o bebê. Sinto que não sei fazer nada certo.",
+    "resposta_simples": "Isso se chama 'Gatekeeping Materno'. O cérebro da mãe está em alerta máximo e ela acha que só o jeito dela é seguro. Isso frustra o pai e faz com que ele se afaste do cuidado por medo de ser julgado.",
+    "o_que_fazer": "Converse francamente: 'Eu preciso aprender o meu jeito de cuidar. Por favor, me dê espaço'. O bebê precisa aprender que existem formas diferentes de ser segurado e amado.",
+    "fonte": "Dinâmicas Familiares e Coparentalidade"
+  },
+  {
+    "id": "PAI05",
+    "pergunta": "Existe 'Depressão Pós-Parto' em pais?",
+    "resposta_simples": "Sim. Cerca de 10% dos pais sofrem de depressão após o nascimento. No homem, ela costuma aparecer como irritabilidade excessiva, isolamento, aumento de horas no trabalho ou uso de álcool, em vez de tristeza profunda.",
+    "o_que_fazer": "Se você não sente prazer nas coisas que gostava ou está sempre 'explodindo', procure um psicólogo ou médico. Cuidar de você é cuidar do seu filho.",
+    "fonte": "Estudos de Psicopatologia Paternal"
+  },
+  {
+    "id": "PAI06",
+    "pergunta": "Sinto falta da minha vida antiga e da atenção da minha parceira. Sou egoísta?",
+    "resposta_simples": "Não, você é humano. O luto pela vida antiga (liberdade, sono, casal) é real para o pai também. O cérebro sente falta da rotina de prazer e conexão que existia antes do bebê sequestrar toda a atenção.",
+    "o_que_fazer": "Pequenos rituais de casal (15 min de conversa sem falar de fraldas) ajudam a lembrar que vocês ainda são parceiros, não apenas 'pai e mãe'.",
+    "fonte": "Psicologia Evolutiva e Relacionamentos"
+  },
+  {
+    "id": "PAI07",
+    "pergunta": "Como posso me conectar com o bebê se ele não fala e só 'come e dorme'?",
+    "resposta_simples": "O vínculo paterno muitas vezes demora mais para 'ligar' do que o materno. O cérebro do pai se conecta mais através da interação ativa (brincar, movimentar).",
+    "o_que_fazer": "Use o tempo de 'chão' com ele. Deite ao lado dele, faça caretas, narre o que você está fazendo. Essa presença física treina seu cérebro para amar os detalhes do bebê.",
+    "fonte": "Desenvolvimento do Vínculo Pai-Bebê"
+  },
+  {
+    "id": "PAI08",
+    "pergunta": "Por que fico tão ansioso com a segurança da casa e do carro agora?",
+    "resposta_simples": "Seu cérebro sofreu uma mudança estrutural para aumentar o foco em vigilância. A 'amígdala' cresce para identificar perigos que você não via antes. É o instinto de proteção em nível máximo.",
+    "o_que_fazer": "Canalize essa energia para ações práticas de segurança, mas não deixe que o medo te impeça de curtir o bebê. Se a ansiedade travar sua vida, busque apoio.",
+    "fonte": "Neuroplasticidade Paternal"
+  },
+  {
+    "id": "PAI09",
+    "pergunta": "Estou trabalhando muito para não faltar nada, mas me sinto culpado por estar longe.",
+    "resposta_simples": "O conflito trabalho-família atinge os pais em cheio. O cérebro fica dividido entre a necessidade biológica de prover e o desejo de se vincular.",
+    "o_que_fazer": "Foque na qualidade, não na quantidade. Quando chegar em casa, desligue o celular por 30 minutos e seja 100% pai. Esse tempo focado vale mais para o cérebro do bebê do que horas de presença distraída.",
+    "fonte": "Sociologia da Paternidade Contemporânea"
+  },
+  {
+    "id": "PAI10",
+    "pergunta": "Qual a maior dica para um pai que está sobrecarregado?",
+    "resposta_simples": "Entender que você e a mãe são uma equipe, não competidores. Se um cai, o outro levanta. Mas se os dois caem, o bebê fica sem chão.",
+    "o_que_fazer": "Negocie turnos de descanso. 'Hoje eu cuido da madrugada para você dormir, amanhã você me deixa dormir 2h a mais'. O cérebro descansado é um cérebro muito mais amoroso.",
+    "fonte": "Gestão de Estresse Familiar"
+  }
+]
+
+[
+  {
+    "id": "P01",
+    "pergunta": "Sinto que perdi minha identidade e agora sou apenas 'mãe'. Isso é normal?",
+    "resposta_simples": "Sim, a neurociência chama isso de 'Matrescência'. O cérebro da mulher sofre alterações físicas reais para se tornar mais atento e protetor. É uma poda neural: você perde um pouco da 'antiga eu' para ganhar novas habilidades de cuidado. Mas lembre-se: a mulher que você era não morreu, ela está apenas dividindo espaço.",
+    "o_que_fazer": "Tente ter 15 minutos por dia fazendo algo que não tenha nada a ver com o bebê (ler, ouvir música, tomar um café sozinha). Isso avisa ao seu cérebro que você ainda existe como indivíduo.",
+    "fonte": "Neuropsicologia da Matrescência (Dra. Alexandra Sacks)"
+  },
+  {
+    "id": "P02",
+    "pergunta": "Por que sinto tanta irritação ou vontade de chorar do nada (Baby Blues)?",
+    "resposta_simples": "Logo após o parto, ocorre uma queda brusca de hormônios (estrogênio e progesterona), equivalente a uma 'ressaca' química gigante. Isso afeta os neurotransmissores da alegria e da calma. É uma reação biológica, não é falta de amor pelo bebê.",
+    "o_que_fazer": "Aceite ajuda prática (almoço, limpeza). Se essa tristeza durar mais de duas semanas ou for muito profunda, busque ajuda médica — pode ser depressão pós-parto, que tem tratamento.",
+    "fonte": "Saúde Mental Perinatal"
+  },
+  {
+    "id": "P03",
+    "pergunta": "Privação de sono: como sobreviver sem perder a sanidade?",
+    "resposta_simples": "A falta de sono afeta o córtex pré-frontal, a área do cérebro que controla as emoções e o julgamento. Por isso você fica mais impaciente, esquecida e sensível. Dormir pouco é literalmente uma forma de 'embriaguez' cerebral.",
+    "o_que_fazer": "A regra de ouro: durma quando o bebê dormir, esqueça a louça. Priorize blocos de 4 horas de sono ininterrupto pelo menos uma vez por dia, dividindo turnos com o parceiro ou rede de apoio.",
+    "fonte": "Medicina do Sono e Comportamento"
+  },
+  {
+    "id": "P04",
+    "pergunta": "Como o pai ou segundo cuidador pode ajudar se não amamenta?",
+    "resposta_simples": "O papel do parceiro é ser o 'escudo' da mãe. O cérebro da mãe precisa de tranquilidade para produzir ocitocina (o hormônio do leite e do vínculo). Se o pai cuida da logística (casa, banho, fralda), ele está protegendo a saúde do bebê indiretamente.",
+    "o_que_fazer": "Assuma as tarefas 'braçais'. Quando a mãe descansa, o bebê recebe uma mãe mais sã e presente. O vínculo do pai se constrói no toque, no banho e no colo.",
+    "fonte": "Psicologia do Puerpério"
+  },
+  {
+    "id": "P05",
+    "pergunta": "Sinto culpa por querer um tempo longe do meu filho. Sou uma mãe ruim?",
+    "resposta_simples": "De jeito nenhum. O cérebro humano não foi feito para cuidar de um bebê 24h por dia sozinho. Antigamente, vivíamos em vilas onde todos ajudavam. Querer um tempo longe é um sinal de que seu sistema nervoso está sobrecarregado e pedindo autorregulação.",
+    "o_que_fazer": "Entenda que 'autocuidado não é egoísmo, é estratégia'. Uma mãe que descansa volta com mais paciência e amor para oferecer.",
+    "fonte": "Antropologia do Cuidado (Rede de Apoio)"
+  },
+  {
+    "id": "P06",
+    "pergunta": "Como manter a conexão do casal após a chegada do bebê?",
+    "resposta_simples": "O casal é a base da casa. Se a base racha, a segurança do bebê estremece. O cérebro masculino e feminino mudam com o bebê e é preciso 'reaprender' quem é o parceiro agora.",
+    "o_que_fazer": "Tirem 10 minutos por dia para conversar sobre vocês, e não sobre o bebê. Pequenos gestos de gentileza diminuem o cortisol e aumentam a união da equipe.",
+    "fonte": "Terapia de Casal e Parentalidade"
+  },
+  {
+    "id": "P07",
+    "pergunta": "Por que tenho pensamentos assustadores (medo de algo ruim acontecer com o bebê)?",
+    "resposta_simples": "Isso se chama 'Pensamentos Intrusivos'. É o sistema de alerta do cérebro (amígdala) trabalhando em excesso. O cérebro projeta o pior cenário para garantir que você esteja preparada para proteger o bebê.",
+    "o_que_fazer": "Não se assuste com os pensamentos, eles são apenas 'alarmes falsos'. Se eles ficarem constantes e impedirem você de dormir ou viver, converse com um profissional.",
+    "fonte": "Neurociência da Ansiedade Pós-Parto"
+  },
+  {
+    "id": "P08",
+    "pergunta": "Alimentação dos pais: por que estamos comendo tão mal?",
+    "resposta_simples": "O estresse e a falta de tempo pedem açúcar e carboidratos rápidos (energia imediata para o cérebro cansado). Mas isso gera picos de insulina que aumentam a irritabilidade e o cansaço depois.",
+    "o_que_fazer": "Foque em proteínas e gorduras boas (ovos, castanhas, iogurte). Elas dão energia duradoura para o cérebro aguentar as noites em claro.",
+    "fonte": "Nutrição Cerebral"
+  },
+  {
+    "id": "P09",
+    "pergunta": "A rede de apoio é realmente necessária ou é luxo?",
+    "resposta_simples": "É necessidade biológica. O ser humano é um 'criador cooperativo'. Sem ajuda, o nível de estresse da mãe sobe tanto que prejudica a sensibilidade dela para ler os sinais do bebê.",
+    "o_que_fazer": "Peça ajuda específica: 'Pode lavar essa louça?' ou 'Pode segurar ele por 30 min enquanto tomo banho?'. As pessoas geralmente querem ajudar, mas não sabem como.",
+    "fonte": "Psicologia Evolutiva"
+  },
+  {
+    "id": "P10",
+    "pergunta": "Como lidar com os palpites e críticas da família?",
+    "resposta_simples": "O estresse social (julgamento) ativa as mesmas áreas da dor física no cérebro. Palpites minam a confiança da mãe e geram um estado de alerta defensivo que atrapalha o vínculo com o bebê.",
+    "o_que_fazer": "Estabeleça limites gentis, mas firmes. 'Obrigada pela dica, mas estamos seguindo a orientação do nosso médico/estudo'. Proteja sua paz mental como se fosse um tesouro.",
+    "fonte": "Psicologia Social e Fronteiras Familiares"
+  }
+]
