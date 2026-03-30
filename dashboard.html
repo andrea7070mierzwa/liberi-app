@@ -41,6 +41,18 @@
             margin-bottom: 20px;
         }
 
+        /* CARD GATILHO NEURAS */
+        .card-neuras {
+            background: linear-gradient(135deg, #6C5CE7, #A29BFE);
+            color: white;
+            border-radius: 28px;
+            padding: 25px;
+            margin-bottom: 20px;
+            display: none;
+            /* Só aparece se houver dica */
+            border: none;
+        }
+
         /* PERFIL & LINKS */
         .foto-perfil {
             width: 100px;
@@ -76,7 +88,6 @@
             font-weight: 500;
         }
 
-        /* FOFOCA & APOIO */
         .fofoca-box {
             background: #FFF4E5;
             border: 1px solid #FFE082;
@@ -109,16 +120,7 @@
             text-align: left;
         }
 
-        .depoimento-item {
-            font-size: 0.75rem;
-            font-style: italic;
-            color: #555;
-            margin-top: 8px;
-            border-bottom: 1px solid #E0DBFF;
-            padding-bottom: 5px;
-        }
-
-        /* EDITOR E PALETA */
+        /* EDITOR */
         #campoPost {
             width: 100%;
             min-height: 100px;
@@ -150,7 +152,6 @@
             font-weight: bold;
         }
 
-        /* FEED & LOCK */
         .post-card {
             border-left: 4px solid var(--roxo);
             padding: 15px;
@@ -206,6 +207,17 @@
         </aside>
 
         <section>
+            <div id="gatilhoNeuras" class="card-neuras">
+                <span style="font-size: 0.7rem; font-weight: 800; text-transform: uppercase; opacity: 0.9;">💡 Insights
+                    do Neuras para sua fase</span>
+                <h3 id="perguntaGatilho"
+                    style="font-family: 'Plus Jakarta Sans'; font-size: 1.1rem; margin: 12px 0; line-height: 1.4;">
+                    Carregando sabedoria...</h3>
+                <button onclick="window.location.href='../neuras_de_mae/index.html'"
+                    style="background: white; color: var(--roxo); border: none; padding: 10px 20px; border-radius: 12px; font-weight: 700; cursor: pointer; font-size: 0.85rem; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">Ver
+                    Resposta Científica</button>
+            </div>
+
             <div class="card">
                 <div id="campoPost" contenteditable="true" placeholder="Mencione com @ ou use a paleta 🎨"></div>
                 <div class="toolbar" id="tools">
@@ -219,3 +231,128 @@
                         style="background:none; border:none; font-size:1.5rem; cursor:pointer;">🎨</button>
                     <button id="btnPostar"
                         style="background:var(--roxo); color:white; border:none; padding:10px 25px; border-radius:15px; font-weight:600; cursor:pointer;">Publicar</button>
+                </div>
+            </div>
+            <div id="feedHibrido"></div>
+        </section>
+
+        <aside>
+            <div class="card">
+                <h3 style="font-size:0.8rem; color:#AAA; text-transform:uppercase;">Explorar</h3>
+                <button onclick="window.location.href='comunidades.html'"
+                    style="width:100%; background:#F0EEFF; border:none; padding:12px; border-radius:15px; color:var(--roxo); font-weight:700; cursor:pointer;">Ver
+                    Comunidades</button>
+            </div>
+        </aside>
+    </main>
+
+    <script type="module">
+        import { db, auth, doc, getDoc, collection, query, where, getDocs, onSnapshot, orderBy, serverTimestamp, addDoc } from "./liberi.js";
+        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        window.toggleTools = () => {
+            const t = document.getElementById('tools');
+            t.style.display = (t.style.display === 'flex') ? 'none' : 'flex';
+        };
+
+        let minhasComus = [];
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                document.getElementById('userFoto').src = user.photoURL;
+                document.getElementById('userName').innerText = user.displayName;
+
+                // 1. Busca perfil para dados dos filhos e Gatilho do Neuras
+                const userSnap = await getDoc(doc(db, "usuarios", user.uid));
+                if (userSnap.exists()) {
+                    const dados = userSnap.data();
+                    minhasComus = dados.comunidades || [];
+
+                    if (dados.filhos && dados.filhos.length > 0) {
+                        const idadeMeses = calcularMeses(dados.filhos[0].nascimento);
+                        carregarGatilhoNeuras(idadeMeses);
+                    }
+                }
+
+                carregarFeed();
+                ouvirFofocas(user.displayName);
+                ouvirDepoimentos();
+            } else { window.location.href = "index.html"; }
+        });
+
+        function calcularMeses(dataNasc) {
+            const nasc = new Date(dataNasc);
+            const hoje = new Date();
+            return (hoje.getFullYear() - nasc.getFullYear()) * 12 + (hoje.getMonth() - nasc.getMonth());
+        }
+
+        async function carregarGatilhoNeuras(meses) {
+            let faixa = "0-2"; // Padrão
+            if (meses > 6 && meses <= 12) faixa = "6-12m"; // Tag baseada nos seus arquivos
+            if (meses <= 6) faixa = "0-6m";
+            if (meses > 12) faixa = "maiores";
+
+            try {
+                const q = query(collection(db, "neuras_conhecimento"), where("faixaEtaria", "==", faixa));
+                const snap = await getDocs(q);
+
+                if (!snap.empty) {
+                    const dicas = snap.docs;
+                    const sorteada = dicas[Math.floor(Math.random() * dicas.length)].data();
+
+                    document.getElementById('gatilhoNeuras').style.display = 'block';
+                    document.getElementById('perguntaGatilho').innerText = sorteada.pergunta;
+                }
+            } catch (e) { console.error("Erro Neuras:", e); }
+        }
+
+        function carregarFeed() {
+            onSnapshot(query(collection(db, "posts"), orderBy("data", "desc")), (snap) => {
+                const feed = document.getElementById('feedHibrido');
+                feed.innerHTML = "";
+                snap.forEach(d => {
+                    const p = d.data();
+                    const souMembro = p.comunidadeId ? minhasComus.includes(p.comunidadeId) : true;
+                    feed.insertAdjacentHTML('beforeend', `
+                        <div class="post-card">
+                            <strong style="font-size:0.8rem; color:var(--roxo);">${p.autor}</strong>
+                            <div class="${souMembro ? '' : 'blur-content'}">${p.texto}</div>
+                            ${!souMembro ? `<div class="lock-overlay"><button onclick="window.location.href='comunidades.html'" style="background:var(--roxo); color:white; border:none; padding:8px 15px; border-radius:10px; cursor:pointer;">Participar para ler</button></div>` : ''}
+                        </div>`);
+                });
+            });
+        }
+
+        function ouvirFofocas(nome) {
+            onSnapshot(collection(db, "notificacoes"), (snap) => {
+                snap.forEach(d => {
+                    if (d.data().para === nome) {
+                        document.getElementById('gavetaFofoca').style.display = 'block';
+                        document.getElementById('msgFofoca').innerText = d.data().mensagem;
+                    }
+                });
+            });
+        }
+
+        function ouvirDepoimentos() {
+            onSnapshot(query(collection(db, "depoimentos"), orderBy("data", "desc")), (snap) => {
+                const lista = document.getElementById('listaDepoimentos');
+                lista.innerHTML = "";
+                snap.forEach(d => { lista.insertAdjacentHTML('beforeend', `<p class="depoimento-item">"${d.data().texto}" <b style="color:var(--roxo);">- ${d.data().de}</b></p>`); });
+            });
+        }
+
+        document.getElementById('btnPostar').onclick = async () => {
+            const campo = document.getElementById('campoPost');
+            const texto = campo.innerHTML;
+            if (!texto.trim()) return;
+            const match = texto.match(/@(\w+)/);
+            if (match) await addDoc(collection(db, "notificacoes"), { para: match[1], mensagem: `${auth.currentUser.displayName} te marcou!`, data: serverTimestamp() });
+            await addDoc(collection(db, "posts"), { texto: texto, autor: auth.currentUser.displayName, fotoAutor: auth.currentUser.photoURL, autorId: auth.currentUser.uid, data: serverTimestamp() });
+            campo.innerHTML = "";
+            document.getElementById('tools').style.display = 'none';
+        };
+    </script>
+</body>
+
+</html>
