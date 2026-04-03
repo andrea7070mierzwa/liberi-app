@@ -4,14 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Líberi - Login</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <title>NeurUp - Bem-vinda à Rede</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=Poppins:wght@400;500&display=swap"
         rel="stylesheet">
     <style>
         :root {
-            --roxo: #6C5CE7;
+            --roxo: #5848d0;
+            --laranja: #FF8C00;
             --bg: #F0EEFF;
         }
 
@@ -23,7 +23,6 @@
             align-items: center;
             justify-content: center;
             height: 100vh;
-            overflow: hidden;
         }
 
         .login-card {
@@ -32,7 +31,7 @@
             border-radius: 40px;
             text-align: center;
             max-width: 400px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 20px 50px rgba(88, 72, 208, 0.1);
         }
 
         h1 {
@@ -42,8 +41,12 @@
             margin-bottom: 10px;
         }
 
+        h1 span {
+            color: var(--laranja);
+        }
+
         p {
-            color: #777;
+            color: #666;
             margin-bottom: 30px;
             line-height: 1.5;
         }
@@ -55,30 +58,27 @@
             width: 100%;
             padding: 20px;
             border-radius: 22px;
-            font-size: 1.05rem;
             font-weight: 600;
             cursor: pointer;
-            transition: 0.4s;
-            box-shadow: 0 10px 25px rgba(108, 92, 231, 0.3);
-            font-family: 'Poppins';
+            transition: 0.3s;
         }
 
         .btn-google:hover {
             transform: translateY(-4px);
-            background: #5649c0;
+            background: #4639a7;
         }
     </style>
 </head>
 
 <body>
-
     <main class="login-card">
-        <h1>Líberi</h1>
-        <p>Conectando famílias e fortalecendo a comunidade parental.</p>
+        <h1>Neur<span>Up</span></h1>
+        <p>Neurociência e afeto para impulsionar o desenvolvimento do seu filho.</p>
         <button class="btn-google" id="btnLogar">Entrar com Google</button>
     </main>
 
     <script type="module">
+        // IMPORTANTE: Verifique se o arquivo se chama neurup.js ou liberi.js
         import { auth, provider, db } from "./liberi.js";
         import { signInWithPopup } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -87,13 +87,11 @@
             try {
                 const result = await signInWithPopup(auth, provider);
                 const user = result.user;
-
-                // Referência do usuário no Firestore
                 const userRef = doc(db, "usuarios", user.uid);
                 const userSnap = await getDoc(userRef);
 
-                // Se o usuário não existir no banco, criamos o perfil básico dele agora
                 if (!userSnap.exists()) {
+                    // Primeiro cadastro: salva o básico
                     await setDoc(userRef, {
                         nome: user.displayName,
                         email: user.email,
@@ -101,13 +99,11 @@
                         dataCadastro: new Date().toISOString()
                     });
                 }
-
-                // Redirecionamento direto para o Perfil, sem passar por cadastro de filhos
+                // Vai para o perfil para completar idade do filho e preferências
                 window.location.href = "perfil.html";
-
             } catch (error) {
                 console.error("Erro no login:", error);
-                alert("Ops! Ocorreu um erro ao entrar. Verifique sua conexão.");
+                alert("Ops! Erro ao conectar com o NeurUp. Verifique se o domínio está autorizado no Firebase.");
             }
         };
     </script>

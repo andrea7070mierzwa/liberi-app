@@ -4,13 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Líberi - Perfil Integrado</title>
+    <title>NeurUp - Perfil da Família</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Poppins:wght@400;500;600&display=swap"
         rel="stylesheet">
     <style>
         :root {
-            --roxo: #6C5CE7;
+            --roxo: #5848d0;
+            /* Roxo NeurUp */
+            --laranja: #FF8C00;
+            /* Laranja Up */
             --bg: #F8F9FD;
             --card: #FFFFFF;
         }
@@ -33,126 +36,129 @@
             border-radius: 32px;
             padding: 40px;
             text-align: center;
-            box-shadow: 0 10px 40px rgba(108, 92, 231, 0.06);
+            box-shadow: 0 10px 40px rgba(88, 72, 208, 0.06);
             border: 1px solid rgba(255, 255, 255, 0.7);
         }
 
-        .foto-perfil {
+        .foto-grande {
             width: 120px;
             height: 120px;
-            border-radius: 40px;
+            border-radius: 45px;
+            border: 5px solid white;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
             object-fit: cover;
-            border: 4px solid #FFF;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-            margin-top: -85px;
+            margin-bottom: 20px;
         }
 
         h2 {
             font-family: 'Plus Jakarta Sans';
-            color: var(--roxo);
-            margin: 15px 0 5px;
             font-weight: 800;
-            font-size: 1.5rem;
+            color: var(--roxo);
+            margin-bottom: 5px;
         }
 
-        .tag-perfil {
-            background: #F0EEFF;
+        .tag-status {
+            background: #E8E5FF;
             color: var(--roxo);
-            padding: 4px 12px;
+            padding: 5px 15px;
             border-radius: 12px;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             font-weight: 700;
             text-transform: uppercase;
         }
 
-        .secao-familia {
-            background: #F4F6FB;
-            border-radius: 24px;
-            padding: 20px;
-            margin: 25px 0;
+        .secao-filhos {
+            margin-top: 40px;
             text-align: left;
         }
 
-        .titulo-secao {
-            font-family: 'Plus Jakarta Sans';
-            font-size: 0.8rem;
-            color: #AAA;
-            text-transform: uppercase;
-            margin-bottom: 15px;
-            display: block;
-            font-weight: 700;
-        }
-
         .filho-card {
+            background: #F8F9FD;
+            padding: 15px 20px;
+            border-radius: 20px;
+            margin-bottom: 12px;
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 12px;
-            background: white;
-            padding: 12px 16px;
-            border-radius: 16px;
-            margin-bottom: 8px;
+            border: 1px solid #EEE;
         }
 
         .tag-neuro {
-            background: #FFF4E5;
-            color: #FF9F43;
-            padding: 2px 8px;
-            border-radius: 6px;
+            background: var(--laranja);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 8px;
             font-size: 0.65rem;
-            font-weight: 700;
-            margin-left: 5px;
+            font-weight: 800;
         }
 
         .btn-voltar {
+            margin-top: 30px;
             background: var(--roxo);
             color: white;
             border: none;
-            padding: 14px;
-            border-radius: 16px;
+            padding: 15px 30px;
+            border-radius: 20px;
             font-weight: 600;
             cursor: pointer;
             width: 100%;
-            margin-top: 20px;
-            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .btn-voltar:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(88, 72, 208, 0.3);
         }
     </style>
 </head>
 
 <body>
-    <script type="module" src="menu.js"></script>
     <div class="container-perfil">
-        <div style="height: 100px;"></div>
         <div class="card-perfil">
-            <img id="userFoto" src="" class="foto-perfil">
-            <h2 id="userName">Carregando...</h2>
-            <span class="tag-perfil">Sincronizado com Neuras 🧠</span>
-            <div class="secao-familia">
-                <span class="titulo-secao">Membros da Família</span>
+            <img id="userFoto" src="" class="foto-grande">
+            <h2 id="userName">...</h2>
+            <span class="tag-status">Sincronizado com NeurUp 🧠</span>
+
+            <div class="secao-filhos">
+                <h3 style="font-size: 0.9rem; color: #AAA; text-transform: uppercase; margin-bottom: 15px;">Meus Filhos
+                </h3>
                 <div id="listaFilhos">
-                    <p style="font-size: 0.8rem; color: #bbb; text-align: center;">Buscando dados no Neuras...</p>
                 </div>
             </div>
-            <button class="btn-voltar" onclick="window.location.href='dashboard.html'">Voltar para a Vila</button>
+
+            <button class="btn-voltar" onclick="window.location.href='dashboard.html'">Voltar para a Rede</button>
         </div>
     </div>
+
     <script type="module">
         import { db, auth } from "./liberi.js";
         import { doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 document.getElementById('userName').innerText = user.displayName;
                 document.getElementById('userFoto').src = user.photoURL;
+
                 onSnapshot(doc(db, "usuarios", user.uid), (snap) => {
                     const container = document.getElementById('listaFilhos');
                     if (snap.exists() && snap.data().filhos) {
                         container.innerHTML = "";
                         snap.data().filhos.forEach(f => {
-                            container.insertAdjacentHTML('beforeend', `<div class="filho-card"><strong>${f.apelido} ${f.neuroatipico ? '<span class="tag-neuro">Neuroatípico</span>' : ''}</strong></div>`);
+                            container.insertAdjacentHTML('beforeend', `
+                                <div class="filho-card">
+                                    <strong>${f.apelido}</strong>
+                                    ${f.neuroatipico ? '<span class="tag-neuro">Selo Atípico</span>' : ''}
+                                </div>
+                            `);
                         });
-                    } else { container.innerHTML = '<p style="font-size: 0.8rem; color: #bbb; text-align: center;">Nenhum dado encontrado.</p>'; }
+                    } else {
+                        container.innerHTML = '<p style="font-size: 0.8rem; color: #bbb; text-align: center;">Nenhum pequeno cadastrado ainda.</p>';
+                    }
                 });
-            } else { window.location.href = "index.html"; }
+            } else {
+                window.location.href = "index.html";
+            }
         });
     </script>
 </body>

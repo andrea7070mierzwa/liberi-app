@@ -1,43 +1,66 @@
-import { auth } from "./liberi.js";
-import {
-  onAuthStateChanged,
-  signOut,
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+// NeurUp - Menu de Navegação Global
+document.addEventListener("DOMContentLoaded", () => {
+  const nav = document.createElement("nav");
+  nav.style.cssText = `
+        background: #5848d0; 
+        padding: 15px 5%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: white;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        font-family: 'Poppins', sans-serif;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    `;
 
-// O SEU E-MAIL DE ADMIN (Ajuste para o seu e-mail real do Google)
-const EMAIL_ADMIN = "andrea7070mierzwa@gmail.com";
+  const logo = document.createElement("div");
+  logo.innerHTML = `<span style="font-family: 'Plus Jakarta Sans'; font-weight: 800; font-size: 1.5rem; cursor:pointer;">Neur<span style="color:#FF8C00;">Up</span></span>`;
+  logo.onclick = () => (window.location.href = "dashboard.html");
 
-const menuHTML = `
-<nav style="background: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); font-family: 'Poppins', sans-serif;">
-    <div style="font-family: 'Plus Jakarta Sans'; font-weight: 800; color: #6C5CE7; font-size: 1.5rem; cursor:pointer;" onclick="window.location.href='dashboard.html'">Líberi</div>
-    
-    <div style="display: flex; gap: 20px; align-items: center;">
-        <a href="dashboard.html" style="text-decoration: none; color: #666; font-weight: 500;">Início</a>
-        <a href="comunidades.html" style="text-decoration: none; color: #666; font-weight: 500;">Comunidades</a>
-        <a href="amigos.html" style="text-decoration: none; color: #666; font-weight: 500;">Vila</a>
-        <a href="recados.html" style="text-decoration: none; color: #666; font-weight: 500;">Recados</a>
-        
-        <a href="admin.html" id="linkAdmin" style="display: none; text-decoration: none; background: #ffeaa7; color: #d63031; padding: 5px 12px; border-radius: 8px; font-weight: 700; font-size: 0.8rem;">⚠️ ADM</a>
-        
-        <button id="btnSair" style="background: #f0eeff; border: none; color: #6C5CE7; padding: 8px 15px; border-radius: 10px; cursor: pointer; font-weight: 600;">Sair</button>
-    </div>
-</nav>
-`;
+  const links = document.createElement("div");
+  links.style.cssText = `display: flex; gap: 20px; align-items: center;`;
 
-// Insere o menu no topo da página
-document.body.insertAdjacentHTML("afterbegin", menuHTML);
+  const menuItens = [
+    { nome: "Início", link: "dashboard.html" },
+    { nome: "Comunidades", link: "comunidades.html" },
+    { nome: "Amigos", link: "amigos.html" },
+    { nome: "Perfil", link: "perfil.html" },
+  ];
 
-// Lógica de verificação do usuário
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    // Se o e-mail for o seu, mostra o botão de ADM
-    if (user.email === EMAIL_ADMIN) {
-      document.getElementById("linkAdmin").style.display = "block";
+  menuItens.forEach((item) => {
+    const a = document.createElement("a");
+    a.innerText = item.nome;
+    a.href = item.link;
+    a.style.cssText = `color: white; text-decoration: none; font-weight: 500; font-size: 0.9rem; transition: 0.3s; opacity: 0.9;`;
+    a.onmouseover = () => (a.style.opacity = "1");
+    a.onmouseout = () => (a.style.opacity = "0.9");
+    links.appendChild(a);
+  });
+
+  // Botão de Logout rápido
+  const btnSair = document.createElement("button");
+  btnSair.innerText = "Sair";
+  btnSair.style.cssText = `
+        background: rgba(255,255,255,0.2);
+        border: none;
+        color: white;
+        padding: 5px 12px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 0.8rem;
+    `;
+  btnSair.onclick = () => {
+    if (confirm("Deseja sair da rede NeurUp?")) {
+      window.location.href = "index.html";
     }
-  }
-});
+  };
 
-// Botão Sair
-document.getElementById("btnSair").onclick = () => {
-  signOut(auth).then(() => (window.location.href = "index.html"));
-};
+  links.appendChild(btnSair);
+  nav.appendChild(logo);
+  nav.appendChild(links);
+
+  // Injeta o menu no topo do body
+  document.body.prepend(nav);
+});

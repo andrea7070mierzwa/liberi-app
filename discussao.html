@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Líberi - Comentários</title>
+    <title>NeurUp - Conversa</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=Poppins:wght@400;500;600&display=swap"
         rel="stylesheet">
     <style>
         :root {
-            --roxo: #6C5CE7;
+            --roxo: #5848d0;
             --bg: #F0EEFF;
             --card: #FFFFFF;
         }
@@ -28,7 +28,6 @@
             padding: 0 20px;
         }
 
-        /* POST EM DESTAQUE (PADRÃO LÍBERI) */
         .card-post-foco {
             background: var(--card);
             padding: 30px;
@@ -36,13 +35,6 @@
             border-left: 8px solid var(--roxo);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
             margin-bottom: 25px;
-        }
-
-        .autor-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 15px;
         }
 
         .foto-autor {
@@ -53,91 +45,33 @@
         }
 
         .nome-autor {
-            font-weight: 600;
+            font-weight: 700;
             color: var(--roxo);
         }
 
-        /* LISTA DE COMENTÁRIOS (COM CORES DO USUÁRIO) */
-        .card-comentario {
+        #listaComentarios {
+            margin-top: 30px;
+        }
+
+        .comentario-item {
             background: white;
             padding: 20px;
             border-radius: 20px;
             margin-bottom: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.02);
-        }
-
-        .conteudo-coment {
-            line-height: 1.6;
-            word-wrap: break-word;
-        }
-
-        .btn-excluir {
-            background: none;
-            border: none;
-            color: #ff4757;
-            cursor: pointer;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        /* EDITOR DE RESPOSTA */
-        .area-comentar {
-            background: white;
-            padding: 20px;
-            border-radius: 25px;
-            margin-top: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-        }
-
-        .toolbar {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 12px;
-            background: #f8f7ff;
-            padding: 10px;
-            border-radius: 15px;
-        }
-
-        .btn-tool {
-            background: white;
-            border: 1px solid #ddd;
-            padding: 4px 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            font-family: 'Poppins';
-            font-size: 0.9rem;
-        }
-
-        .input-cor {
-            border: none;
-            width: 30px;
-            height: 30px;
-            cursor: pointer;
-            background: none;
-            padding: 0;
         }
 
         #textoComentario {
             width: 100%;
-            border: 2px solid #f8f7ff;
-            background: #f8f7ff;
-            border-radius: 15px;
-            padding: 15px;
-            font-family: 'Poppins';
-            min-height: 120px;
-            outline: none;
-            box-sizing: border-box;
-            overflow-y: auto;
-        }
-
-        #textoComentario:focus {
+            min-height: 80px;
             background: white;
-            border-color: var(--roxo);
+            border-radius: 20px;
+            padding: 15px;
+            outline: none;
+            border: 2px solid #EEE;
+            margin-bottom: 10px;
         }
 
-        .btn-enviar {
+        .btn-comentar {
             background: var(--roxo);
             color: white;
             border: none;
@@ -145,124 +79,65 @@
             border-radius: 15px;
             font-weight: 600;
             cursor: pointer;
-            margin-top: 15px;
-            float: right;
         }
     </style>
 </head>
 
 <body>
-
     <script type="module" src="menu.js"></script>
-
-    <main class="container-discussao">
-        <a href="dashboard.html"
-            style="text-decoration: none; color: var(--roxo); font-weight: 600; display: inline-block; margin-bottom: 20px;">←
-            Voltar ao Feed</a>
-
-        <div id="postPrincipal" class="card-post-foco">
-            <p>Carregando postagem...</p>
+    <div class="container-discussao">
+        <div id="postFoco" class="card-post-foco">
         </div>
 
-        <section>
-            <h3 style="font-family: 'Plus Jakarta Sans'; color: var(--roxo); margin-left: 10px;">Comentários da
-                Comunidade</h3>
-            <div id="listaComentarios"></div>
-        </section>
-
-        <div class="area-comentar">
-            <div class="toolbar">
-                <button class="btn-tool" onclick="formatar('bold')">B</button>
-                <button class="btn-tool" onclick="formatar('italic')">I</button>
-                <input type="color" class="input-cor" id="corComent" onchange="mudarCor(this.value)"
-                    title="Cor do texto">
-                <button class="btn-tool" onclick="inserirImagem()" style="margin-left: auto;">🖼️ Imagem</button>
-            </div>
-            <div id="textoComentario" contenteditable="true"></div>
-            <button id="btnEnviarComentario" class="btn-enviar">Responder ✨</button>
-            <div style="clear: both;"></div>
+        <div class="editor-coment">
+            <div id="textoComentario" contenteditable="true" placeholder="Escreva seu apoio ou dúvida..."></div>
+            <button id="btnEnviarComentario" class="btn-comentar">Enviar Comentário</button>
         </div>
-    </main>
+
+        <div id="listaComentarios"></div>
+    </div>
 
     <script type="module">
-        import { db, auth } from "./liberi.js";
-        import { doc, getDoc, collection, addDoc, query, where, orderBy, onSnapshot, serverTimestamp, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { db, auth, doc, getDoc, collection, addDoc, query, where, onSnapshot, orderBy, serverTimestamp, deleteDoc } from "./liberi.js";
 
-        const urlParams = new URLSearchParams(window.location.search);
-        const postId = urlParams.get('id');
+        const params = new URLSearchParams(window.location.search);
+        const postId = params.get('id');
 
-        // Funções de Estilo
-        window.formatar = (cmd) => { document.execCommand(cmd, false, null); document.getElementById('textoComentario').focus(); };
-        window.mudarCor = (cor) => { document.execCommand('foreColor', false, cor); document.getElementById('textoComentario').focus(); };
-        window.inserirImagem = () => {
-            const url = prompt("Link da imagem:");
-            if (url) document.execCommand('insertImage', false, url);
-        };
-
-        onAuthStateChanged(auth, (user) => {
-            if (user && postId) {
-                carregarPostInfo();
-                carregarComentarios();
-            } else if (!postId) {
-                window.location.href = "dashboard.html";
-            }
+        // Carrega o Post Principal
+        onSnapshot(doc(db, "posts", postId), (snap) => {
+            if (!snap.exists()) return;
+            const p = snap.data();
+            document.getElementById('postFoco').innerHTML = `
+                <div style="display:flex; align-items:center; gap:15px; margin-bottom:15px;">
+                    <img src="${p.fotoAutor}" class="foto-autor">
+                    <span class="nome-autor">${p.autor}</span>
+                </div>
+                <div style="font-size:1.1rem; line-height:1.6;">${p.texto}</div>
+            `;
         });
 
-        async function carregarPostInfo() {
-            const docRef = doc(db, "posts", postId);
-            const docSnap = await getDoc(docRef);
-            if (docSnap.exists()) {
-                const post = docSnap.data();
-                document.getElementById('postPrincipal').innerHTML = `
-                    <div class="autor-info">
-                        <img src="${post.fotoAutor}" class="foto-autor">
-                        <span class="nome-autor">${post.autor}</span>
+        // Carrega Comentários
+        onSnapshot(query(collection(db, "comentarios"), where("postId", "==", postId), orderBy("data", "asc")), (snap) => {
+            const lista = document.getElementById('listaComentarios');
+            lista.innerHTML = "";
+            snap.forEach(d => {
+                const c = d.data();
+                lista.insertAdjacentHTML('beforeend', `
+                    <div class="comentario-item">
+                        <small><b>${c.autor}:</b></small>
+                        <div style="margin-top:5px;">${c.texto}</div>
                     </div>
-                    <div class="conteudo-coment" style="font-size: 1.1rem;">${post.texto}</div>
-                `;
-            }
-        }
-
-        function carregarComentarios() {
-            const q = query(collection(db, "comentarios"), where("postId", "==", postId), orderBy("data", "asc"));
-            onSnapshot(q, (snapshot) => {
-                const lista = document.getElementById('listaComentarios');
-                lista.innerHTML = snapshot.empty ? "<p style='padding: 20px; color:#999'>Nenhum comentário ainda. Comece a conversa! 🌱</p>" : "";
-
-                snapshot.forEach(docSnap => {
-                    const c = docSnap.data();
-                    const eDono = auth.currentUser && (c.autorId === auth.currentUser.uid || auth.currentUser.email === "ANDREA_ADMIN@gmail.com");
-
-                    lista.insertAdjacentHTML('beforeend', `
-                        <div class="card-comentario">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                                <div class="autor-info" style="margin-bottom: 0;">
-                                    <img src="${c.fotoAutor}" class="foto-autor" style="width:30px; height:30px; border-radius: 10px;">
-                                    <span class="nome-autor" style="font-size:0.85rem">${c.autor}</span>
-                                </div>
-                                ${eDono ? `<button onclick="window.excluirComent('${docSnap.id}')" class="btn-excluir">🗑️</button>` : ''}
-                            </div>
-                            <div class="conteudo-coment">${c.texto}</div>
-                        </div>
-                    `);
-                });
+                `);
             });
-        }
-
-        window.excluirComent = async (id) => {
-            if (confirm("Apagar comentário?")) await deleteDoc(doc(db, "comentarios", id));
-        };
+        });
 
         document.getElementById('btnEnviarComentario').onclick = async () => {
             const campo = document.getElementById('textoComentario');
-            if (!campo.innerHTML.trim() || campo.innerHTML === "<br>") return;
-
+            if (!campo.innerText.trim()) return;
             await addDoc(collection(db, "comentarios"), {
                 postId: postId,
                 texto: campo.innerHTML,
                 autor: auth.currentUser.displayName,
-                fotoAutor: auth.currentUser.photoURL,
                 autorId: auth.currentUser.uid,
                 data: serverTimestamp()
             });

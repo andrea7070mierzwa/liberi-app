@@ -4,14 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Líberi - Dashboard Oficial</title>
+    <title>NeurUp - Dashboard Oficial</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Poppins:wght@400;500;600&display=swap"
         rel="stylesheet">
     <style>
         :root {
-            --roxo: #6C5CE7;
-            --roxo-claro: #A29BFE;
+            --roxo: #5848d0;
+            /* Roxo NeurUp */
+            --laranja: #FF8C00;
+            /* Laranja Up */
             --bg: #F8F9FD;
             --card: #FFFFFF;
         }
@@ -36,24 +38,22 @@
             background: var(--card);
             border-radius: 28px;
             padding: 20px;
-            box-shadow: 0 4px 20px rgba(108, 92, 231, 0.05);
+            box-shadow: 0 4px 20px rgba(88, 72, 208, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.8);
             margin-bottom: 20px;
         }
 
-        /* CARD GATILHO NEURAS */
+        /* CARD INSIGHTS NEURUP */
         .card-neuras {
-            background: linear-gradient(135deg, #6C5CE7, #A29BFE);
+            background: linear-gradient(135deg, var(--roxo), #A29BFE);
             color: white;
             border-radius: 28px;
             padding: 25px;
             margin-bottom: 20px;
             display: none;
-            /* Só aparece se houver dica */
             border: none;
         }
 
-        /* PERFIL & LINKS */
         .foto-perfil {
             width: 100px;
             height: 100px;
@@ -86,6 +86,11 @@
             margin-bottom: 10px;
             cursor: pointer;
             font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .orkut-links li:hover {
+            color: var(--roxo);
         }
 
         .fofoca-box {
@@ -179,6 +184,26 @@
             z-index: 5;
             border-radius: 18px;
         }
+
+        /* NOVA FUNCIONALIDADE: BOTÃO RESPIRAR */
+        .btn-respirar {
+            width: 100%;
+            background: var(--laranja);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 0.8rem;
+            transition: 0.3s;
+        }
+
+        .btn-respirar:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
     </style>
 </head>
 
@@ -195,8 +220,13 @@
                     <li onclick="window.location.href='comunidades.html'">🔍 Comunidades (<b>47</b>)</li>
                     <li>📄 Depoimentos (8)</li>
                 </ul>
+
+                <button class="btn-respirar"
+                    onclick="alert('🧘 Pausa NeurUp: Inspire profundamente pelo nariz contando até 4... Segure por 4... Solte pela boca em 4. Você está no controle.')">Pausa
+                    para Respirar</button>
+
                 <div class="fofoca-box" id="gavetaFofoca">
-                    <span style="font-size:0.6rem; font-weight:800; color:#B7791F;">FOFOCA DA VILA 🔥</span>
+                    <span style="font-size:0.6rem; font-weight:800; color:var(--laranja);">CONEXÃO NEURUP 🔥</span>
                     <p id="msgFofoca" style="font-size:0.8rem; margin:5px 0; color:#856404; font-weight:600;"></p>
                 </div>
                 <div class="apoio-box">
@@ -208,8 +238,8 @@
 
         <section>
             <div id="gatilhoNeuras" class="card-neuras">
-                <span style="font-size: 0.7rem; font-weight: 800; text-transform: uppercase; opacity: 0.9;">💡 Insights
-                    do Neuras para sua fase</span>
+                <span style="font-size: 0.7rem; font-weight: 800; text-transform: uppercase; opacity: 0.9;">💡 Conexão
+                    NeurUp para você</span>
                 <h3 id="perguntaGatilho"
                     style="font-family: 'Plus Jakarta Sans'; font-size: 1.1rem; margin: 12px 0; line-height: 1.4;">
                     Carregando sabedoria...</h3>
@@ -262,7 +292,6 @@
                 document.getElementById('userFoto').src = user.photoURL;
                 document.getElementById('userName').innerText = user.displayName;
 
-                // 1. Busca perfil para dados dos filhos e Gatilho do Neuras
                 const userSnap = await getDoc(doc(db, "usuarios", user.uid));
                 if (userSnap.exists()) {
                     const dados = userSnap.data();
@@ -275,7 +304,7 @@
                 }
 
                 carregarFeed();
-                ouvirFofocas(user.displayName);
+                ouvirConexoes(user.displayName);
                 ouvirDepoimentos();
             } else { window.location.href = "index.html"; }
         });
@@ -287,8 +316,8 @@
         }
 
         async function carregarGatilhoNeuras(meses) {
-            let faixa = "0-2"; // Padrão
-            if (meses > 6 && meses <= 12) faixa = "6-12m"; // Tag baseada nos seus arquivos
+            let faixa = "0-2";
+            if (meses > 6 && meses <= 12) faixa = "6-12m";
             if (meses <= 6) faixa = "0-6m";
             if (meses > 12) faixa = "maiores";
 
@@ -323,7 +352,7 @@
             });
         }
 
-        function ouvirFofocas(nome) {
+        function ouvirConexoes(nome) {
             onSnapshot(collection(db, "notificacoes"), (snap) => {
                 snap.forEach(d => {
                     if (d.data().para === nome) {
@@ -338,7 +367,7 @@
             onSnapshot(query(collection(db, "depoimentos"), orderBy("data", "desc")), (snap) => {
                 const lista = document.getElementById('listaDepoimentos');
                 lista.innerHTML = "";
-                snap.forEach(d => { lista.insertAdjacentHTML('beforeend', `<p class="depoimento-item">"${d.data().texto}" <b style="color:var(--roxo);">- ${d.data().de}</b></p>`); });
+                snap.forEach(d => { lista.insertAdjacentHTML('beforeend', `<p class="depoimento-item" style="font-size:0.8rem; margin-bottom:10px;">"${d.data().texto}" <b style="color:var(--roxo);">- ${d.data().de}</b></p>`); });
             });
         }
 

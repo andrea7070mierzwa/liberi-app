@@ -4,22 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Líberi - Explorar Comunidades</title>
+    <title>NeurUp - Comunidades</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Poppins:wght@400;500;600&display=swap"
         rel="stylesheet">
     <style>
         :root {
-            --roxo: #6C5CE7;
+            --roxo: #5848d0;
+            --laranja: #FF8C00;
             --bg: #F8F9FD;
-            --card: #FFFFFF;
         }
 
         body {
             font-family: 'Poppins', sans-serif;
             background: var(--bg);
             margin: 0;
-            color: #4A4A4A;
         }
 
         .container {
@@ -28,7 +27,6 @@
             padding: 0 20px;
         }
 
-        /* HEADER E BOTÃO CRIAR */
         .header-flex {
             display: flex;
             justify-content: space-between;
@@ -40,197 +38,78 @@
             font-family: 'Plus Jakarta Sans';
             color: var(--roxo);
             margin: 0;
-            font-size: 1.8rem;
         }
 
         .btn-criar {
             background: var(--roxo);
             color: white;
             border: none;
-            padding: 14px 25px;
+            padding: 12px 25px;
             border-radius: 18px;
             font-weight: 700;
             cursor: pointer;
-            font-family: 'Plus Jakarta Sans';
-            box-shadow: 0 6px 20px rgba(108, 92, 231, 0.2);
-            transition: 0.3s;
         }
 
-        .btn-criar:hover {
-            transform: scale(1.05);
-            opacity: 0.9;
-        }
-
-        /* GRID DE COMUNIDADES (IGUAL À SUA IMAGEM) */
-        .grid-comus {
+        .lista-comus {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
         }
 
         .card-comu {
-            background: var(--card);
-            border-radius: 28px;
+            background: white;
+            border-radius: 25px;
             padding: 30px;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.7);
+            cursor: pointer;
             transition: 0.3s;
-            position: relative;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.03);
         }
 
         .card-comu:hover {
-            transform: translateY(-5px);
+            transform: scale(1.05);
+            border: 2px solid var(--roxo);
         }
 
         .emoji-comu {
-            font-size: 3rem;
-            margin-bottom: 15px;
+            font-size: 2.5rem;
             display: block;
+            margin-bottom: 10px;
         }
 
         .titulo-comu {
-            font-family: 'Plus Jakarta Sans';
-            font-weight: 800;
-            color: var(--roxo);
-            font-size: 1.1rem;
-        }
-
-        /* BOTÃO DE MODERADOR (LIXEIRA) */
-        .btn-admin {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: #FFE5E5;
-            border: none;
-            padding: 8px;
-            border-radius: 10px;
-            cursor: pointer;
-            color: #FF4D4D;
-            display: none;
-        }
-
-        /* MODAL DE CRIAÇÃO (O FORMULÁRIO) */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 100;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(5px);
-        }
-
-        .modal-content {
-            background: white;
-            margin: 10% auto;
-            padding: 30px;
-            border-radius: 32px;
-            width: 90%;
-            max-width: 450px;
-            text-align: center;
-        }
-
-        input,
-        textarea {
-            width: 100%;
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 15px;
-            border: 1px solid #EEE;
-            font-family: 'Poppins';
-            box-sizing: border-box;
+            font-weight: 700;
+            color: #333;
         }
     </style>
 </head>
 
 <body>
     <script type="module" src="menu.js"></script>
-
     <div class="container">
         <div class="header-flex">
-            <h1>Explorar Comunidades</h1>
-            <button class="btn-criar" onclick="abrirModal()">+ Criar Nova</button>
+            <h1>Redes de <span>Troca</span></h1>
+            <button class="btn-criar" onclick="abrirModal()">+ Criar Comunidade</button>
         </div>
-
-        <div class="grid-comus" id="listaComunidades">
-        </div>
-    </div>
-
-    <div id="modalCriar" class="modal">
-        <div class="modal-content">
-            <h2 style="font-family: 'Plus Jakarta Sans'; color: var(--roxo);">Nova Comunidade ✨</h2>
-            <input type="text" id="nomeComu" placeholder="Nome da Comunidade (ex: Mães Atípicas)">
-            <input type="text" id="emojiComu" placeholder="Escolha um Emoji (ex: 🧩)">
-            <textarea id="descComu" placeholder="Sobre o que vamos conversar?"></textarea>
-            <button class="btn-criar" style="width: 100%;" id="btnSalvarComu">Lançar Comunidade</button>
-            <button onclick="fecharModal()"
-                style="background:none; border:none; color:#AAA; margin-top:15px; cursor:pointer;">Cancelar</button>
-        </div>
+        <div id="listaComunidades" class="lista-comus"></div>
     </div>
 
     <script type="module">
-        import { db, auth } from "./liberi.js";
-        import { collection, addDoc, onSnapshot, query, orderBy, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { db, collection, query, onSnapshot, orderBy } from "./liberi.js";
 
-        // Funções do Modal
-        window.abrirModal = () => document.getElementById('modalCriar').style.display = 'block';
-        window.fecharModal = () => document.getElementById('modalCriar').style.display = 'none';
-
-        onAuthStateChanged(auth, (user) => {
-            if (user) { carregarComunidades(); }
-            else { window.location.href = "index.html"; }
+        onSnapshot(query(collection(db, "comunidades"), orderBy("criadoEm", "desc")), (snap) => {
+            const lista = document.getElementById('listaComunidades');
+            lista.innerHTML = "";
+            snap.forEach(docSnap => {
+                const c = docSnap.data();
+                lista.insertAdjacentHTML('beforeend', `
+                    <div class="card-comu" onclick="window.location.href='grupos.html?id=${docSnap.id}'">
+                        <span class="emoji-comu">${c.emoji}</span>
+                        <span class="titulo-comu">${c.nome}</span>
+                    </div>
+                `);
+            });
         });
-
-        // SALVAR NOVA COMUNIDADE (Qualquer membro pode)
-        document.getElementById('btnSalvarComu').onclick = async () => {
-            const nome = document.getElementById('nomeComu').value;
-            const emoji = document.getElementById('emojiComu').value;
-            const desc = document.getElementById('descComu').value;
-
-            if (!nome || !emoji) return alert("Nome e Emoji são obrigatórios!");
-
-            await addDoc(collection(db, "comunidades"), {
-                nome: nome,
-                emoji: emoji,
-                descricao: desc,
-                moderadorId: auth.currentUser.uid, // ELE SE TORNA O MODERADOR
-                criadoEm: new Date()
-            });
-
-            fecharModal();
-            alert("Sua comunidade foi criada! Você é o moderador aqui. 🦉💜");
-        };
-
-        // CARREGAR E MOSTRAR (Com lógica de moderação)
-        function carregarComunidades() {
-            const q = query(collection(db, "comunidades"), orderBy("criadoEm", "desc"));
-            onSnapshot(q, (snapshot) => {
-                const lista = document.getElementById('listaComunidades');
-                lista.innerHTML = "";
-                snapshot.forEach((docSnap) => {
-                    const comu = docSnap.data();
-                    const souModerador = auth.currentUser.uid === comu.moderadorId;
-
-                    lista.insertAdjacentHTML('beforeend', `
-                        <div class="card-comu" onclick="window.location.href='grupos.html?id=${docSnap.id}'">
-                            ${souModerador ? `<button class="btn-admin" style="display:block;" onclick="event.stopPropagation(); excluirComu('${docSnap.id}')">🗑️</button>` : ''}
-                            <span class="emoji-comu">${comu.emoji}</span>
-                            <span class="titulo-comu">${comu.nome}</span>
-                        </div>
-                    `);
-                });
-            });
-        }
-
-        window.excluirComu = async (id) => {
-            if (confirm("Você é o moderador. Deseja excluir esta comunidade para todos?")) {
-                await deleteDoc(doc(db, "comunidades", id));
-            }
-        };
     </script>
 </body>
 

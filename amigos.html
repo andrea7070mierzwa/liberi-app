@@ -4,13 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Líberi - Sugestões de Amizade</title>
+    <title>NeurUp - Sugestões de Conexão</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Poppins:wght@400;500;600&display=swap"
         rel="stylesheet">
     <style>
         :root {
-            --roxo: #6C5CE7;
+            --roxo: #5848d0;
+            /* Roxo NeurUp */
+            --laranja: #FF8C00;
+            /* Laranja Up */
             --bg: #F8F9FD;
             --card: #FFFFFF;
         }
@@ -28,7 +31,6 @@
             padding: 0 20px;
         }
 
-        /* CABEÇALHO REFINADO */
         .cabecalho {
             text-align: center;
             margin-bottom: 35px;
@@ -41,49 +43,42 @@
             margin-bottom: 8px;
         }
 
-        .cabecalho p {
-            color: #888;
-            font-size: 0.95rem;
+        .cabecalho span {
+            color: var(--laranja);
         }
 
         .grid-amigos {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
             gap: 20px;
         }
 
-        /* CARD ESTILO ORKUT-MODERNO */
         .card-amigo {
             background: var(--card);
-            border-radius: 24px;
+            border-radius: 28px;
             padding: 25px;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 8px 25px rgba(88, 72, 208, 0.05);
             transition: 0.3s;
         }
 
         .card-amigo:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(108, 92, 231, 0.08);
         }
 
         .foto-amigo {
             width: 85px;
             height: 85px;
-            border-radius: 28px;
+            border-radius: 30px;
             object-fit: cover;
+            margin-bottom: 15px;
             border: 3px solid #F0EEFF;
-            margin-bottom: 12px;
         }
 
-        /* FONTES REFINADAS */
         .nome-amigo {
             display: block;
-            font-family: 'Plus Jakarta Sans';
             font-weight: 700;
-            color: var(--roxo);
-            font-size: 0.95rem;
+            color: #333;
             margin-bottom: 15px;
         }
 
@@ -91,92 +86,50 @@
             background: var(--roxo);
             color: white;
             border: none;
-            padding: 10px 15px;
-            border-radius: 12px;
+            padding: 10px 20px;
+            border-radius: 15px;
             font-weight: 600;
             cursor: pointer;
             width: 100%;
-            font-size: 0.8rem;
-            transition: 0.3s;
-        }
-
-        .btn-conectar:hover {
-            opacity: 0.9;
-        }
-
-        /* TAGS DE AFINIDADE (GATILHO DE CURIOSIDADE) */
-        .tag-afinidade {
-            display: inline-block;
-            background: #F0EEFF;
-            color: var(--roxo);
-            font-size: 0.65rem;
-            font-weight: 800;
-            padding: 3px 8px;
-            border-radius: 6px;
-            margin-bottom: 10px;
-            text-transform: uppercase;
         }
     </style>
 </head>
 
 <body>
     <script type="module" src="menu.js"></script>
-
-    <main class="container">
+    <div class="container">
         <div class="cabecalho">
-            <h1>Que tal novos amigos? ✨</h1>
-            <p>Famílias com interesses parecidos com os seus.</p>
+            <h1>Neur<span>Up</span> Conexões</h1>
+            <p>Encontre pais que trilham caminhos parecidos com o seu.</p>
         </div>
-
-        <div class="grid-amigos" id="gridAmigos">
-            <p style="text-align: center; grid-column: 1/-1; color: #BBB;">Buscando pessoas incríveis...</p>
+        <div id="gridAmigos" class="grid-amigos">
         </div>
-    </main>
+    </div>
 
     <script type="module">
-        import { db, auth } from "./liberi.js";
-        import { collection, query, where, onSnapshot, limit } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { db, auth, collection, query, onSnapshot, limit } from "./liberi.js";
 
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                carregarNovosAmigos(user.uid);
-            } else {
-                window.location.href = "index.html";
-            }
+        const meuId = auth.currentUser?.uid;
+        const grid = document.getElementById('gridAmigos');
+
+        onSnapshot(query(collection(db, "usuarios"), limit(12)), (snap) => {
+            grid.innerHTML = "";
+            snap.forEach(docSnap => {
+                const d = docSnap.data();
+                if (docSnap.id === auth.currentUser?.uid) return;
+
+                grid.insertAdjacentHTML('beforeend', `
+                    <div class="card-amigo">
+                        <img src="${d.foto || d.photoURL}" class="foto-amigo">
+                        <span class="nome-amigo">${d.nome || d.displayName}</span>
+                        <button class="btn-conectar" onclick="dizerOi('${d.nome || d.displayName}')">👋 Dizer Oi</button>
+                    </div>
+                `);
+            });
         });
 
-        function carregarNovosAmigos(meuId) {
-            const grid = document.getElementById('gridAmigos');
-            // Busca usuários, exceto você mesmo
-            const q = query(collection(db, "usuarios"), limit(12));
-
-            onSnapshot(q, (snapshot) => {
-                grid.innerHTML = "";
-                snapshot.forEach((docSnap) => {
-                    const dados = docSnap.data();
-                    if (docSnap.id === meuId) return; // Não mostra você mesmo na lista
-
-                    // Proteção contra undefined (Lógica de segurança)
-                    const nome = dados.nome || dados.displayName || "Membro Líberi";
-                    const foto = dados.foto || dados.photoURL || "https://via.placeholder.com/85?text=Avatar";
-
-                    grid.insertAdjacentHTML('beforeend', `
-                        <div class="card-amigo">
-                            <img src="${foto}" class="foto-amigo">
-                            <span class="nome-amigo">${nome}</span>
-                            ${dados.afinidade ? `<span class="tag-afinidade">${dados.afinidade}</span>` : ''}
-                            <button class="btn-conectar" onclick="dizerOi('${nome}')">
-                                👋 Dizer Oi
-                            </button>
-                        </div>
-                    `);
-                });
-            });
-        }
-
         window.dizerOi = (nome) => {
-            alert(`Aceno enviado para ${nome}! Conexões reais começam com um pequeno gesto. ✨`);
+            alert(`Aceno enviado para ${nome}! No NeurUp, conexões reais transformam o desenvolvimento. ✨`);
         };
     </script>
 </body>
