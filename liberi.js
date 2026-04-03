@@ -20,6 +20,7 @@ import {
   serverTimestamp,
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+// Configuração oficial do seu projeto NeurUp
 const firebaseConfig = {
   apiKey: "AIzaSyAaLzIJ6LgFMOvEmzpmBo8d2Owh_DIyfWI",
   authDomain: "liberi-e377c.firebaseapp.com",
@@ -29,11 +30,13 @@ const firebaseConfig = {
   appId: "1:304236275616:web:3ecf402fe0b1a6e0a7e6c5",
 };
 
+// Inicialização dos serviços
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
 
+// Exportação para uso nos outros arquivos (index.html, perfil.html, etc)
 export {
   auth,
   db,
@@ -52,6 +55,3 @@ export {
   onSnapshot,
   serverTimestamp,
 };
-
-// CONEXÃO OFICIAL NEURUP - Antigo Liberi
-const firebaseConfig = { ... };
