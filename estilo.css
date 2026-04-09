@@ -11,6 +11,7 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: var(--bg) !important;
     margin: 0;
+    padding: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -22,10 +23,11 @@ body {
 .card,
 .login-card,
 .main-card {
-    max-width: 500px;
+    max-width: 800px;
     width: 90%;
     background: var(--white) !important;
-    padding: 40px;
+    padding: 15px;
+    margin: 0 auto;
     border-radius: 24px;
     box-shadow: var(--shadow);
     text-align: center;
@@ -83,4 +85,107 @@ input {
 .avatar-option.selected {
     border-color: var(--primary);
     background: #f3f0ff;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+.post-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.btn-reaction {
+    background: none !important;
+    border: none !important;
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+@media (max-width: 600px) {
+    .container, .main, .feed {
+        padding: 10px;
+    }
+
+    h1, h2, h3 {
+        font-size: 18px;
+    }
+
+    textarea {
+        font-size: 14px;
+    }
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* CONTAINER CENTRAL */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 15px;
+}
+
+/* INPUTS */
+textarea {
+    width: 100%;
+    min-height: 120px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+input {
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+/* BOTÃO */
+button {
+    padding: 10px;
+    cursor: pointer;
+}
+
+/* IMAGEM RESPONSIVA */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+/* POSTS */
+.feed-item {
+    margin-bottom: 20px;
+}
+
+/* AÇÕES */
+.post-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+
+    textarea {
+        font-size: 14px;
+    }
 }

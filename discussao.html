@@ -4,145 +4,415 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeurUp - Conversa</title>
+    <title>Discussão | NeurUp</title>
+    <link rel="icon" type="image/png" href="imagens/favicon.png">
     <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=Poppins:wght@400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=Poppins:wght@400;500&display=swap"
         rel="stylesheet">
+
+
+    }
+
     <style>
         :root {
             --roxo: #5848d0;
+            --laranja: #FF8C00;
             --bg: #F0EEFF;
-            --card: #FFFFFF;
         }
 
         body {
             font-family: 'Poppins', sans-serif;
             background: var(--bg);
             margin: 0;
-            color: #4A4A4A;
         }
 
-        .container-discussao {
-            max-width: 750px;
-            margin: 30px auto;
-            padding: 0 20px;
+        .container {
+            padding: 30px 5%;
+            max-width: 800px;
+            margin: auto;
         }
 
-        .card-post-foco {
-            background: var(--card);
+        .header-discussao {
+            background: white;
             padding: 30px;
             border-radius: 30px;
-            border-left: 8px solid var(--roxo);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            margin-bottom: 25px;
+            margin-bottom: 20px;
+            border-left: 8px solid var(--laranja);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.02);
         }
 
-        .foto-autor {
-            width: 45px;
-            height: 45px;
-            border-radius: 15px;
-            object-fit: cover;
+        .card-bloqueio {
+            background: linear-gradient(135deg, var(--roxo) 0%, #7b6be6 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 35px;
+            text-align: center;
+            margin: 20px 0;
+            box-shadow: 0 15px 35px rgba(88, 72, 208, 0.2);
         }
 
-        .nome-autor {
-            font-weight: 700;
+        .btn-entrar-comunidade {
+            background: var(--laranja);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 20px;
+            font-weight: 800;
+            cursor: pointer;
+            margin-top: 20px;
+            font-family: 'Plus Jakarta Sans';
+            transition: 0.3s;
+        }
+
+        .btn-entrar-comunidade:hover {
+            transform: scale(1.05);
+            background: #ff7b00;
+        }
+
+        #conteudo-restrito {
+            display: none;
+        }
+
+        .post-usuario {
+            background: white;
+            padding: 20px;
+            border-radius: 25px;
+            margin-bottom: 15px;
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.02);
+        }
+
+        .post-usuario img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #eee;
+        }
+
+        .post-conteudo h4 {
+            margin: 0;
             color: var(--roxo);
         }
 
-        #listaComentarios {
+        .post-conteudo p {
+            margin: 5px 0 0;
+            color: #444;
+            line-height: 1.5;
+        }
+
+        .post-ai {
+            background: linear-gradient(135deg, #ffffff 0%, #f4f1ff 100%);
+            border: 2px solid var(--roxo);
+            padding: 25px;
+            border-radius: 30px;
+            margin: 25px 0;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(88, 72, 208, 0.1);
+        }
+
+        .badge-ai {
+            position: absolute;
+            top: -12px;
+            left: 25px;
+            background: var(--roxo);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 800;
+        }
+
+        .avatar-neura {
+            width: 35px;
+            height: 35px;
+            background: var(--roxo);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .caixa-resposta {
+            background: white;
+            padding: 25px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
             margin-top: 30px;
         }
 
-        .comentario-item {
-            background: white;
-            padding: 20px;
-            border-radius: 20px;
-            margin-bottom: 15px;
-        }
-
-        #textoComentario {
-            width: 100%;
-            min-height: 80px;
-            background: white;
-            border-radius: 20px;
-            padding: 15px;
-            outline: none;
-            border: 2px solid #EEE;
-            margin-bottom: 10px;
-        }
-
-        .btn-comentar {
+        .btn-enviar {
             background: var(--roxo);
             color: white;
             border: none;
             padding: 12px 25px;
-            border-radius: 15px;
+            border-radius: 12px;
             font-weight: 600;
             cursor: pointer;
+            margin-top: 15px;
+            float: right;
+        }
+
+        .btn-provocar-neura {
+            background: white;
+            border: 2px solid var(--roxo);
+            color: var(--roxo);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 10px 0;
+            transition: 0.3s;
+        }
+
+        .btn-provocar-neura:hover {
+            background: var(--roxo);
+            color: white;
+        }
+
+        /* =========================================
+           ⚡ MODO TEEN - ESTÉTICA GAMER / NEON (MASTER)
+           ========================================= */
+        body.modo-teen {
+            --bg: #121214;
+            --roxo: #04d361;
+            --laranja: #8257e5;
+            color: #e1e1e6;
+            background: var(--bg);
+        }
+
+        body.modo-teen .header-discussao,
+        body.modo-teen .post-usuario,
+        body.modo-teen .caixa-resposta {
+            background: #202024 !important;
+            border: 1px solid #29292e !important;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5) !important;
+            color: #e1e1e6 !important;
+        }
+
+        body.modo-teen h1,
+        body.modo-teen h2,
+        body.modo-teen h3,
+        body.modo-teen h4 {
+            color: var(--roxo) !important;
+        }
+
+        body.modo-teen p,
+        body.modo-teen small {
+            color: #a8a8b3 !important;
+        }
+
+        body.modo-teen textarea,
+        body.modo-teen input {
+            background: #121214 !important;
+            color: #e1e1e6 !important;
+            border: 1px solid #323238 !important;
+        }
+
+        body.modo-teen .post-ai {
+            background: #1a1a1e !important;
+            border-color: #8257e5 !important;
+        }
+
+        body.modo-teen .badge-ai {
+            background: #8257e5 !important;
+            color: white !important;
+        }
+
+        body.modo-teen .avatar-neura {
+            background: #8257e5 !important;
+        }
+
+        body.modo-teen .card-bloqueio {
+            background: #202024 !important;
+            border: 2px dashed #04d361 !important;
+            color: #e1e1e6;
+        }
+
+        body.modo-teen button,
+        body.modo-teen .btn-enviar,
+        body.modo-teen .btn-entrar-comunidade {
+            background: var(--roxo) !important;
+            color: #121214 !important;
+            font-weight: 800;
+        }
+
+        body.modo-teen .btn-provocar-neura {
+            background: transparent !important;
+            color: var(--roxo) !important;
+            border: 2px solid var(--roxo) !important;
+        }
+
+        body.modo-teen .btn-provocar-neura:hover {
+            background: var(--roxo) !important;
+            color: #121214 !important;
+        }
+
+        /* =========================================
+           📱 MUTIRÃO MOBILE - RESPONSIVIDADE
+           ========================================= */
+        @media (max-width: 768px) {
+
+            /* 1. Ajusta o respiro lateral para ganhar espaço na telinha */
+            .main-content,
+            .container {
+                padding: 20px 5%;
+            }
+
+            /* 2. Centraliza e diminui os títulos para não quebrarem de linha feio */
+            h1 {
+                font-size: 1.8rem;
+                text-align: center;
+            }
+
+            /* 3. Coloca os cards de Comunidade um embaixo do outro (1 coluna só) */
+            .grid-comunidades {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            /* 4. Ajusta a barra de ferramentas do Mural para os botões não vazarem */
+            .toolbar {
+                justify-content: center;
+                padding: 10px;
+            }
+
+            .toolbar button,
+            .toolbar select {
+                padding: 6px 10px;
+                font-size: 0.9rem;
+            }
+
+            /* 5. Deixa a área de texto do recado mais compacta */
+            .editor-area {
+                min-height: 120px;
+                padding: 15px;
+                font-size: 1rem;
+            }
+
+            /* 6. Encolhe um pouquinho o botão flutuante de Criar Comunidade (+) */
+            button[onclick*="modalCriar"] {
+                width: 50px !important;
+                height: 50px !important;
+                bottom: 20px !important;
+                right: 20px !important;
+                font-size: 24px !important;
+            }
+
+            /* 7. Ajusta o Pop-up de criação para caber perfeitamente no meio do celular */
+            #modalCriar>div {
+                width: 85% !important;
+                padding: 20px !important;
+            }
+
+            /* 8. Botão de postar no mural ocupa a largura toda para ficar fácil de clicar com o dedão */
+            .btn-postar {
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
 </head>
 
 <body>
-    <script type="module" src="menu.js"></script>
-    <div class="container-discussao">
-        <div id="postFoco" class="card-post-foco">
+    <div id="menu-principal"></div>
+    <main class="container">
+        <div class="header-discussao">
+            <small style="color: var(--laranja); font-weight: 700; text-transform: uppercase;">Destaque da
+                Comunidade</small>
+            <h2 style="margin: 10px 0; color: var(--roxo); font-family: 'Plus Jakarta Sans';">E aí galera, qual a boa de
+                hoje?</h2>
+            <p style="color: #666; font-size: 0.9rem;">Tópico iniciando uma nova conversa...</p>
         </div>
 
-        <div class="editor-coment">
-            <div id="textoComentario" contenteditable="true" placeholder="Escreva seu apoio ou dúvida..."></div>
-            <button id="btnEnviarComentario" class="btn-comentar">Enviar Comentário</button>
+        <div id="card-bloqueio" class="card-bloqueio">
+            <span style="font-size: 3rem;">🔒</span>
+            <h2 style="font-family: 'Plus Jakarta Sans'; margin-top: 10px;">Comunidade Privada</h2>
+            <p>Este tópico contém interações exclusivas para quem é da turma.</p>
+            <button class="btn-entrar-comunidade" onclick="entrarNaComunidade()">Participar para ler tudo</button>
         </div>
 
-        <div id="listaComentarios"></div>
-    </div>
+        <section id="conteudo-restrito">
+            <div class="post-usuario">
+                <img src="https://via.placeholder.com/50" alt="Avatar">
+                <div class="post-conteudo">
+                    <h4>Manu</h4>
+                    <p>Alguém online para jogar ou bater papo?</p>
+                </div>
+            </div>
+            <button id="btnNeura" class="btn-provocar-neura">✨ Pedir ajuda da Neura</button>
+            <div id="respostaNeura" class="post-ai" style="display: none;">
+                <span class="badge-ai">🤖 NEURA | INSIGHT</span>
+                <div class="post-conteudo">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                        <div class="avatar-neura">🧠</div>
+                        <h4 style="margin: 0; color: var(--roxo);">Neura explica:</h4>
+                    </div>
+                    <p>Oi! Sabia que jogar online ajuda a desenvolver reflexos rápidos e estratégia em equipe? Que tal
+                        sugerirem um jogo aqui embaixo? 🎮</p>
+                </div>
+            </div>
+            <div class="caixa-resposta">
+                <h4 style="color: var(--roxo); margin-top: 0;">Sua contribuição:</h4>
+                <textarea id="textoResposta" placeholder="Escreva aqui sua mensagem..."></textarea>
+                <button class="btn-enviar">Postar Resposta</button>
+                <div style="clear: both;"></div>
+            </div>
+        </section>
+    </main>
 
     <script type="module">
-        import { db, auth, doc, getDoc, collection, addDoc, query, where, onSnapshot, orderBy, serverTimestamp, deleteDoc } from "./liberi.js";
+        import { renderizarMenu } from './menu.js';
+        import { auth, db } from './liberi.js';
+        import { getDoc, getDocs, doc, collection, query, where } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { criarEditor } from './editor.js';
 
-        const params = new URLSearchParams(window.location.search);
-        const postId = params.get('id');
+        renderizarMenu();
 
-        // Carrega o Post Principal
-        onSnapshot(doc(db, "posts", postId), (snap) => {
-            if (!snap.exists()) return;
-            const p = snap.data();
-            document.getElementById('postFoco').innerHTML = `
-                <div style="display:flex; align-items:center; gap:15px; margin-bottom:15px;">
-                    <img src="${p.fotoAutor}" class="foto-autor">
-                    <span class="nome-autor">${p.autor}</span>
-                </div>
-                <div style="font-size:1.1rem; line-height:1.6;">${p.texto}</div>
-            `;
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                const docSnap = await getDoc(doc(db, "usuarios", user.uid));
+                if (docSnap.exists()) {
+                    const d = docSnap.data();
+                    let idade = 30;
+
+                    if (d.filho && d.filho.idade) {
+                        idade = parseInt(d.filho.idade);
+                    } else if (d.tipo === "dependente_autonomo" && d.pai_uid_referencia) {
+                        const qPai = query(collection(db, "usuarios"), where("codigoFamiliar", "==", d.pai_uid_referencia));
+                        const snapPai = await getDocs(qPai);
+                        if (!snapPai.empty) {
+                            const dadosPai = snapPai.docs[0].data();
+                            if (dadosPai.filho && dadosPai.filho.idade) {
+                                idade = parseInt(dadosPai.filho.idade);
+                            }
+                        }
+                    }
+
+                    if (idade >= 11 && idade <= 17) {
+                        document.body.classList.add('modo-teen');
+                    }
+                }
+            }
         });
 
-        // Carrega Comentários
-        onSnapshot(query(collection(db, "comentarios"), where("postId", "==", postId), orderBy("data", "asc")), (snap) => {
-            const lista = document.getElementById('listaComentarios');
-            lista.innerHTML = "";
-            snap.forEach(d => {
-                const c = d.data();
-                lista.insertAdjacentHTML('beforeend', `
-                    <div class="comentario-item">
-                        <small><b>${c.autor}:</b></small>
-                        <div style="margin-top:5px;">${c.texto}</div>
-                    </div>
-                `);
-            });
-        });
+        window.entrarNaComunidade = function () {
+            document.getElementById('card-bloqueio').style.display = 'none';
+            document.getElementById('conteudo-restrito').style.display = 'block';
+            criarEditor('textoResposta');
+            alert("Bem-vindo(a) à conversa!");
+        }
 
-        document.getElementById('btnEnviarComentario').onclick = async () => {
-            const campo = document.getElementById('textoComentario');
-            if (!campo.innerText.trim()) return;
-            await addDoc(collection(db, "comentarios"), {
-                postId: postId,
-                texto: campo.innerHTML,
-                autor: auth.currentUser.displayName,
-                autorId: auth.currentUser.uid,
-                data: serverTimestamp()
-            });
-            campo.innerHTML = "";
-        };
+        document.getElementById('btnNeura').onclick = function () {
+            this.innerHTML = "🤖 Neura digitando...";
+            this.disabled = true;
+            setTimeout(() => {
+                document.getElementById('respostaNeura').style.display = 'block';
+                this.style.display = 'none';
+            }, 1200);
+        }
     </script>
 </body>
 

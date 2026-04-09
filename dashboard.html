@@ -4,382 +4,551 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeurUp - Dashboard Oficial</title>
+    <title>Dashboard | NeurUp</title>
+    <link rel="icon" type="image/png" href="imagens/favicon.png">
+
     <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Poppins:wght@400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=Poppins:wght@400;500&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <style>
         :root {
             --roxo: #5848d0;
-            /* Roxo NeurUp */
             --laranja: #FF8C00;
-            /* Laranja Up */
-            --bg: #F8F9FD;
-            --card: #FFFFFF;
+            --bg: #F0EEFF;
         }
 
         body {
             font-family: 'Poppins', sans-serif;
             background: var(--bg);
             margin: 0;
-            color: #4A4A4A;
+            color: #333;
         }
 
-        .layout-geral {
+        /* --- Header: Logo e Menu --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+        }
+
+        .logo-img {
+            height: 45px;
+        }
+
+        /* --- Layout de 3 Colunas Fixo --- */
+        .main-container {
             display: grid;
-            grid-template-columns: 260px 1fr 260px;
+            grid-template-columns: 260px minmax(0, 1fr) 260px;
             gap: 20px;
-            max-width: 1200px;
-            margin: 30px auto;
-            padding: 0 20px;
+            padding: 20px 5%;
+            max-width: 1400px;
+            margin: auto;
         }
 
         .card {
-            background: var(--card);
-            border-radius: 28px;
+            background: white;
             padding: 20px;
-            box-shadow: 0 4px 20px rgba(88, 72, 208, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(88, 72, 208, 0.05);
             margin-bottom: 20px;
-        }
-
-        /* CARD INSIGHTS NEURUP */
-        .card-neuras {
-            background: linear-gradient(135deg, var(--roxo), #A29BFE);
-            color: white;
-            border-radius: 28px;
-            padding: 25px;
-            margin-bottom: 20px;
-            display: none;
-            border: none;
-        }
-
-        .foto-perfil {
-            width: 100px;
-            height: 100px;
-            border-radius: 35px;
-            border: 4px solid #FFF;
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.06);
-            object-fit: cover;
-        }
-
-        .nome-user {
-            font-family: 'Plus Jakarta Sans';
-            font-weight: 800;
-            color: var(--roxo);
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            margin-top: 15px;
-            display: block;
-        }
-
-        .orkut-links {
-            list-style: none;
-            padding: 0;
-            margin: 20px 0;
-            text-align: left;
-            font-size: 0.85rem;
-            color: #666;
-        }
-
-        .orkut-links li {
-            margin-bottom: 10px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: 0.2s;
-        }
-
-        .orkut-links li:hover {
-            color: var(--roxo);
-        }
-
-        .fofoca-box {
-            background: #FFF4E5;
-            border: 1px solid #FFE082;
-            border-radius: 18px;
-            padding: 12px;
-            margin-bottom: 15px;
-            display: none;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.02);
-            }
-
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        .apoio-box {
-            background: #F0EEFF;
-            border: 1px dashed var(--roxo);
-            border-radius: 20px;
-            padding: 15px;
-            text-align: left;
-        }
-
-        /* EDITOR */
-        #campoPost {
-            width: 100%;
-            min-height: 100px;
-            background: #F0F2F9;
-            border-radius: 20px;
-            padding: 15px;
-            outline: none;
-            font-size: 0.9rem;
-            box-sizing: border-box;
-        }
-
-        .toolbar {
-            display: none;
-            gap: 10px;
-            margin-top: 10px;
-            background: white;
-            padding: 10px;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-            align-items: center;
-        }
-
-        .btn-t {
-            background: #EEE;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .post-card {
-            border-left: 4px solid var(--roxo);
-            padding: 15px;
-            background: white;
-            border-radius: 18px;
-            margin-bottom: 15px;
             position: relative;
         }
 
-        .blur-content {
-            filter: blur(5px);
-            pointer-events: none;
+        /* --- Sidebar Esquerda --- */
+        .perfil-card {
+            text-align: center;
         }
 
-        .lock-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.7);
+        .perfil-card img {
+            width: 85px;
+            height: 85px;
+            border-radius: 50%;
+            border: 3px solid var(--laranja);
+            object-fit: cover;
+        }
+
+        .menu-link {
             display: flex;
             align-items: center;
-            justify-content: center;
-            z-index: 5;
-            border-radius: 18px;
-        }
-
-        /* NOVA FUNCIONALIDADE: BOTÃO RESPIRAR */
-        .btn-respirar {
-            width: 100%;
-            background: var(--laranja);
-            color: white;
-            border: none;
-            padding: 10px;
+            gap: 12px;
+            padding: 12px;
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
             border-radius: 15px;
-            font-weight: 700;
-            cursor: pointer;
-            margin-top: 10px;
-            font-size: 0.8rem;
             transition: 0.3s;
+            margin-bottom: 5px;
         }
 
-        .btn-respirar:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
+        .menu-link.active,
+        .menu-link:hover {
+            background: var(--roxo);
+            color: white;
+        }
+
+        /* --- Ferramentas do Orkut --- */
+        .post-area {
+            border: 2px solid #f0edff;
+            border-radius: 20px;
+            padding: 15px;
+            margin: 15px 0;
+            background: white;
+        }
+
+        .toolbar {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .toolbar button,
+        .toolbar select,
+        .toolbar input[type="color"] {
+            background: #eee;
+            border: 1px solid #ddd;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: #333;
+        }
+
+        .toolbar button:hover {
+            background: #ddd;
+        }
+
+        .toolbar input[type="color"] {
+            width: 40px;
+            height: 34px;
+            padding: 0;
+        }
+
+        #postContent {
+            width: 100%;
+            min-height: 120px;
+            border: none;
+            outline: none;
+            font-family: inherit;
+            font-size: 1rem;
+            color: #333;
+            overflow-y: auto;
+            max-width: 100%;
+        }
+
+        #postContent img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        #postContent[contenteditable]:empty:before {
+            content: attr(placeholder);
+            color: #999;
+            display: block;
+        }
+
+        /* Garante que imagens postadas no feed não quebrem o layout */
+        .feed-item img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-top: 10px;
+            display: block;
+        }
+
+        .feed-post-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .feed-post-header img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+            object-fit: cover;
+        }
+
+        .feed-post-header .author-info strong {
+            color: var(--roxo);
+            font-size: 1rem;
+        }
+
+        .feed-post-header .author-info small {
+            color: #888;
+            font-size: 0.75rem;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 20px;
+            margin-top: 15px;
+            border-top: 1px solid #f5f5f5;
+            padding-top: 15px;
+        }
+
+        .btn-reaction {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.4rem;
+            transition: 0.2s;
+            color: #666;
+        }
+
+        .btn-reaction:hover {
+            transform: scale(1.3);
+            color: var(--roxo);
+        }
+
+        .delete-btn {
+            margin-left: auto;
+            color: #dc2626;
+            display: none;
+        }
+
+        .delete-btn.ativo {
+            display: block;
+        }
+
+        @media (max-width: 1100px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                display: none;
+            }
+        }
+
+        /* =========================================
+           📱 MUTIRÃO MOBILE - RESPONSIVIDADE
+           ========================================= */
+        @media (max-width: 768px) {
+
+            /* 1. Ajusta o respiro lateral para ganhar espaço na telinha */
+            .main-content,
+            .container {
+                padding: 20px 5%;
+            }
+
+            /* 2. Centraliza e diminui os títulos para não quebrarem de linha feio */
+            h1 {
+                font-size: 1.8rem;
+                text-align: center;
+            }
+
+            /* 3. Coloca os cards de Comunidade um embaixo do outro (1 coluna só) */
+            .grid-comunidades {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            /* 4. Ajusta a barra de ferramentas do Mural para os botões não vazarem */
+            .toolbar {
+                justify-content: center;
+                padding: 10px;
+            }
+
+            .toolbar button,
+            .toolbar select {
+                padding: 6px 10px;
+                font-size: 0.9rem;
+            }
+
+            /* 5. Deixa a área de texto do recado mais compacta */
+            .editor-area {
+                min-height: 120px;
+                padding: 15px;
+                font-size: 1rem;
+            }
+
+            /* 6. Encolhe um pouquinho o botão flutuante de Criar Comunidade (+) */
+            button[onclick*="modalCriar"] {
+                width: 50px !important;
+                height: 50px !important;
+                bottom: 20px !important;
+                right: 20px !important;
+                font-size: 24px !important;
+            }
+
+            /* 7. Ajusta o Pop-up de criação para caber perfeitamente no meio do celular */
+            #modalCriar>div {
+                width: 85% !important;
+                padding: 20px !important;
+            }
+
+            /* 8. Botão de postar no mural ocupa a largura toda para ficar fácil de clicar com o dedão */
+            .btn-postar {
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
 </head>
 
 <body>
-    <script type="module" src="menu.js"></script>
-    <main class="layout-geral">
-        <aside>
-            <div class="card" style="text-align: center;">
-                <img id="userFoto" src="" class="foto-perfil">
-                <span id="userName" class="nome-user">...</span>
-                <ul class="orkut-links">
-                    <li>💬 Recados (12)</li>
-                    <li onclick="window.location.href='amigos.html'">👥 Amigos (<b>312</b>)</li>
-                    <li onclick="window.location.href='comunidades.html'">🔍 Comunidades (<b>47</b>)</li>
-                    <li>📄 Depoimentos (8)</li>
-                </ul>
-
-                <button class="btn-respirar"
-                    onclick="alert('🧘 Pausa NeurUp: Inspire profundamente pelo nariz contando até 4... Segure por 4... Solte pela boca em 4. Você está no controle.')">Pausa
-                    para Respirar</button>
-
-                <div class="fofoca-box" id="gavetaFofoca">
-                    <span style="font-size:0.6rem; font-weight:800; color:var(--laranja);">CONEXÃO NEURUP 🔥</span>
-                    <p id="msgFofoca" style="font-size:0.8rem; margin:5px 0; color:#856404; font-weight:600;"></p>
-                </div>
-                <div class="apoio-box">
-                    <span style="font-size:0.7rem; font-weight:800; color:var(--roxo);">REDE DE APOIO 💜</span>
-                    <div id="listaDepoimentos"></div>
-                </div>
+    <div id="menu-principal"></div>
+    <main class="main-container">
+        <aside class="sidebar">
+            <div class="card perfil-card">
+                <img id="fotoPerfil" src="" alt="Avatar">
+                <h4 id="nomeUsuario" style="color: var(--roxo); margin: 10px 0 5px 0;">...</h4>
+                <small id="labelPersona"
+                    style="text-transform: uppercase; color: #888; font-weight: 700; font-size: 0.7rem;"></small>
             </div>
+
+            <nav class="card" style="padding: 10px;">
+                <a href="dashboard.html" class="menu-link active">🏠 Circuito Principal</a>
+                <a href="comunidades.html" class="menu-link">🤝 Comunidades</a>
+                <a href="neura_kids.html" class="menu-link" style="color: var(--laranja); font-weight: 800;">🧠
+                    Perguntar à Neura</a>
+            </nav>
         </aside>
 
-        <section>
-            <div id="gatilhoNeuras" class="card-neuras">
-                <span style="font-size: 0.7rem; font-weight: 800; text-transform: uppercase; opacity: 0.9;">💡 Conexão
-                    NeurUp para você</span>
-                <h3 id="perguntaGatilho"
-                    style="font-family: 'Plus Jakarta Sans'; font-size: 1.1rem; margin: 12px 0; line-height: 1.4;">
-                    Carregando sabedoria...</h3>
-                <button onclick="window.location.href='../neuras_de_mae/index.html'"
-                    style="background: white; color: var(--roxo); border: none; padding: 10px 20px; border-radius: 12px; font-weight: 700; cursor: pointer; font-size: 0.85rem; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">Ver
-                    Resposta Científica</button>
+        <section class="feed">
+            <div class="card">
+                <h5 style="margin:0; color: var(--roxo);">📢 Compartilhar com o Circuito</h5>
+                <div class="post-area">
+                    <div class="toolbar">
+                        <button id="boldBtn" title="Negrito"><i class="fas fa-bold"></i></button>
+                        <button id="italicBtn" title="Itálico"><i class="fas fa-italic"></i></button>
+                        <select id="sizeSelect" title="Tamanho">
+                            <option value="3">Pequeno</option>
+                            <option value="4" selected>Normal</option>
+                            <option value="5">Grande</option>
+                        </select>
+                        <input type="color" id="colorPicker" value="#333333" title="Cor">
+                        <button id="imgBtn" title="Inserir Imagem"><i class="fas fa-image"></i></button>
+                        <input type="file" id="fileInput" accept="image/*" style="display:none;">
+                    </div>
+                    <div id="postContent" contenteditable="true"
+                        placeholder="Clique aqui para contar uma descoberta..."></div>
+                </div>
+                <button id="btnPostar"
+                    style="background:var(--roxo); color:white; border:none; padding:12px; border-radius:15px; font-weight:700; cursor:pointer; width:100%;">Postar
+                    no Circuito</button>
             </div>
 
-            <div class="card">
-                <div id="campoPost" contenteditable="true" placeholder="Mencione com @ ou use a paleta 🎨"></div>
-                <div class="toolbar" id="tools">
-                    <button class="btn-t" onclick="document.execCommand('bold')">B</button>
-                    <button class="btn-t" onclick="document.execCommand('italic')">I</button>
-                    <input type="color" onchange="document.execCommand('foreColor', false, this.value)"
-                        style="border:none; width:30px; height:30px; cursor:pointer;">
-                </div>
-                <div style="display:flex; justify-content:space-between; margin-top:10px; align-items:center;">
-                    <button onclick="window.toggleTools()"
-                        style="background:none; border:none; font-size:1.5rem; cursor:pointer;">🎨</button>
-                    <button id="btnPostar"
-                        style="background:var(--roxo); color:white; border:none; padding:10px 25px; border-radius:15px; font-weight:600; cursor:pointer;">Publicar</button>
-                </div>
-            </div>
-            <div id="feedHibrido"></div>
+            <div id="feedPrincipal"></div>
         </section>
 
-        <aside>
+        <aside class="sidebar">
+
             <div class="card">
-                <h3 style="font-size:0.8rem; color:#AAA; text-transform:uppercase;">Explorar</h3>
-                <button onclick="window.location.href='comunidades.html'"
-                    style="width:100%; background:#F0EEFF; border:none; padding:12px; border-radius:15px; color:var(--roxo); font-weight:700; cursor:pointer;">Ver
-                    Comunidades</button>
+                <h5 style="color: var(--roxo); margin-top: 0;">🎯 Dependente Cadastrado</h5>
+                <div id="containerAcessoFilho" style="text-align: center; padding: 10px 0;">
+                    <small style="color: #999;">Buscando dados...</small>
+                </div>
+            </div>
+
+            <div class="card">
+                <h5 style="color: var(--roxo); margin-top: 0;">🛡️ Monitor Kids</h5>
+                <div id="monitorizacaoKids" style="font-size: 0.85rem; color: #999; text-align: center;">
+                    Buscando sinais no circuito...
+                </div>
             </div>
         </aside>
     </main>
 
     <script type="module">
-        import { db, auth, doc, getDoc, collection, query, where, getDocs, onSnapshot, orderBy, serverTimestamp, addDoc } from "./liberi.js";
-        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { renderizarMenu } from './menu.js';
+        import { auth, db } from './liberi.js';
+        import { doc, getDoc, collection, query, where, orderBy, onSnapshot, addDoc, serverTimestamp, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        window.toggleTools = () => {
-            const t = document.getElementById('tools');
-            t.style.display = (t.style.display === 'flex') ? 'none' : 'flex';
+        renderizarMenu();
+
+        // NOVO: Função global de revelar/esconder o código familiar
+        window.toggleCodigoFamiliar = function () {
+            const span = document.getElementById('textoCodigoFamiliar');
+            const icone = document.getElementById('iconeOlhoCodigo');
+
+            // Verifica se está borrado para revelar
+            if (span.style.filter.includes('blur')) {
+                span.style.filter = 'none';
+                icone.classList.remove('fa-eye');
+                icone.classList.add('fa-eye-slash');
+            } else {
+                span.style.filter = 'blur(5px)';
+                icone.classList.remove('fa-eye-slash');
+                icone.classList.add('fa-eye');
+            }
         };
 
-        let minhasComus = [];
+        let currentUserId = '';
 
-        onAuthStateChanged(auth, async (user) => {
+        // 1. CARREGAR PERFIL
+        auth.onAuthStateChanged(async (user) => {
             if (user) {
-                document.getElementById('userFoto').src = user.photoURL;
-                document.getElementById('userName').innerText = user.displayName;
+                currentUserId = user.uid;
+                const docSnap = await getDoc(doc(db, "usuarios", user.uid));
 
-                const userSnap = await getDoc(doc(db, "usuarios", user.uid));
-                if (userSnap.exists()) {
-                    const dados = userSnap.data();
-                    minhasComus = dados.comunidades || [];
-
-                    if (dados.filhos && dados.filhos.length > 0) {
-                        const idadeMeses = calcularMeses(dados.filhos[0].nascimento);
-                        carregarGatilhoNeuras(idadeMeses);
+                if (docSnap.exists()) {
+                    const d = docSnap.data();
+                    document.getElementById('nomeUsuario').innerText = user.displayName.split(' ')[0];
+                    if (user.photoURL) document.getElementById('fotoPerfil').src = user.photoURL;
+                    document.getElementById('labelPersona').innerText = d.persona || "Membro";
+                    // TRAVA DE SEGURANÇA: Se a criança cair no painel do pai por engano, joga ela de volta pro Kids.
+                    if (d.tipo === "dependente_autonomo") {
+                        window.location.href = "neura_kids.html";
+                        return;
                     }
-                }
 
-                carregarFeed();
-                ouvirConexoes(user.displayName);
-                ouvirDepoimentos();
-            } else { window.location.href = "index.html"; }
+                    // === LÓGICA DO BOTÃO E LINK DO DEPENDENTE ===
+                    if (d.filho && d.filho.nome) {
+                        const nomeDoFilho = d.filho.nome;
+                        const codigoFamiliar = user.uid.substring(0, 6).toUpperCase();
+                        const linkAcesso = "https://neurup.app/login_explorador.html"; // O endereço da porta deles
+                        const container = document.getElementById('containerAcessoFilho');
+
+                        container.innerHTML = `
+        <div style="font-weight: 600; color: var(--roxo); margin-bottom: 10px;">${nomeDoFilho}</div>
+        
+        <button onclick="window.location.href='neura_kids.html'" 
+            style="background: var(--laranja); color: white; border: none; padding: 10px 15px; border-radius: 12px; font-weight: 700; cursor: pointer; width: 100%; transition: 0.3s; margin-bottom: 15px;">
+            Acessar painel de ${nomeDoFilho}
+        </button>
+        
+        <div style="background: #fff5eb; border: 1px dashed var(--laranja); padding: 12px; border-radius: 12px; text-align: center;">
+            <small style="color: #666; font-weight: 600; display: block; margin-bottom: 5px;">🔑 Código de Conexão:</small>
+            
+            <div style="display: inline-flex; align-items: center; background: var(--roxo); border-radius: 8px; overflow: hidden; margin: 5px auto;">
+                <span id="textoCodigoFamiliar" style="color: white; font-family: monospace; font-size: 1.1rem; padding: 5px 12px; font-weight: bold; filter: blur(5px); transition: 0.3s; user-select: none;">${codigoFamiliar}</span>
+                <button onclick="toggleCodigoFamiliar()" style="background: rgba(0,0,0,0.2); border: none; color: white; padding: 8px; cursor: pointer;">
+                    <i id="iconeOlhoCodigo" class="fas fa-eye"></i>
+                </button>
+            </div>
+
+            <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,140,0,0.2);">
+                <small style="color: #666; display: block; margin-bottom: 5px;">🔗 Link para o Explorador:</small>
+                <input type="text" value="${linkAcesso}" readonly 
+                    style="width: 100%; font-size: 0.7rem; padding: 5px; border: 1px solid #ddd; border-radius: 5px; text-align: center; background: white;">
+                <button onclick="navigator.clipboard.writeText('${linkAcesso}').then(() => alert('Link copiado!'))"
+                    style="background: none; border: none; color: var(--roxo); font-size: 0.75rem; font-weight: 700; cursor: pointer; margin-top: 5px;">
+                    <i class="fas fa-copy"></i> Copiar Link
+                </button>
+            </div>
+        </div>
+    `;
+                        // ===========================================
+
+                        // Monitoramento Kids (simplificado)
+                        const qKids = query(collection(db, "posts_circuito"), where("pai_uid", "==", user.uid), orderBy("data", "desc"));
+                        onSnapshot(qKids, (snapshot) => {
+                            const monitor = document.getElementById('monitorizacaoKids');
+                            monitor.innerHTML = "";
+                            if (snapshot.empty) monitor.innerHTML = "Nenhuma atividade recente.";
+                            snapshot.forEach(doc => {
+                                const p = doc.data();
+                                monitor.innerHTML += `<div class="card" style="padding:10px; font-size:0.8rem; margin-bottom:10px; border:1px solid #eee;"><b>${p.autor}:</b> ${p.texto}</div>`;
+                            });
+                        });
+                    }
+
+                    carregarFeed(); // Chama o feed assim que logar
+                }
+            } else {
+                window.location.href = "index.html";
+            }
         });
 
-        function calcularMeses(dataNasc) {
-            const nasc = new Date(dataNasc);
-            const hoje = new Date();
-            return (hoje.getFullYear() - nasc.getFullYear()) * 12 + (hoje.getMonth() - nasc.getMonth());
-        }
+        // 2. FUNCIONAMENTO DA BARRA DO ORKUT
+        const postContent = document.getElementById('postContent');
+        document.getElementById('boldBtn').onclick = () => document.execCommand('bold', false, null);
+        document.getElementById('italicBtn').onclick = () => document.execCommand('italic', false, null);
+        document.getElementById('sizeSelect').onchange = (e) => document.execCommand('fontSize', false, e.target.value);
+        document.getElementById('colorPicker').onchange = (e) => document.execCommand('foreColor', false, e.target.value);
 
-        async function carregarGatilhoNeuras(meses) {
-            let faixa = "0-2";
-            if (meses > 6 && meses <= 12) faixa = "6-12m";
-            if (meses <= 6) faixa = "0-6m";
-            if (meses > 12) faixa = "maiores";
+        // Upload de Imagem na caixa de texto
+        document.getElementById('imgBtn').onclick = () => document.getElementById('fileInput').click();
+        document.getElementById('fileInput').onchange = (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    document.execCommand('insertImage', false, event.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        };
+
+        // 3. POSTAR NO FEED
+        document.getElementById('btnPostar').onclick = async () => {
+            const htmlContent = postContent.innerHTML.trim();
+            if (!htmlContent || htmlContent === postContent.getAttribute('placeholder')) {
+                return alert("Escreva algo antes de postar!");
+            }
 
             try {
-                const q = query(collection(db, "neuras_conhecimento"), where("faixaEtaria", "==", faixa));
-                const snap = await getDocs(q);
+                await addDoc(collection(db, "posts_gerais"), {
+                    texto: htmlContent,
+                    autor: auth.currentUser.displayName,
+                    fotoAutor: auth.currentUser.photoURL,
+                    uid: auth.currentUser.uid,
+                    data: serverTimestamp()
+                });
+                postContent.innerHTML = "";
+            } catch (e) {
+                console.error("Erro ao postar:", e);
+                alert("Erro ao postar. Se persistir, aguarde o Firebase criar o Índice.");
+            }
+        };
 
-                if (!snap.empty) {
-                    const dicas = snap.docs;
-                    const sorteada = dicas[Math.floor(Math.random() * dicas.length)].data();
-
-                    document.getElementById('gatilhoNeuras').style.display = 'block';
-                    document.getElementById('perguntaGatilho').innerText = sorteada.pergunta;
-                }
-            } catch (e) { console.error("Erro Neuras:", e); }
-        }
-
+        // 4. CARREGAR FEED E LIXEIRA INTELIGENTE
         function carregarFeed() {
-            onSnapshot(query(collection(db, "posts"), orderBy("data", "desc")), (snap) => {
-                const feed = document.getElementById('feedHibrido');
-                feed.innerHTML = "";
-                snap.forEach(d => {
-                    const p = d.data();
-                    const souMembro = p.comunidadeId ? minhasComus.includes(p.comunidadeId) : true;
-                    feed.insertAdjacentHTML('beforeend', `
-                        <div class="post-card">
-                            <strong style="font-size:0.8rem; color:var(--roxo);">${p.autor}</strong>
-                            <div class="${souMembro ? '' : 'blur-content'}">${p.texto}</div>
-                            ${!souMembro ? `<div class="lock-overlay"><button onclick="window.location.href='comunidades.html'" style="background:var(--roxo); color:white; border:none; padding:8px 15px; border-radius:10px; cursor:pointer;">Participar para ler</button></div>` : ''}
-                        </div>`);
+            const qFeed = query(collection(db, "posts_gerais"), orderBy("data", "desc"));
+            onSnapshot(qFeed, (snapshot) => {
+                const feedPrincipal = document.getElementById('feedPrincipal');
+                feedPrincipal.innerHTML = "";
+
+                snapshot.forEach(docSnap => {
+                    const post = docSnap.data();
+                    const postId = docSnap.id;
+                    const postDate = post.data ? post.data.toDate().toLocaleString('pt-BR') : 'agora mesmo';
+
+                    const isDono = currentUserId === post.uid;
+                    const classLixeira = isDono ? "btn-reaction delete-btn ativo" : "btn-reaction delete-btn";
+
+                    const html = `
+                        <div class="feed-item" id="post-${postId}">
+                            <div class="feed-post-header">
+                                <img src="${post.fotoAutor || 'https://via.placeholder.com/40'}" alt="Avatar">
+                                <div class="author-info">
+                                    <strong>${post.autor}</strong>
+                                    <small>${postDate}</small>
+                                </div>
+                            </div>
+                            <div style="color: #444; line-height: 1.5;">
+                                ${post.texto}
+                            </div>
+                            <div class="post-actions">
+                                <button class="btn-reaction" title="Amei!">❤️</button>
+                                <button class="btn-reaction" title="Genial!">🧠</button>
+                                <button class="btn-reaction" title="Favoritar">⭐</button>
+                                
+                                <button class="${classLixeira}" title="Excluir" onclick="deletarPost('${postId}')">🗑️</button>
+                            </div>
+                        </div>
+                    `;
+                    feedPrincipal.innerHTML += html;
                 });
             });
         }
 
-        function ouvirConexoes(nome) {
-            onSnapshot(collection(db, "notificacoes"), (snap) => {
-                snap.forEach(d => {
-                    if (d.data().para === nome) {
-                        document.getElementById('gavetaFofoca').style.display = 'block';
-                        document.getElementById('msgFofoca').innerText = d.data().mensagem;
-                    }
-                });
-            });
-        }
-
-        function ouvirDepoimentos() {
-            onSnapshot(query(collection(db, "depoimentos"), orderBy("data", "desc")), (snap) => {
-                const lista = document.getElementById('listaDepoimentos');
-                lista.innerHTML = "";
-                snap.forEach(d => { lista.insertAdjacentHTML('beforeend', `<p class="depoimento-item" style="font-size:0.8rem; margin-bottom:10px;">"${d.data().texto}" <b style="color:var(--roxo);">- ${d.data().de}</b></p>`); });
-            });
-        }
-
-        document.getElementById('btnPostar').onclick = async () => {
-            const campo = document.getElementById('campoPost');
-            const texto = campo.innerHTML;
-            if (!texto.trim()) return;
-            const match = texto.match(/@(\w+)/);
-            if (match) await addDoc(collection(db, "notificacoes"), { para: match[1], mensagem: `${auth.currentUser.displayName} te marcou!`, data: serverTimestamp() });
-            await addDoc(collection(db, "posts"), { texto: texto, autor: auth.currentUser.displayName, fotoAutor: auth.currentUser.photoURL, autorId: auth.currentUser.uid, data: serverTimestamp() });
-            campo.innerHTML = "";
-            document.getElementById('tools').style.display = 'none';
+        // Função global de deletar
+        window.deletarPost = async function (postId) {
+            if (confirm("Tem certeza que deseja excluir esta memória?")) {
+                await deleteDoc(doc(db, "posts_gerais", postId));
+            }
         };
     </script>
 </body>

@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapeamento de Perfil | NeurUp</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=Poppins:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --roxo: #5848d0;
+            --laranja: #FF8C00;
+            --bg: #F0EEFF;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg);
+            padding: 40px 20px;
+            margin: 0;
+            color: #333;
+        }
+
+        .form-card {
+            background: white;
+            max-width: 700px;
+            margin: auto;
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 15px 40px rgba(88, 72, 208, 0.08);
+        }
+
+        h2 {
+            color: var(--roxo);
+            font-family: 'Plus Jakarta Sans';
+            text-align: center;
+            font-size: 1.8rem;
+            margin-top: 0;
+        }
+
+        p.subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+        }
+
+        .secao {
+            background: #fdfcff;
+            border: 2px solid #f0edff;
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+        }
+
+        .secao h3 {
+            color: var(--laranja);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .campo {
+            margin-bottom: 20px;
+        }
+
+        label.titulo-campo {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--roxo);
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #eee;
+            border-radius: 12px;
+            outline: none;
+            box-sizing: border-box;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus {
+            border-color: var(--roxo);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        /* Estilo Checkbox Grid */
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 10px;
+        }
+
+        .check-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #fff;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .check-item:hover {
+            border-color: var(--roxo);
+            background: #f8f7ff;
+        }
+
+        .check-item input {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: var(--roxo);
+        }
+
+        /* Grid de Avatares */
+        .avatar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(65px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .avatar-item {
+            font-size: 2.2rem;
+            text-align: center;
+            padding: 10px;
+            border: 3px solid #eee;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            background: white;
+            user-select: none;
+        }
+
+        .avatar-item:hover {
+            border-color: var(--roxo);
+            transform: scale(1.1);
+        }
+
+        .avatar-item.selected {
+            border-color: var(--laranja);
+            background: #fff5eb;
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(255, 140, 0, 0.2);
+        }
+
+        /* Pacto de Segurança */
+        .caixa-seguranca {
+            background: #fff5eb;
+            border: 2px dashed var(--laranja);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+        }
+
+        .btn-finalizar {
+            background: var(--roxo);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 18px;
+            border-radius: 15px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-finalizar:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(88, 72, 208, 0.2);
+        }
+
+        /* =========================================
+           📱 MUTIRÃO MOBILE - RESPONSIVIDADE
+           ========================================= */
+        @media (max-width: 768px) {
+
+            /* 1. Ajusta o respiro lateral para ganhar espaço na telinha */
+            .main-content,
+            .container {
+                padding: 20px 5%;
+            }
+
+            /* 2. Centraliza e diminui os títulos para não quebrarem de linha feio */
+            h1 {
+                font-size: 1.8rem;
+                text-align: center;
+            }
+
+            /* 3. Coloca os cards de Comunidade um embaixo do outro (1 coluna só) */
+            .grid-comunidades {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            /* 4. Ajusta a barra de ferramentas do Mural para os botões não vazarem */
+            .toolbar {
+                justify-content: center;
+                padding: 10px;
+            }
+
+            .toolbar button,
+            .toolbar select {
+                padding: 6px 10px;
+                font-size: 0.9rem;
+            }
+
+            /* 5. Deixa a área de texto do recado mais compacta */
+            .editor-area {
+                min-height: 120px;
+                padding: 15px;
+                font-size: 1rem;
+            }
+
+            /* 6. Encolhe um pouquinho o botão flutuante de Criar Comunidade (+) */
+            button[onclick*="modalCriar"] {
+                width: 50px !important;
+                height: 50px !important;
+                bottom: 20px !important;
+                right: 20px !important;
+                font-size: 24px !important;
+            }
+
+            /* 7. Ajusta o Pop-up de criação para caber perfeitamente no meio do celular */
+            #modalCriar>div {
+                width: 85% !important;
+                padding: 20px !important;
+            }
+
+            /* 8. Botão de postar no mural ocupa a largura toda para ficar fácil de clicar com o dedão */
+            .btn-postar {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="form-card">
+        <h2>Mapeamento de Perfil 🧠</h2>
+        <p class="subtitle">Quanto mais a Neura souber sobre vocês, mais precisa será a nossa rede de apoio.</p>
+
+        <div class="secao">
+            <h3>🛡️ 1. Sobre Você (O Guardião)</h3>
+
+            <div class="campo">
+                <label class="titulo-campo">Seu papel (pode marcar mais de um):</label>
+                <div class="checkbox-grid">
+                    <label class="check-item"><input type="checkbox" name="papel" value="mae"> Mãe</label>
+                    <label class="check-item"><input type="checkbox" name="papel" value="pai"> Pai</label>
+                    <label class="check-item"><input type="checkbox" name="papel" value="avo"> Avó / Avô</label>
+                    <label class="check-item"><input type="checkbox" name="papel" value="especialista">
+                        Especialista</label>
+                    <label class="check-item"><input type="checkbox" name="papel" value="educador"> Educador(a)</label>
+                </div>
+            </div>
+
+            <div class="campo">
+                <label class="titulo-campo">Qual é o seu Estilo de Educação Familiar?</label>
+                <div class="checkbox-grid">
+                    <label class="check-item"><input type="checkbox" name="estilo" value="apego"> Criação com
+                        Apego</label>
+                    <label class="check-item"><input type="checkbox" name="estilo" value="positiva"> Disciplina
+                        Positiva</label>
+                    <label class="check-item"><input type="checkbox" name="estilo" value="tradicional">
+                        Tradicional</label>
+                    <label class="check-item"><input type="checkbox" name="estilo" value="descobrindo"> Ainda
+                        descobrindo</label>
+                </div>
+            </div>
+
+            <div class="campo">
+                <label class="titulo-campo">Maiores desafios atuais:</label>
+                <div class="checkbox-grid">
+                    <label class="check-item"><input type="checkbox" name="desafios" value="sono"> Sono</label>
+                    <label class="check-item"><input type="checkbox" name="desafios" value="birras"> Regulação Emocional
+                        (Birras)</label>
+                    <label class="check-item"><input type="checkbox" name="desafios" value="alimentacao">
+                        Alimentação</label>
+                    <label class="check-item"><input type="checkbox" name="desafios" value="telas"> Limite de
+                        Telas</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="secao" style="border-color: #ffe0b2;">
+            <h3 style="color: var(--laranja);">🚀 2. Sobre o Pequeno (O Explorador)</h3>
+
+            <div class="campo">
+                <label class="titulo-campo">Escolha um Avatar (Para manter a segurança e privacidade):</label>
+                <div class="avatar-grid" id="gridAvatares">
+                    <div class="avatar-item selected" onclick="selectAvatar(this, '🚀')">🚀</div>
+                    <div class="avatar-item" onclick="selectAvatar(this, '🦖')">🦖</div>
+                    <div class="avatar-item" onclick="selectAvatar(this, '🦄')">🦄</div>
+                    <div class="avatar-item" onclick="selectAvatar(this, '🎨')">🎨</div>
+                    <div class="avatar-item" onclick="selectAvatar(this, '🧬')">🧬</div>
+                    <div class="avatar-item" onclick="selectAvatar(this, '🤖')">🤖</div>
+                    <div class="avatar-item" onclick="selectAvatar(this, '🐯')">🐯</div>
+                    <div class="avatar-item" onclick="selectAvatar(this, '🪐')">🪐</div>
+                </div>
+                <input type="hidden" id="avatarSelecionado" value="🚀">
+            </div>
+
+            <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+                <div style="flex: 2;">
+                    <label class="titulo-campo">Nome ou Apelido</label>
+                    <input type="text" id="nomeCrianca" placeholder="Ex: Leo">
+                </div>
+                <div style="flex: 1;">
+                    <label class="titulo-campo">Idade (anos)</label>
+                    <input type="number" id="idadeCrianca" placeholder="Ex: 4">
+                </div>
+            </div>
+
+            <div class="campo">
+                <label class="titulo-campo">Neurodiversidade (Marque todas que se aplicam):</label>
+                <div class="checkbox-grid">
+                    <label class="check-item"><input type="checkbox" name="neuro" value="tipico"> Desenvolvimento
+                        Típico</label>
+                    <label class="check-item"><input type="checkbox" name="neuro" value="tea"> TEA (Autismo)</label>
+                    <label class="check-item"><input type="checkbox" name="neuro" value="tdah"> TDAH</label>
+                    <label class="check-item"><input type="checkbox" name="neuro" value="ahsd"> AH/SD
+                        (Superdotação)</label>
+                    <label class="check-item"><input type="checkbox" name="neuro" value="tod"> TOD</label>
+                    <label class="check-item"><input type="checkbox" name="neuro" value="investigando"> Em
+                        investigação</label>
+                </div>
+            </div>
+
+            <div class="campo">
+                <label class="titulo-campo">Superpoderes e Interesses (Do que ele/ela mais gosta?)</label>
+                <input type="text" id="interessesCrianca" placeholder="Ex: Dinossauros, blocos de montar, música...">
+            </div>
+        </div>
+
+        <div class="secao">
+            <h3>🔒 3. Segurança da Nossa Aldeia</h3>
+
+            <div class="campo">
+                <label class="titulo-campo">Filtro Cognitivo (Para nos conhecermos melhor):</label>
+                <p style="font-size: 0.85rem; color: #666; margin-top: -5px;">Resuma em uma frase: Qual foi a maior
+                    surpresa que a educação te trouxe até hoje?</p>
+                <textarea id="filtroCognitivo"
+                    placeholder="Sua resposta nos ajuda a validar que você é um humano e responsável real..."></textarea>
+            </div>
+
+            <div class="caixa-seguranca">
+                <label style="display: flex; gap: 15px; align-items: flex-start; cursor: pointer;">
+                    <input type="checkbox" id="pactoSeguranca" style="width: 25px; height: 25px; margin-top: 2px;"
+                        required>
+                    <span style="font-size: 0.9rem; color: #444; line-height: 1.5;">
+                        <strong>Pacto de Proteção NeurUp:</strong> Compreendo que nenhum sistema na internet é 100% à
+                        prova de falhas. Comprometo-me a ser um(a) guardião(ã) ativo(a) desta comunidade, ajudando a
+                        monitorar a rede e denunciando qualquer comportamento ou perfil suspeito para proteger as nossas
+                        famílias.
+                    </span>
+                </label>
+            </div>
+        </div>
+
+        <button class="btn-finalizar" id="btnSalvar">Assinar Pacto e Entrar 🚀</button>
+    </div>
+
+    <script type="module">
+        import { auth, db } from './liberi.js';
+        import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        // Lógica de Seleção de Avatar
+        window.selectAvatar = function (elemento, emoji) {
+            document.querySelectorAll('.avatar-item').forEach(el => el.classList.remove('selected'));
+            elemento.classList.add('selected');
+            document.getElementById('avatarSelecionado').value = emoji;
+        }
+
+        // Função auxiliar para pegar todos os checkboxes marcados
+        function getCheckedValues(name) {
+            return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(cb => cb.value);
+        }
+
+        document.getElementById('btnSalvar').onclick = async () => {
+            const pacto = document.getElementById('pactoSeguranca').checked;
+            const filtroTexto = document.getElementById('filtroCognitivo').value.trim();
+
+            if (!pacto) {
+                alert("Por favor, assine o Pacto de Proteção para continuarmos.");
+                return;
+            }
+            if (filtroTexto.length < 10) {
+                alert("Por favor, responda à pergunta de segurança (Filtro Cognitivo) com algumas palavras a mais.");
+                return;
+            }
+
+            const user = auth.currentUser;
+            if (!user) {
+                alert("Sessão expirada. Faça login novamente.");
+                window.location.href = "index.html";
+                return;
+            }
+
+            // Coletando todos os dados
+            const dados = {
+                uid: user.uid,
+                nomeReal: user.displayName,
+                email: user.email,
+                codigoFamiliar: user.uid.substring(0, 6).toUpperCase(), // Salva o código oficial do pai
+                cadastroCompleto: true,
+                dataCadastro: new Date().toISOString(),
+
+                guardiao: {
+                    papeis: getCheckedValues('papel'),
+                    estilosEducacao: getCheckedValues('estilo'),
+                    desafios: getCheckedValues('desafios'),
+                    filtroResposta: filtroTexto
+                },
+
+                filho: {
+                    nome: document.getElementById('nomeCrianca').value || "Explorador",
+                    idade: document.getElementById('idadeCrianca').value || null,
+                    avatar: document.getElementById('avatarSelecionado').value, // <--- Aqui o Avatar sendo salvo!
+                    neurodiversidades: getCheckedValues('neuro'),
+                    interesses: document.getElementById('interessesCrianca').value
+                }
+            };
+
+            try {
+                const btn = document.getElementById('btnSalvar');
+                btn.innerText = "Salvando perfil...";
+                btn.disabled = true;
+
+                await setDoc(doc(db, "usuarios", user.uid), dados);
+                window.location.href = "dashboard.html";
+            } catch (e) {
+                console.error(e);
+                alert("Erro ao salvar. Verifique sua conexão.");
+                document.getElementById('btnSalvar').disabled = false;
+                document.getElementById('btnSalvar').innerText = "Assinar Pacto e Entrar 🚀";
+            }
+        };
+    </script>
+</body>
+
+</html>

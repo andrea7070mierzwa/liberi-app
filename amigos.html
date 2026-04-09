@@ -4,133 +4,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeurUp - Sugestões de Conexão</title>
+    <title>Minha Rede | NeurUp</title>
+    <link rel="icon" type="image/png" href="imagens/favicon.png">
     <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Poppins:wght@400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=Poppins:wght@400;500&display=swap"
         rel="stylesheet">
     <style>
         :root {
             --roxo: #5848d0;
-            /* Roxo NeurUp */
-            --laranja: #FF8C00;
-            /* Laranja Up */
-            --bg: #F8F9FD;
-            --card: #FFFFFF;
+            --bg: #F0EEFF;
         }
 
         body {
             font-family: 'Poppins', sans-serif;
             background: var(--bg);
             margin: 0;
-            color: #4A4A4A;
         }
 
         .container {
-            max-width: 1000px;
-            margin: 40px auto;
-            padding: 0 20px;
+            padding: 40px 5%;
+            max-width: 800px;
+            margin: auto;
         }
 
-        .cabecalho {
-            text-align: center;
-            margin-bottom: 35px;
-        }
-
-        .cabecalho h1 {
-            font-family: 'Plus Jakarta Sans';
+        h1 {
             color: var(--roxo);
-            font-size: 1.8rem;
-            margin-bottom: 8px;
+            font-family: 'Plus Jakarta Sans';
         }
 
-        .cabecalho span {
-            color: var(--laranja);
-        }
-
-        .grid-amigos {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 20px;
-        }
-
-        .card-amigo {
-            background: var(--card);
-            border-radius: 28px;
-            padding: 25px;
-            text-align: center;
-            box-shadow: 0 8px 25px rgba(88, 72, 208, 0.05);
-            transition: 0.3s;
-        }
-
-        .card-amigo:hover {
-            transform: translateY(-5px);
-        }
-
-        .foto-amigo {
-            width: 85px;
-            height: 85px;
+        .lista-amigos {
+            background: white;
             border-radius: 30px;
-            object-fit: cover;
-            margin-bottom: 15px;
-            border: 3px solid #F0EEFF;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
         }
 
-        .nome-amigo {
-            display: block;
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 15px;
+        .amigo-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
         }
 
-        .btn-conectar {
-            background: var(--roxo);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
+        .amigo-item img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+
+        /* =========================================
+           📱 MUTIRÃO MOBILE - RESPONSIVIDADE
+           ========================================= */
+        @media (max-width: 768px) {
+
+            /* 1. Ajusta o respiro lateral para ganhar espaço na telinha */
+            .main-content,
+            .container {
+                padding: 20px 5%;
+            }
+
+            /* 2. Centraliza e diminui os títulos para não quebrarem de linha feio */
+            h1 {
+                font-size: 1.8rem;
+                text-align: center;
+            }
+
+            /* 3. Coloca os cards de Comunidade um embaixo do outro (1 coluna só) */
+            .grid-comunidades {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            /* 4. Ajusta a barra de ferramentas do Mural para os botões não vazarem */
+            .toolbar {
+                justify-content: center;
+                padding: 10px;
+            }
+
+            .toolbar button,
+            .toolbar select {
+                padding: 6px 10px;
+                font-size: 0.9rem;
+            }
+
+            /* 5. Deixa a área de texto do recado mais compacta */
+            .editor-area {
+                min-height: 120px;
+                padding: 15px;
+                font-size: 1rem;
+            }
+
+            /* 6. Encolhe um pouquinho o botão flutuante de Criar Comunidade (+) */
+            button[onclick*="modalCriar"] {
+                width: 50px !important;
+                height: 50px !important;
+                bottom: 20px !important;
+                right: 20px !important;
+                font-size: 24px !important;
+            }
+
+            /* 7. Ajusta o Pop-up de criação para caber perfeitamente no meio do celular */
+            #modalCriar>div {
+                width: 85% !important;
+                padding: 20px !important;
+            }
+
+            /* 8. Botão de postar no mural ocupa a largura toda para ficar fácil de clicar com o dedão */
+            .btn-postar {
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
 </head>
 
 <body>
-    <script type="module" src="menu.js"></script>
-    <div class="container">
-        <div class="cabecalho">
-            <h1>Neur<span>Up</span> Conexões</h1>
-            <p>Encontre pais que trilham caminhos parecidos com o seu.</p>
+    <div id="menu-principal"></div>
+
+    <main class="container">
+        <h1>Minha Rede de Apoio</h1>
+        <div class="lista-amigos">
+            <div class="amigo-item">
+                <img src="https://via.placeholder.com/50" alt="Avatar">
+                <div><strong>Maria Silva</strong><br><small>Mãe do Leo (2 anos)</small></div>
+            </div>
         </div>
-        <div id="gridAmigos" class="grid-amigos">
-        </div>
-    </div>
+    </main>
 
     <script type="module">
-        import { db, auth, collection, query, onSnapshot, limit } from "./liberi.js";
-
-        const meuId = auth.currentUser?.uid;
-        const grid = document.getElementById('gridAmigos');
-
-        onSnapshot(query(collection(db, "usuarios"), limit(12)), (snap) => {
-            grid.innerHTML = "";
-            snap.forEach(docSnap => {
-                const d = docSnap.data();
-                if (docSnap.id === auth.currentUser?.uid) return;
-
-                grid.insertAdjacentHTML('beforeend', `
-                    <div class="card-amigo">
-                        <img src="${d.foto || d.photoURL}" class="foto-amigo">
-                        <span class="nome-amigo">${d.nome || d.displayName}</span>
-                        <button class="btn-conectar" onclick="dizerOi('${d.nome || d.displayName}')">👋 Dizer Oi</button>
-                    </div>
-                `);
-            });
-        });
-
-        window.dizerOi = (nome) => {
-            alert(`Aceno enviado para ${nome}! No NeurUp, conexões reais transformam o desenvolvimento. ✨`);
-        };
+        import { renderizarMenu } from './menu.js';
+        renderizarMenu();
     </script>
 </body>
 

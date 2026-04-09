@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circuito Neura | NeurUp</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=Poppins:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
+    <style>
+        /* VARIÁVEIS DINÂMICAS: A Neura muda tudo aqui via JS */
+        :root {
+            --roxo: #5848d0;
+            --laranja: #FF8C00;
+            --bg: #f4f8ff;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --border-radius: 30px;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg);
+            margin: 0;
+            color: var(--text-color);
+            transition: 0.5s;
+        }
+
+        /* BANNER DINÂMICO */
+        .banner-kids {
+            background: linear-gradient(135deg, var(--laranja) 0%, var(--roxo) 100%);
+            color: white;
+            padding: 25px 5%;
+            text-align: center;
+            font-family: 'Plus Jakarta Sans';
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* LAYOUT 3 COLUNAS */
+        .main-container {
+            display: grid;
+            grid-template-columns: 260px minmax(0, 1fr) 260px;
+            gap: 20px;
+            padding: 20px 5%;
+            max-width: 1400px;
+            margin: auto;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            transition: 0.5s;
+        }
+
+        /* PERFIL E AVATAR */
+        .avatar-box {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            background: var(--bg);
+            border: 4px solid var(--laranja);
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+
+        .bio-text {
+            font-size: 0.85rem;
+            opacity: 0.8;
+            margin-top: 10px;
+            line-height: 1.4;
+        }
+
+        /* NAVEGAÇÃO SOCIAL */
+        .nav-kids {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            border-radius: 15px;
+            background: rgba(0, 0, 0, 0.03);
+            margin-bottom: 8px;
+            transition: 0.3s;
+        }
+
+        .nav-kids:hover,
+        .nav-kids.active {
+            background: var(--roxo);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        /* BARRA DE FERRAMENTAS */
+        .toolbar {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+            flex-wrap: wrap;
+        }
+
+        .toolbar button,
+        .toolbar input[type="color"] {
+            background: var(--bg);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+
+        /* INPUT E TERMINAL */
+        .terminal-neura {
+            background: var(--roxo);
+            color: white;
+            padding: 25px;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+        }
+
+        .input-kids {
+            width: 100%;
+            padding: 15px;
+            border-radius: 15px;
+            border: 2px solid rgba(0, 0, 0, 0.05);
+            background: var(--bg);
+            color: var(--text-color);
+            outline: none;
+            margin: 10px 0;
+            font-family: inherit;
+            box-sizing: border-box;
+            min-height: 50px;
+        }
+
+        .btn-acao {
+            background: var(--laranja);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 100%;
+        }
+
+        /* MODAL DE EDIÇÃO */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 500px;
+            color: var(--text-color);
+        }
+
+        .avatar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .avatar-opt {
+            font-size: 1.8rem;
+            cursor: pointer;
+            padding: 8px;
+            text-align: center;
+            border-radius: 12px;
+            transition: 0.2s;
+        }
+
+        .avatar-opt:hover,
+        .avatar-opt.selected {
+            background: var(--roxo);
+            color: white;
+        }
+
+        .feed-item {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 15px;
+        }
+
+        .tag-conexao {
+            background: rgba(88, 72, 208, 0.1);
+            color: var(--roxo);
+            padding: 3px 8px;
+            border-radius: 8px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 1000px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                display: none;
+            }
+        }
+
+        /* =========================================
+           📱 MUTIRÃO MOBILE - RESPONSIVIDADE
+           ========================================= */
+        @media (max-width: 768px) {
+
+            /* 1. Ajusta o respiro lateral para ganhar espaço na telinha */
+            .main-content,
+            .container {
+                padding: 20px 5%;
+            }
+
+            /* 2. Centraliza e diminui os títulos para não quebrarem de linha feio */
+            h1 {
+                font-size: 1.8rem;
+                text-align: center;
+            }
+
+            /* 3. Coloca os cards de Comunidade um embaixo do outro (1 coluna só) */
+            .grid-comunidades {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            /* 4. Ajusta a barra de ferramentas do Mural para os botões não vazarem */
+            .toolbar {
+                justify-content: center;
+                padding: 10px;
+            }
+
+            .toolbar button,
+            .toolbar select {
+                padding: 6px 10px;
+                font-size: 0.9rem;
+            }
+
+            /* 5. Deixa a área de texto do recado mais compacta */
+            .editor-area {
+                min-height: 120px;
+                padding: 15px;
+                font-size: 1rem;
+            }
+
+            /* 6. Encolhe um pouquinho o botão flutuante de Criar Comunidade (+) */
+            button[onclick*="modalCriar"] {
+                width: 50px !important;
+                height: 50px !important;
+                bottom: 20px !important;
+                right: 20px !important;
+                font-size: 24px !important;
+            }
+
+            /* 7. Ajusta o Pop-up de criação para caber perfeitamente no meio do celular */
+            #modalCriar>div {
+                width: 85% !important;
+                padding: 20px !important;
+            }
+
+            /* 8. Botão de postar no mural ocupa a largura toda para ficar fácil de clicar com o dedão */
+            .btn-postar {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="banner-kids">
+        <h2 id="tituloBanner">🚀 Circuito Neura</h2>
+        <p id="subBanner">O seu espaço seguro de conexão.</p>
+    </div>
+
+    <main class="main-container">
+        <aside class="sidebar">
+            <div class="card perfil-card">
+                <div class="avatar-box" id="avatarKid">👤</div>
+                <h3 id="nomeKid" style="color: var(--roxo); margin: 15px 0 5px 0; text-align: center;">...</h3>
+                <div id="bioExibicao" class="bio-text" style="text-align: center;">Carregando bio...</div>
+
+                <button onclick="abrirModalEdicao()"
+                    style="width: 100%; margin-top:15px; background:none; border:2px solid var(--roxo); color:var(--roxo); padding:8px 15px; border-radius:12px; cursor:pointer; font-weight:700; font-size:0.8rem;">
+                    <i class="fas fa-magic"></i> Editar Perfil
+                </button>
+
+                <div class="sidebar-social" style="margin-top:25px;">
+                    <a href="#" class="nav-kids active"><i class="fas fa-bolt"></i> Meu Circuito</a>
+                    <a href="comunidades.html" class="nav-kids"><i class="fas fa-users"></i> Comunidades</a>
+                    <a href="amigos_kids.html" class="nav-kids"><i class="fas fa-user-friends"></i> Amigos</a>
+                </div>
+
+                <hr style="border:none; border-top:1px dashed var(--roxo); margin:20px 0; opacity:0.3;">
+                <button onclick="voltarDashboard()"
+                    style="width:100%; border:none; background:var(--bg); padding:12px; border-radius:12px; color:var(--text-color); font-weight:600; cursor:pointer;">
+                    Voltar
+                </button>
+            </div>
+        </aside>
+
+        <section class="feed">
+            <div class="terminal-neura">
+                <h3 id="tituloTerminal" style="margin-top:0;">🧠 Terminal Neura</h3>
+                <p id="msgTerminal">O que você quer descobrir hoje?</p>
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" id="perguntaNeura" class="input-kids" placeholder="Pergunte algo..."
+                        style="background:rgba(255,255,255,0.1); border:none; color:white; margin:0;">
+                    <button class="btn-acao" onclick="enviarPerguntaNeura()" style="width:60px;"><i
+                            class="fas fa-paper-plane"></i></button>
+                </div>
+                <div id="respostaNeura"
+                    style="display:none; margin-top:15px; background:rgba(0,0,0,0.2); padding:15px; border-radius:12px;">
+                </div>
+            </div>
+
+            <div class="card">
+                <h4 id="tituloPostagem" style="margin:0 0 10px 0; color:var(--laranja);">Conectar novo pensamento:</h4>
+                <div class="toolbar">
+                    <button onclick="document.execCommand('bold')"><i class="fas fa-bold"></i></button>
+                    <button onclick="document.execCommand('italic')"><i class="fas fa-italic"></i></button>
+                    <input type="color" onchange="document.execCommand('foreColor', false, this.value)">
+                </div>
+                <div id="postInput" class="input-kids" contenteditable="true" placeholder="O que está na sua mente?">
+                </div>
+                <button class="btn-acao" id="btnPostar" style="background:var(--roxo)">Postar no Circuito</button>
+            </div>
+
+            <div id="feedCircuito"></div>
+        </section>
+
+        <aside class="sidebar">
+            <div class="card">
+                <h5 id="tituloAmigos" style="color: var(--roxo); margin-top:0;"><i class="fas fa-user-plus"></i>
+                    Sugestões</h5>
+                <div id="listaSugestoes"></div>
+            </div>
+            <div class="card">
+                <h5 id="tituloInsight" style="color: var(--roxo); margin-top:0;"><i class="fas fa-lightbulb"></i>
+                    Insight</h5>
+                <p id="msgInsight" style="font-size:0.85rem; line-height:1.4;">Seu cérebro é como uma Ferrari!</p>
+            </div>
+        </aside>
+    </main>
+
+    <div id="modalEdit" class="modal">
+        <div class="modal-content">
+            <h3 style="margin-top:0; color:var(--roxo);">Editar Perfil ✨</h3>
+            <label style="font-size:0.8rem; font-weight:700;">Seu Apelido:</label>
+            <input type="text" id="editNome" class="input-kids">
+
+            <div style="margin-top: 15px; text-align: left;">
+                <label style="font-weight: bold; color: var(--roxo); font-size: 0.9rem;">Sua Idade (Definida pelo
+                    Guardião)</label>
+                <input type="text" id="idadePerfilVisual" readonly
+                    style="width: 100%; padding: 12px; margin-top: 5px; border-radius: 12px; border: 1px solid #ddd; background-color: #f0f0f0; color: #888; cursor: not-allowed; font-weight: bold;">
+            </div>
+
+            <label style="font-size:0.8rem; font-weight:700; margin-top:15px; display:block;">Escolha seu
+                Avatar:</label>
+            <div class="avatar-grid">
+                <div class="avatar-opt" onclick="setAvatarEdit(this, '🚀')">🚀</div>
+                <div class="avatar-opt" onclick="setAvatarEdit(this, '🦖')">🦖</div>
+                <div class="avatar-opt" onclick="setAvatarEdit(this, '🦄')">🦄</div>
+                <div class="avatar-opt" onclick="setAvatarEdit(this, '🤖')">🤖</div>
+                <div class="avatar-opt" onclick="setAvatarEdit(this, '🎨')">🎨</div>
+                <div class="avatar-opt" onclick="setAvatarEdit(this, '🪐')">🪐</div>
+            </div>
+            <input type="hidden" id="valAvatar">
+
+            <label style="font-size:0.8rem; font-weight:700;">Sua Bio (Use cores!):</label>
+            <div class="toolbar" style="margin-top:5px;">
+                <button onclick="document.execCommand('bold')">B</button>
+                <input type="color" onchange="document.execCommand('foreColor', false, this.value)">
+            </div>
+            <div id="editBio" class="input-kids" contenteditable="true" style="min-height:60px;"></div>
+
+            <div style="display:flex; gap:10px; margin-top:20px;">
+                <button class="btn-acao" onclick="confirmarEdicao()">Salvar</button>
+                <button class="btn-acao" onclick="fecharModalEdicao()"
+                    style="background:#eee; color:#666;">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { auth, db } from './liberi.js';
+        import { collection, addDoc, query, where, orderBy, onSnapshot, serverTimestamp, doc, getDoc, getDocs, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        let parentUidGlobal;
+        let ehDependente = false;
+
+        // FUNÇÕES GLOBAIS DO MODAL
+        window.abrirModalEdicao = () => { document.getElementById('modalEdit').style.display = 'block'; };
+        window.fecharModalEdicao = () => { document.getElementById('modalEdit').style.display = 'none'; };
+        window.setAvatarEdit = (el, emoji) => {
+            document.querySelectorAll('.avatar-opt').forEach(opt => opt.classList.remove('selected'));
+            el.classList.add('selected');
+            document.getElementById('valAvatar').value = emoji;
+        };
+
+        // Função de Voltar
+        window.voltarDashboard = () => {
+            window.location.href = ehDependente ? "index.html" : "dashboard.html";
+        };
+
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                let dadosParaExibir = {};
+                const docSnap = await getDoc(doc(db, "usuarios", user.uid));
+                const d = docSnap.exists() ? docSnap.data() : null;
+
+                if (d && d.tipo === "dependente_autonomo") {
+                    ehDependente = true;
+                    // 1. ELA ESTÁ LOGADA: Vamos buscar o perfil do PAI/MÃE pelo código familiar
+                    const qPai = query(collection(db, "usuarios"), where("codigoFamiliar", "==", d.pai_uid_referencia));
+                    const snapPai = await getDocs(qPai);
+
+                    if (!snapPai.empty) {
+                        const dadosPai = snapPai.docs[0].data();
+                        parentUidGlobal = snapPai.docs[0].id;
+                        // Pega a idade e o nome que VOCÊ configurou no seu dashboard
+                        dadosParaExibir = dadosPai.filho || d;
+                    } else {
+                        dadosParaExibir = d;
+                    }
+                } else if (d) {
+                    // 2. VOCÊ ESTÁ LOGADA
+                    parentUidGlobal = user.uid;
+                    dadosParaExibir = d.filho || {};
+                }
+
+                // Carrega nome, bio, avatar
+                document.getElementById('nomeKid').innerText = dadosParaExibir.nome || "Explorador";
+                document.getElementById('editNome').value = dadosParaExibir.nome || "";
+
+                document.getElementById('avatarKid').innerText = dadosParaExibir.avatar || "🚀";
+                document.getElementById('valAvatar').value = dadosParaExibir.avatar || "🚀";
+
+                document.getElementById('bioExibicao').innerHTML = dadosParaExibir.bio || "Sua bio aqui...";
+                document.getElementById('editBio').innerHTML = dadosParaExibir.bio || "";
+
+                // A MÁGICA DA IDADE: Lê a idade da ficha do usuário
+                let idadeDinamica = "Não informada";
+                if (dadosParaExibir.idade) {
+                    idadeDinamica = dadosParaExibir.idade;
+                } else if (d && d.idade) {
+                    idadeDinamica = d.idade;
+                }
+
+                // Preenche o campo travado no Modal de Edição
+                document.getElementById('idadePerfilVisual').value = idadeDinamica + " anos";
+
+                // Aplica o visual
+                configurarAmbiente(parseInt(idadeDinamica) || 0);
+                carregarFeed(parentUidGlobal);
+
+            } else {
+                window.location.href = "index.html";
+            }
+        });
+
+        function configurarAmbiente(idade) {
+            const root = document.documentElement;
+            if (idade >= 11 && idade <= 17) {
+                // TEMA TEEN (Preto e Verde Neon)
+                root.style.setProperty('--bg', '#121214');
+                root.style.setProperty('--card-bg', '#202024');
+                root.style.setProperty('--text-color', '#e1e1e6');
+                root.style.setProperty('--roxo', '#8257e5');
+                root.style.setProperty('--laranja', '#04d361');
+                root.style.setProperty('--border-radius', '12px');
+
+                document.getElementById('tituloBanner').innerText = "⚡ Circuito Jovem";
+                document.getElementById('subBanner').innerText = "Liberdade com responsabilidade. A Neura está de olho!";
+                document.getElementById('msgInsight').innerText = "Tudo o que você posta cria sua pegada digital. Use com sabedoria!";
+            }
+        }
+
+        window.confirmarEdicao = async () => {
+            const n = document.getElementById('editNome').value;
+            const a = document.getElementById('valAvatar').value;
+            const b = document.getElementById('editBio').innerHTML;
+
+            try {
+                if (ehDependente) {
+                    await updateDoc(doc(db, "usuarios", auth.currentUser.uid), { nome: n, avatar: a, bio: b });
+                } else {
+                    await updateDoc(doc(db, "usuarios", auth.currentUser.uid), { "filho.nome": n, "filho.avatar": a, "filho.bio": b });
+                }
+                document.getElementById('modalEdit').style.display = 'none';
+                location.reload();
+            } catch (e) { alert("Erro ao salvar!"); }
+        };
+
+        function carregarFeed(pUid) {
+            if (!pUid) return;
+            const q = query(collection(db, "posts_circuito"), where("pai_uid", "==", pUid), orderBy("data", "desc"));
+            onSnapshot(q, (snapshot) => {
+                const feed = document.getElementById('feedCircuito');
+                feed.innerHTML = "";
+                snapshot.forEach(docSnap => {
+                    const p = docSnap.data();
+                    feed.innerHTML += `
+                        <div class="feed-item">
+                            <span class="tag-conexao">Conexão</span>
+                            <h4 style="margin:10px 0 5px 0; color:var(--roxo);">${p.autor}</h4>
+                            <div style="font-size:0.95rem; line-height:1.5; color:var(--text-color);">${p.texto}</div>
+                            <div style="display:flex; margin-top:10px;">
+                                <button onclick="apagarPost('${docSnap.id}')" style="margin-left:auto; background:none; border:none; cursor:pointer; color:#dc2626;"><i class="fas fa-trash"></i> Apagar</button>
+                            </div>
+                        </div>`;
+                });
+            });
+        }
+
+        document.getElementById('btnPostar').onclick = async () => {
+            const html = document.getElementById('postInput').innerHTML;
+            if (!document.getElementById('postInput').innerText.trim()) return;
+            await addDoc(collection(db, "posts_circuito"), {
+                texto: html, autor: document.getElementById('nomeKid').innerText,
+                pai_uid: parentUidGlobal, data: serverTimestamp()
+            });
+            document.getElementById('postInput').innerHTML = "";
+        };
+
+        window.apagarPost = async (id) => { if (confirm("Tem certeza que deseja apagar essa lembrança?")) await deleteDoc(doc(db, "posts_circuito", id)); };
+    </script>
+</body>
+
+</html>

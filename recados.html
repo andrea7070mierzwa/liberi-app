@@ -4,160 +4,433 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Líberi - Meus Recados</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <title>Mural de Recados | NeurUp</title>
+    <link rel="icon" type="image/png" href="imagens/favicon.png">
     <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=Poppins:wght@400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=Poppins:wght@400;500&family=Fira+Code:wght@400;500&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <style>
         :root {
-            --roxo: #6C5CE7;
+            --roxo: #5848d0;
+            --laranja: #FF8C00;
             --bg: #F0EEFF;
-            --card: #FFFFFF;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --border-color: #eeeeee;
         }
 
         body {
             font-family: 'Poppins', sans-serif;
             background: var(--bg);
+            color: var(--text-color);
             margin: 0;
-            color: #4A4A4A;
+            transition: background 0.5s, color 0.5s;
         }
 
-        .container-recados {
+        .container {
+            padding: 40px 5%;
             max-width: 800px;
-            margin: 40px auto;
-            padding: 0 20px;
+            margin: auto;
         }
 
         h1 {
+            color: var(--roxo);
             font-family: 'Plus Jakarta Sans';
-            color: var(--roxo);
-            font-size: 2rem;
-            margin-bottom: 30px;
+            transition: color 0.3s;
         }
 
-        .lista-recados {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        /* ESTILO DO CARD DE RECADO */
-        .card-recado {
-            background: var(--card);
-            padding: 20px;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.05);
-            transition: 0.3s;
-            cursor: pointer;
+        .mural-card {
+            background: var(--card-bg);
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
             border: 2px solid transparent;
+            transition: 0.3s;
+            margin-bottom: 20px;
         }
 
-        .card-recado:hover {
-            border-color: #EBE8FF;
-            transform: translateY(-2px);
+        .toolbar {
+            background: rgba(0, 0, 0, 0.02);
+            padding: 15px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            border-bottom: 1px solid var(--border-color);
+            align-items: center;
         }
 
-        .foto-autor {
-            width: 50px;
-            height: 50px;
-            border-radius: 15px;
-            object-fit: cover;
-            background: #EEE;
+        .toolbar button,
+        .toolbar select,
+        .toolbar input[type="color"] {
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-color);
+            border-radius: 8px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: 0.2s;
         }
 
-        .conteudo-recado {
-            flex: 1;
+        .toolbar button:hover,
+        .toolbar select:hover {
+            background: rgba(0, 0, 0, 0.05);
         }
 
-        .texto-principal {
-            font-size: 0.95rem;
-            margin: 0;
+        .toolbar select {
+            font-family: 'Poppins', sans-serif;
+            outline: none;
         }
 
-        .texto-principal strong {
-            color: var(--roxo);
+        .toolbar input[type="color"] {
+            padding: 2px;
+            width: 35px;
+            height: 35px;
         }
 
-        .data-recado {
-            font-size: 0.75rem;
-            color: #AAA;
-            margin-top: 5px;
+        .editor-area {
+            width: 100%;
+            min-height: 150px;
+            padding: 20px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.05rem;
+            outline: none;
+            box-sizing: border-box;
+            background: transparent;
+            color: var(--text-color);
+        }
+
+        .editor-area[placeholder]:empty:before {
+            content: attr(placeholder);
+            color: #aaa;
+            pointer-events: none;
             display: block;
         }
 
-        .vazio {
-            text-align: center;
-            padding: 50px;
-            color: #888;
+        .footer-card {
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.01);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .btn-postar {
+            background: var(--laranja);
+            color: white;
+            border: none;
+            padding: 12px 35px;
+            border-radius: 15px;
+            font-weight: 800;
+            font-family: 'Plus Jakarta Sans';
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-postar:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 140, 0, 0.3);
+        }
+
+        /* =========================================
+           ⚡ MODO TEEN - ESTÉTICA MISSÃO ESPACIAL / NEON
+           ========================================= */
+        body.modo-teen {
+            --bg: #0b0b0e;
+            --card-bg: #15151a;
+            --text-color: #e1e1e6;
+            --border-color: #29292e;
+            --roxo: #04d361;
+            --laranja: #04d361;
+        }
+
+        body.modo-teen h1 {
+            color: #04d361;
+            text-shadow: 0 0 15px rgba(4, 211, 97, 0.4);
+        }
+
+        body.modo-teen .mural-card {
+            border: 1px solid #04d361;
+            box-shadow: 0 0 25px rgba(4, 211, 97, 0.15);
+        }
+
+        body.modo-teen .toolbar {
+            background: #111115;
+            border-bottom: 1px solid #04d361;
+        }
+
+        body.modo-teen .toolbar button,
+        body.modo-teen .toolbar select {
+            color: #a8a8b3;
+        }
+
+        body.modo-teen .toolbar button:hover,
+        body.modo-teen .toolbar select:hover {
+            color: #04d361;
+            background: rgba(4, 211, 97, 0.1);
+            border-color: rgba(4, 211, 97, 0.3);
+        }
+
+        body.modo-teen .toolbar select {
+            background: #111115;
+        }
+
+        body.modo-teen .editor-area {
+            font-family: 'Fira Code', monospace;
+            color: #04d361;
+            background: #0d0d0f;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
+        }
+
+        body.modo-teen .footer-card {
+            background: #111115;
+            border-top: 1px solid #29292e;
+        }
+
+        body.modo-teen .btn-postar {
+            background: #04d361;
+            color: #000;
+            text-shadow: none;
+            box-shadow: 0 0 15px rgba(4, 211, 97, 0.4);
+        }
+
+        body.modo-teen .btn-postar:hover {
+            background: #03b252;
+            box-shadow: 0 0 25px rgba(4, 211, 97, 0.6);
+        }
+
+        /* =========================================
+           📱 MUTIRÃO MOBILE - RESPONSIVIDADE
+           ========================================= */
+        @media (max-width: 768px) {
+
+            /* 1. Ajusta o respiro lateral para ganhar espaço na telinha */
+            .main-content,
+            .container {
+                padding: 20px 5%;
+            }
+
+            /* 2. Centraliza e diminui os títulos para não quebrarem de linha feio */
+            h1 {
+                font-size: 1.8rem;
+                text-align: center;
+            }
+
+            /* 3. Coloca os cards de Comunidade um embaixo do outro (1 coluna só) */
+            .grid-comunidades {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            /* 4. Ajusta a barra de ferramentas do Mural para os botões não vazarem */
+            .toolbar {
+                justify-content: center;
+                padding: 10px;
+            }
+
+            .toolbar button,
+            .toolbar select {
+                padding: 6px 10px;
+                font-size: 0.9rem;
+            }
+
+            /* 5. Deixa a área de texto do recado mais compacta */
+            .editor-area {
+                min-height: 120px;
+                padding: 15px;
+                font-size: 1rem;
+            }
+
+            /* 6. Encolhe um pouquinho o botão flutuante de Criar Comunidade (+) */
+            button[onclick*="modalCriar"] {
+                width: 50px !important;
+                height: 50px !important;
+                bottom: 20px !important;
+                right: 20px !important;
+                font-size: 24px !important;
+            }
+
+            /* 7. Ajusta o Pop-up de criação para caber perfeitamente no meio do celular */
+            #modalCriar>div {
+                width: 85% !important;
+                padding: 20px !important;
+            }
+
+            /* 8. Botão de postar no mural ocupa a largura toda para ficar fácil de clicar com o dedão */
+            .btn-postar {
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
 </head>
 
 <body>
+    <div id="menu-principal"></div>
 
-    <script type="module" src="menu.js"></script>
+    <main class="container">
+        <h1>Mural de Recados</h1>
 
-    <main class="container-recados">
-        <h1>📬 Meus Recados</h1>
+        <div class="mural-card">
+            <div class="toolbar">
+                <button onclick="document.execCommand('bold', false, null)" title="Negrito"><i
+                        class="fas fa-bold"></i></button>
+                <button onclick="document.execCommand('italic', false, null)" title="Itálico"><i
+                        class="fas fa-italic"></i></button>
+                <button onclick="document.execCommand('underline', false, null)" title="Sublinhado"><i
+                        class="fas fa-underline"></i></button>
+                <button onclick="document.execCommand('strikeThrough', false, null)" title="Riscado"><i
+                        class="fas fa-strikethrough"></i></button>
+                <span style="color: var(--border-color);">|</span>
+                <button onclick="document.execCommand('insertUnorderedList', false, null)" title="Lista"><i
+                        class="fas fa-list-ul"></i></button>
+                <button onclick="document.execCommand('justifyLeft', false, null)" title="Alinhar à Esquerda"><i
+                        class="fas fa-align-left"></i></button>
+                <button onclick="document.execCommand('justifyCenter', false, null)" title="Centralizar"><i
+                        class="fas fa-align-center"></i></button>
+                <span style="color: var(--border-color);">|</span>
+                <input type="color" onchange="document.execCommand('foreColor', false, this.value)"
+                    title="Cor do Texto">
+                <button onclick="inserirEmoji('🚀')">🚀</button>
+                <button onclick="inserirEmoji('💚')">💚</button>
+                <button onclick="inserirEmoji('🤖')">🤖</button>
+                <button onclick="inserirEmoji('👽')">👽</button>
+            </div>
 
-        <div id="listaRecados" class="lista-recados">
-            <div class="vazio">Buscando seus recados na vila...</div>
+            <div id="meuRecado" class="editor-area" contenteditable="true"
+                placeholder="Transmita seu pensamento para a rede..."></div>
+
+            <div class="footer-card">
+                <button class="btn-postar" onclick="enviarRecado()">Postar no Mural 🚀</button>
+            </div>
         </div>
+
+        <div id="feedRecados"></div>
+
     </main>
 
     <script type="module">
-        import { db, auth } from "./liberi.js";
-        import { collection, query, where, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { renderizarMenu } from './menu.js';
+        import { auth, db } from './liberi.js';
+        import { getDoc, getDocs, doc, collection, query, where, addDoc, serverTimestamp, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        onAuthStateChanged(auth, (user) => {
+        renderizarMenu();
+
+        let categoriaGlobal = "kids";
+        let nomeDoUsuario = "Explorador";
+
+        window.inserirEmoji = function (emoji) {
+            document.execCommand('insertText', false, emoji);
+            document.getElementById('meuRecado').focus();
+        };
+
+        auth.onAuthStateChanged(async (user) => {
             if (user) {
-                carregarRecados(user.uid);
+                try {
+                    const docSnap = await getDoc(doc(db, "usuarios", user.uid));
+                    if (docSnap.exists()) {
+                        const d = docSnap.data();
+                        let idade = 30;
+
+                        // Busca o nome para postar
+                        if (d.nome) nomeDoUsuario = d.nome;
+                        if (d.filho && d.filho.nome) nomeDoUsuario = d.filho.nome;
+
+                        // Busca a idade para definir o Neon e a bolha de recados
+                        if (d.filho && d.filho.idade) {
+                            idade = parseInt(d.filho.idade);
+                        } else if (d.tipo === "dependente_autonomo" && d.pai_uid_referencia) {
+                            const qPai = query(collection(db, "usuarios"), where("codigoFamiliar", "==", d.pai_uid_referencia));
+                            const snapPai = await getDocs(qPai);
+                            if (!snapPai.empty) {
+                                const dadosPai = snapPai.docs[0].data();
+                                if (dadosPai.filho && dadosPai.filho.idade) {
+                                    idade = parseInt(dadosPai.filho.idade);
+                                }
+                                if (dadosPai.filho && dadosPai.filho.nome) {
+                                    nomeDoUsuario = dadosPai.filho.nome;
+                                }
+                            }
+                        }
+
+                        if (idade >= 11 && idade <= 17) {
+                            categoriaGlobal = "teen";
+                            document.body.classList.add('modo-teen');
+                        }
+
+                        // Carrega os recados daquela bolha de idade
+                        carregarRecados(categoriaGlobal);
+                    }
+                } catch (e) {
+                    console.error("Erro ao verificar dados:", e);
+                }
             } else {
                 window.location.href = "index.html";
             }
         });
 
-        function carregarRecados(userId) {
-            const listaElement = document.getElementById('listaRecados');
+        window.enviarRecado = async function () {
+            const caixaTexto = document.getElementById('meuRecado');
+            const conteudo = caixaTexto.innerHTML;
 
-            // Busca notificações onde o "destino" é o usuário atual
-            // (Ajustaremos a lógica de salvar notificações conforme as respostas forem criadas)
-            const q = query(
-                collection(db, "notificacoes"),
-                where("paraId", "==", userId),
-                orderBy("data", "desc")
-            );
+            if (caixaTexto.innerText.trim() === "") {
+                alert("Opa! A mensagem está vazia. Escreva algo antes de postar.");
+                return;
+            }
 
+            try {
+                // Salva no banco de dados
+                await addDoc(collection(db, "recados_rede"), {
+                    texto: conteudo,
+                    autor: nomeDoUsuario,
+                    autor_uid: auth.currentUser.uid,
+                    faixa_etaria: categoriaGlobal,
+                    data: serverTimestamp()
+                });
+
+                caixaTexto.innerHTML = ""; // Limpa a caixa após postar
+            } catch (e) {
+                console.error("Falha na comunicação com Houston:", e);
+                alert("Erro ao postar. Tente novamente.");
+            }
+        };
+
+        // Função para puxar e exibir os recados
+        function carregarRecados(cat) {
+            const q = query(collection(db, "recados_rede"), where("faixa_etaria", "==", cat));
             onSnapshot(q, (snapshot) => {
-                if (snapshot.empty) {
-                    listaElement.innerHTML = `
-                        <div class="vazio">
-                            <p>Nenhum recado por enquanto.</p>
-                            <small>Quando alguém interagir com suas neuras, você verá aqui!</small>
-                        </div>`;
-                    return;
+                const feed = document.getElementById('feedRecados');
+                feed.innerHTML = "";
+
+                // Puxa e ordena via JavaScript para não exigir indexação extra no Firebase agora
+                let recados = [];
+                snapshot.forEach(docSnap => {
+                    recados.push({ id: docSnap.id, ...docSnap.data() });
+                });
+
+                recados.sort((a, b) => {
+                    const dataA = a.data ? a.data.toMillis() : 0;
+                    const dataB = b.data ? b.data.toMillis() : 0;
+                    return dataB - dataA; // Mais novos primeiro
+                });
+
+                if (recados.length === 0) {
+                    feed.innerHTML = `<p style="text-align:center; color:#888;">Nenhum recado ainda. Seja o primeiro a postar!</p>`;
                 }
 
-                listaElement.innerHTML = "";
-                snapshot.forEach((doc) => {
-                    const recado = doc.data();
-                    const html = `
-                        <div class="card-recado">
-                            <img src="${recado.fotoAutor || ''}" class="foto-autor">
-                            <div class="conteudo-recado">
-                                <p class="texto-principal">
-                                    <strong>${recado.autorNome}</strong> ${recado.mensagem}
-                                </p>
-                                <span class="data-recado">${recado.data?.toDate().toLocaleString() || 'Agora mesmo'}</span>
-                            </div>
+                recados.forEach(r => {
+                    feed.innerHTML += `
+                        <div class="mural-card" style="padding: 20px;">
+                            <h4 style="margin: 0 0 10px 0; color: var(--roxo);">${r.autor}</h4>
+                            <div style="font-size: 0.95rem; line-height: 1.5; color: var(--text-color);">${r.texto}</div>
                         </div>
                     `;
-                    listaElement.insertAdjacentHTML('beforeend', html);
                 });
             });
         }

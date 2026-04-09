@@ -4,112 +4,324 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeurUp - Comunidades</title>
+    <title>Comunidades | NeurUp</title>
+    <link rel="icon" type="image/png" href="imagens/favicon.png">
     <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Poppins:wght@400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=Poppins:wght@400;500&display=swap"
         rel="stylesheet">
     <style>
         :root {
             --roxo: #5848d0;
             --laranja: #FF8C00;
-            --bg: #F8F9FD;
+            --bg: #F0EEFF;
         }
 
         body {
             font-family: 'Poppins', sans-serif;
             background: var(--bg);
             margin: 0;
+            transition: 0.5s;
         }
 
-        .container {
-            max-width: 1100px;
-            margin: 40px auto;
-            padding: 0 20px;
+        .main-content {
+            padding: 40px 5%;
+            max-width: 1000px;
+            margin: auto;
         }
 
-        .header-flex {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 40px;
-        }
-
-        .header-flex h1 {
-            font-family: 'Plus Jakarta Sans';
+        h1 {
             color: var(--roxo);
-            margin: 0;
+            font-family: 'Plus Jakarta Sans';
+            transition: 0.3s;
         }
 
-        .btn-criar {
+        .grid-comunidades {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 25px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.03);
+            transition: 0.3s;
+            border: 2px solid transparent;
+            position: relative;
+        }
+
+        .btn-entrar {
             background: var(--roxo);
             color: white;
             border: none;
-            padding: 12px 25px;
-            border-radius: 18px;
-            font-weight: 700;
+            padding: 10px 20px;
+            border-radius: 12px;
             cursor: pointer;
-        }
-
-        .lista-comus {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-        }
-
-        .card-comu {
-            background: white;
-            border-radius: 25px;
-            padding: 30px;
-            text-align: center;
-            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
             transition: 0.3s;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.03);
         }
 
-        .card-comu:hover {
-            transform: scale(1.05);
-            border: 2px solid var(--roxo);
+        /* Botão Admin */
+        .btn-excluir {
+            background: none;
+            border: none;
+            color: #ff4757;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            text-decoration: underline;
         }
 
-        .emoji-comu {
-            font-size: 2.5rem;
-            display: block;
-            margin-bottom: 10px;
+        .btn-excluir:hover {
+            color: #cc0000;
         }
 
-        .titulo-comu {
-            font-weight: 700;
-            color: #333;
+        /* =========================================
+           ⚡ MODO TEEN - ESTÉTICA GAMER / NEON (MASTER)
+           ========================================= */
+        body.modo-teen {
+            --bg: #121214;
+            --roxo: #04d361;
+            --laranja: #8257e5;
+            color: #e1e1e6;
+            background: var(--bg);
+        }
+
+        body.modo-teen .card {
+            background: #202024 !important;
+            border: 1px solid #29292e !important;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5) !important;
+            color: #e1e1e6 !important;
+        }
+
+        body.modo-teen h1,
+        body.modo-teen h3 {
+            color: var(--roxo) !important;
+        }
+
+        body.modo-teen p {
+            color: #a8a8b3 !important;
+        }
+
+        body.modo-teen input {
+            background: #121214 !important;
+            color: #e1e1e6 !important;
+            border: 1px solid #323238 !important;
+        }
+
+        body.modo-teen button,
+        body.modo-teen .btn-entrar {
+            background: var(--roxo) !important;
+            color: #121214 !important;
+            font-weight: 800;
+        }
+
+        body.modo-teen .card:hover {
+            border-color: #04d361 !important;
+            box-shadow: 0 10px 25px rgba(4, 211, 97, 0.1) !important;
+            transform: translateY(-5px);
+        }
+
+        body.modo-teen #modalCriar>div {
+            background: #202024 !important;
+            border: 1px solid #04d361;
+        }
+
+        body.modo-teen .btn-excluir {
+            background: transparent !important;
+            color: #ff4757 !important;
+        }
+
+        /* =========================================
+           📱 MUTIRÃO MOBILE - RESPONSIVIDADE
+           ========================================= */
+        @media (max-width: 768px) {
+
+            /* 1. Ajusta o respiro lateral para ganhar espaço na telinha */
+            .main-content,
+            .container {
+                padding: 20px 5%;
+            }
+
+            /* 2. Centraliza e diminui os títulos para não quebrarem de linha feio */
+            h1 {
+                font-size: 1.8rem;
+                text-align: center;
+            }
+
+            /* 3. Coloca os cards de Comunidade um embaixo do outro (1 coluna só) */
+            .grid-comunidades {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            /* 4. Ajusta a barra de ferramentas do Mural para os botões não vazarem */
+            .toolbar {
+                justify-content: center;
+                padding: 10px;
+            }
+
+            .toolbar button,
+            .toolbar select {
+                padding: 6px 10px;
+                font-size: 0.9rem;
+            }
+
+            /* 5. Deixa a área de texto do recado mais compacta */
+            .editor-area {
+                min-height: 120px;
+                padding: 15px;
+                font-size: 1rem;
+            }
+
+            /* 6. Encolhe um pouquinho o botão flutuante de Criar Comunidade (+) */
+            button[onclick*="modalCriar"] {
+                width: 50px !important;
+                height: 50px !important;
+                bottom: 20px !important;
+                right: 20px !important;
+                font-size: 24px !important;
+            }
+
+            /* 7. Ajusta o Pop-up de criação para caber perfeitamente no meio do celular */
+            #modalCriar>div {
+                width: 85% !important;
+                padding: 20px !important;
+            }
+
+            /* 8. Botão de postar no mural ocupa a largura toda para ficar fácil de clicar com o dedão */
+            .btn-postar {
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
 </head>
 
 <body>
-    <script type="module" src="menu.js"></script>
-    <div class="container">
-        <div class="header-flex">
-            <h1>Redes de <span>Troca</span></h1>
-            <button class="btn-criar" onclick="abrirModal()">+ Criar Comunidade</button>
+    <div id="menu-principal"></div>
+    <main class="main-content">
+        <h1 id="tituloPagina">Explorar Comunidades</h1>
+        <div class="grid-comunidades" id="gridComunidades"></div>
+    </main>
+
+    <button onclick="document.getElementById('modalCriar').style.display='flex'"
+        style="position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: #FF8C00; color: white; border: none; border-radius: 50%; font-size: 30px; cursor: pointer; box-shadow: 0 5px 15px rgba(255,140,0,0.3); z-index: 999;">+</button>
+
+    <div id="modalCriar"
+        style="display:none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); align-items:center; justify-content:center; z-index:1000;">
+        <div style="background:white; padding:30px; border-radius:25px; width:300px; text-align:center;">
+            <h3 style="color:#5848d0">Novo Espaço</h3>
+            <input type="text" id="nomeComunidade" placeholder="Nome da tribo..."
+                style="width:100%; padding:10px; margin:10px 0; border-radius:10px; border:1px solid #ddd; outline: none;">
+            <button onclick="salvarNovaComunidade()"
+                style="background:#FF8C00; color:white; border:none; padding:12px; width:100%; border-radius:12px; cursor:pointer; font-weight:bold;">Criar
+                Agora! 🚀</button>
+            <button onclick="document.getElementById('modalCriar').style.display='none'"
+                style="background:none; border:none; color:#888; margin-top:10px; cursor:pointer;">Talvez
+                depois</button>
         </div>
-        <div id="listaComunidades" class="lista-comus"></div>
     </div>
 
     <script type="module">
-        import { db, collection, query, onSnapshot, orderBy } from "./liberi.js";
+        import { renderizarMenu } from './menu.js';
+        import { auth, db } from './liberi.js';
+        import { collection, query, where, onSnapshot, getDoc, getDocs, doc, addDoc, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        onSnapshot(query(collection(db, "comunidades"), orderBy("criadoEm", "desc")), (snap) => {
-            const lista = document.getElementById('listaComunidades');
-            lista.innerHTML = "";
-            snap.forEach(docSnap => {
-                const c = docSnap.data();
-                lista.insertAdjacentHTML('beforeend', `
-                    <div class="card-comu" onclick="window.location.href='grupos.html?id=${docSnap.id}'">
-                        <span class="emoji-comu">${c.emoji}</span>
-                        <span class="titulo-comu">${c.nome}</span>
-                    </div>
-                `);
-            });
+        renderizarMenu();
+        let categoriaGlobal = "kids";
+
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                const docSnap = await getDoc(doc(db, "usuarios", user.uid));
+                if (!docSnap.exists()) return;
+                const d = docSnap.data();
+
+                let idade = 30;
+                if (d.filho && d.filho.idade) {
+                    idade = parseInt(d.filho.idade);
+                } else if (d.tipo === "dependente_autonomo" && d.pai_uid_referencia) {
+                    const qPai = query(collection(db, "usuarios"), where("codigoFamiliar", "==", d.pai_uid_referencia));
+                    const snapPai = await getDocs(qPai);
+                    if (!snapPai.empty) {
+                        const dadosPai = snapPai.docs[0].data();
+                        if (dadosPai.filho && dadosPai.filho.idade) {
+                            idade = parseInt(dadosPai.filho.idade);
+                        }
+                    }
+                }
+
+                if (idade >= 11 && idade <= 17) {
+                    categoriaGlobal = "teen";
+                    document.body.classList.add('modo-teen');
+                    const titulo = document.getElementById('tituloPagina');
+                    if (titulo) titulo.innerText = "Circuitos Teen ⚡";
+                } else {
+                    categoriaGlobal = "kids";
+                }
+
+                carregarComunidades(categoriaGlobal);
+            } else { window.location.href = "index.html"; }
         });
+
+        function carregarComunidades(cat) {
+            const q = query(collection(db, "comunidades_kids"), where("faixa_etaria", "==", cat));
+            onSnapshot(q, (snapshot) => {
+                const grid = document.getElementById('gridComunidades');
+                grid.innerHTML = "";
+                if (snapshot.empty) {
+                    grid.innerHTML = `<p style="text-align:center; color:#888; width:100%;">Ainda não há tribos para sua idade. Que tal criar a primeira?</p>`;
+                    return;
+                }
+
+                // Pega o ID de quem está logado para comparar
+                const meuUid = auth.currentUser.uid;
+
+                snapshot.forEach(docSnap => {
+                    const com = docSnap.data();
+
+                    // Lógica de Admin: Só mostra o botão se o criador for a pessoa logada
+                    let botaoExcluir = "";
+                    if (com.criador_uid === meuUid) {
+                        botaoExcluir = `<button class="btn-excluir" onclick="apagarComunidade('${docSnap.id}')">🗑️ Excluir Tribo</button>`;
+                    }
+
+                    grid.innerHTML += `
+                        <div class="card">
+                            <div style="font-size:3rem; margin-bottom:15px;">${cat === 'teen' ? '🔥' : '🚀'}</div>
+                            <h3>${com.nome}</h3>
+                            <p style="font-size:0.9rem; opacity:0.8;">${com.descricao || 'Espaço de descobertas'}</p>
+                            <button class="btn-entrar" onclick="window.location.href='grupos.html?comunidade=${docSnap.id}'">Participar</button>
+                            ${botaoExcluir}
+                        </div>`;
+                });
+            });
+        }
+
+        window.salvarNovaComunidade = async () => {
+            const nomeInput = document.getElementById('nomeComunidade');
+            if (nomeInput.value) {
+                try {
+                    await addDoc(collection(db, "comunidades_kids"), {
+                        nome: nomeInput.value, descricao: `Tribo criada por um explorador`, faixa_etaria: categoriaGlobal,
+                        criador_uid: auth.currentUser.uid, data: serverTimestamp()
+                    });
+                    nomeInput.value = ""; document.getElementById('modalCriar').style.display = 'none';
+                } catch (e) { alert("Erro ao conectar."); }
+            }
+        };
+
+        // Função para o Admin apagar a comunidade
+        window.apagarComunidade = async (id) => {
+            if (confirm("Tem certeza que deseja apagar esta tribo inteira? Isso não pode ser desfeito!")) {
+                await deleteDoc(doc(db, "comunidades_kids", id));
+            }
+        };
     </script>
 </body>
 

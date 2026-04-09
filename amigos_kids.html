@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conexões Seguras | NeurUp</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=Poppins:wght@400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --roxo: #5848d0;
+            --laranja: #FF8C00;
+            --bg: #f4f8ff;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg);
+            margin: 0;
+            transition: 0.5s;
+        }
+
+        .header-segura {
+            background: var(--roxo);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            border-bottom: 5px solid var(--laranja);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 40px 5%;
+        }
+
+        .busca-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        input {
+            flex: 1;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #ddd;
+            outline: none;
+        }
+
+        .btn-buscar {
+            background: var(--laranja);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .resultado-card {
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 15px;
+        }
+
+        /* MODO TEEN */
+        body.modo-teen {
+            --bg: #121214;
+            --roxo: #04d361;
+            --laranja: #8257e5;
+            color: #e1e1e6;
+        }
+
+        body.modo-teen .header-segura {
+            background: #1a1a1e;
+            border-bottom-color: var(--roxo);
+        }
+
+        body.modo-teen .resultado-card {
+            background: #1a1a1e !important;
+            border: 1px solid #333 !important;
+        }
+
+        body.modo-teen input {
+            background: #0d0d0f;
+            border: 1px solid #333;
+            color: white;
+        }
+
+        body.modo-teen .btn-buscar {
+            background: var(--roxo);
+            color: #000;
+        }
+
+        /* =========================================
+           📱 MUTIRÃO MOBILE - RESPONSIVIDADE
+           ========================================= */
+        @media (max-width: 768px) {
+
+            /* 1. Ajusta o respiro lateral para ganhar espaço na telinha */
+            .main-content,
+            .container {
+                padding: 20px 5%;
+            }
+
+            /* 2. Centraliza e diminui os títulos para não quebrarem de linha feio */
+            h1 {
+                font-size: 1.8rem;
+                text-align: center;
+            }
+
+            /* 3. Coloca os cards de Comunidade um embaixo do outro (1 coluna só) */
+            .grid-comunidades {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            /* 4. Ajusta a barra de ferramentas do Mural para os botões não vazarem */
+            .toolbar {
+                justify-content: center;
+                padding: 10px;
+            }
+
+            .toolbar button,
+            .toolbar select {
+                padding: 6px 10px;
+                font-size: 0.9rem;
+            }
+
+            /* 5. Deixa a área de texto do recado mais compacta */
+            .editor-area {
+                min-height: 120px;
+                padding: 15px;
+                font-size: 1rem;
+            }
+
+            /* 6. Encolhe um pouquinho o botão flutuante de Criar Comunidade (+) */
+            button[onclick*="modalCriar"] {
+                width: 50px !important;
+                height: 50px !important;
+                bottom: 20px !important;
+                right: 20px !important;
+                font-size: 24px !important;
+            }
+
+            /* 7. Ajusta o Pop-up de criação para caber perfeitamente no meio do celular */
+            #modalCriar>div {
+                width: 85% !important;
+                padding: 20px !important;
+            }
+
+            /* 8. Botão de postar no mural ocupa a largura toda para ficar fácil de clicar com o dedão */
+            .btn-postar {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="menu-principal"></div>
+
+    <div class="header-segura">
+        <h2>🛡️ Círculo de Confiança</h2>
+        <p>Apenas conexões validadas são visíveis.</p>
+    </div>
+
+    <main class="container">
+        <div class="busca-box">
+            <input type="text" id="inputBusca" placeholder="Código Familiar ou Nome...">
+            <button class="btn-buscar">🔍 Buscar</button>
+        </div>
+        <div id="listaResultados"></div>
+    </main>
+
+    <script type="module">
+        import { renderizarMenu } from './menu.js';
+        import { auth, db } from './liberi.js';
+        import { getDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        renderizarMenu();
+
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                const docSnap = await getDoc(doc(db, "usuarios", user.uid));
+                if (docSnap.exists()) {
+                    const d = docSnap.data();
+                    let idade = 30;
+                    if (d.filho && d.filho.idade) { idade = parseInt(d.filho.idade); }
+                    else if (d.tipo === "dependente_autonomo" && d.idade) { idade = parseInt(d.idade); }
+
+                    if (idade >= 11 && idade <= 17) {
+                        document.body.classList.add('modo-teen');
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

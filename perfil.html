@@ -4,162 +4,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeurUp - Perfil da Família</title>
+    <title>Meu Perfil | NeurUp</title>
+    <link rel="icon" type="image/png" href="imagens/favicon.png">
     <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Poppins:wght@400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=Poppins:wght@400;500&display=swap"
         rel="stylesheet">
     <style>
         :root {
             --roxo: #5848d0;
-            /* Roxo NeurUp */
             --laranja: #FF8C00;
-            /* Laranja Up */
-            --bg: #F8F9FD;
-            --card: #FFFFFF;
+            --bg: #F0EEFF;
         }
 
         body {
             font-family: 'Poppins', sans-serif;
             background: var(--bg);
             margin: 0;
-            color: #4A4A4A;
         }
 
-        .container-perfil {
-            max-width: 650px;
+        .perfil-container {
+            max-width: 600px;
             margin: 40px auto;
-            padding: 20px;
-        }
-
-        .card-perfil {
-            background: var(--card);
-            border-radius: 32px;
+            background: white;
             padding: 40px;
-            text-align: center;
-            box-shadow: 0 10px 40px rgba(88, 72, 208, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.7);
-        }
-
-        .foto-grande {
-            width: 120px;
-            height: 120px;
-            border-radius: 45px;
-            border: 5px solid white;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-            object-fit: cover;
-            margin-bottom: 20px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
         }
 
         h2 {
+            color: var(--roxo);
             font-family: 'Plus Jakarta Sans';
-            font-weight: 800;
-            color: var(--roxo);
-            margin-bottom: 5px;
         }
 
-        .tag-status {
-            background: #E8E5FF;
-            color: var(--roxo);
-            padding: 5px 15px;
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #eee;
             border-radius: 12px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
+            box-sizing: border-box;
         }
 
-        .secao-filhos {
-            margin-top: 40px;
-            text-align: left;
-        }
-
-        .filho-card {
-            background: #F8F9FD;
-            padding: 15px 20px;
-            border-radius: 20px;
-            margin-bottom: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: 1px solid #EEE;
-        }
-
-        .tag-neuro {
-            background: var(--laranja);
-            color: white;
-            padding: 4px 10px;
-            border-radius: 8px;
-            font-size: 0.65rem;
-            font-weight: 800;
-        }
-
-        .btn-voltar {
-            margin-top: 30px;
+        .btn-salvar {
             background: var(--roxo);
             color: white;
             border: none;
-            padding: 15px 30px;
-            border-radius: 20px;
+            width: 100%;
+            padding: 15px;
+            border-radius: 15px;
             font-weight: 600;
             cursor: pointer;
-            width: 100%;
-            transition: 0.3s;
+            margin-top: 20px;
         }
 
-        .btn-voltar:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(88, 72, 208, 0.3);
+        /* =========================================
+           📱 MUTIRÃO MOBILE - RESPONSIVIDADE
+           ========================================= */
+        @media (max-width: 768px) {
+
+            /* 1. Ajusta o respiro lateral para ganhar espaço na telinha */
+            .main-content,
+            .container {
+                padding: 20px 5%;
+            }
+
+            /* 2. Centraliza e diminui os títulos para não quebrarem de linha feio */
+            h1 {
+                font-size: 1.8rem;
+                text-align: center;
+            }
+
+            /* 3. Coloca os cards de Comunidade um embaixo do outro (1 coluna só) */
+            .grid-comunidades {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            /* 4. Ajusta a barra de ferramentas do Mural para os botões não vazarem */
+            .toolbar {
+                justify-content: center;
+                padding: 10px;
+            }
+
+            .toolbar button,
+            .toolbar select {
+                padding: 6px 10px;
+                font-size: 0.9rem;
+            }
+
+            /* 5. Deixa a área de texto do recado mais compacta */
+            .editor-area {
+                min-height: 120px;
+                padding: 15px;
+                font-size: 1rem;
+            }
+
+            /* 6. Encolhe um pouquinho o botão flutuante de Criar Comunidade (+) */
+            button[onclick*="modalCriar"] {
+                width: 50px !important;
+                height: 50px !important;
+                bottom: 20px !important;
+                right: 20px !important;
+                font-size: 24px !important;
+            }
+
+            /* 7. Ajusta o Pop-up de criação para caber perfeitamente no meio do celular */
+            #modalCriar>div {
+                width: 85% !important;
+                padding: 20px !important;
+            }
+
+            /* 8. Botão de postar no mural ocupa a largura toda para ficar fácil de clicar com o dedão */
+            .btn-postar {
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
 </head>
 
 <body>
-    <div class="container-perfil">
-        <div class="card-perfil">
-            <img id="userFoto" src="" class="foto-grande">
-            <h2 id="userName">...</h2>
-            <span class="tag-status">Sincronizado com NeurUp 🧠</span>
+    <div id="menu-principal"></div>
 
-            <div class="secao-filhos">
-                <h3 style="font-size: 0.9rem; color: #AAA; text-transform: uppercase; margin-bottom: 15px;">Meus Filhos
-                </h3>
-                <div id="listaFilhos">
-                </div>
-            </div>
+    <main class="perfil-container">
+        <h2>Complete seu Perfil</h2>
+        <p>Olá! Para personalizarmos sua experiência, conte-nos um pouco mais.</p>
 
-            <button class="btn-voltar" onclick="window.location.href='dashboard.html'">Voltar para a Rede</button>
+        <div class="form-group">
+            <label>Nome do seu pequeno(a)</label>
+            <input type="text" placeholder="Ex: Theo">
         </div>
-    </div>
+        <div class="form-group">
+            <label>Idade do seu pequeno(a)</label>
+            <input type="text" placeholder="Ex: 2 anos">
+        </div>
+
+        <button class="btn-salvar">Salvar Dados</button>
+    </main>
 
     <script type="module">
-        import { db, auth } from "./liberi.js";
-        import { doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                document.getElementById('userName').innerText = user.displayName;
-                document.getElementById('userFoto').src = user.photoURL;
-
-                onSnapshot(doc(db, "usuarios", user.uid), (snap) => {
-                    const container = document.getElementById('listaFilhos');
-                    if (snap.exists() && snap.data().filhos) {
-                        container.innerHTML = "";
-                        snap.data().filhos.forEach(f => {
-                            container.insertAdjacentHTML('beforeend', `
-                                <div class="filho-card">
-                                    <strong>${f.apelido}</strong>
-                                    ${f.neuroatipico ? '<span class="tag-neuro">Selo Atípico</span>' : ''}
-                                </div>
-                            `);
-                        });
-                    } else {
-                        container.innerHTML = '<p style="font-size: 0.8rem; color: #bbb; text-align: center;">Nenhum pequeno cadastrado ainda.</p>';
-                    }
-                });
-            } else {
-                window.location.href = "index.html";
-            }
-        });
+        import { renderizarMenu } from './menu.js';
+        renderizarMenu();
     </script>
 </body>
 

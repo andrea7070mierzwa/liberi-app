@@ -4,279 +4,321 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Líberi - Tópicos do Grupo</title>
+    <title>Grupos | NeurUp</title>
+    <link rel="icon" type="image/png" href="imagens/favicon.png">
     <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Poppins:wght@400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=Poppins:wght@400;500&display=swap"
         rel="stylesheet">
     <style>
         :root {
-            --roxo: #6C5CE7;
+            --roxo: #5848d0;
+            --laranja: #FF8C00;
             --bg: #F0EEFF;
-            --branco: #FFFFFF;
         }
 
         body {
             font-family: 'Poppins', sans-serif;
             background: var(--bg);
             margin: 0;
-            color: #4A4A4A;
+            transition: 0.5s;
         }
 
-        .container {
-            max-width: 900px;
-            margin: 30px auto;
-            padding: 0 20px;
+        .main-content {
+            padding: 40px 5%;
+            max-width: 1000px;
+            margin: auto;
         }
 
-        .cabecalho-grupo {
-            background: var(--roxo);
-            color: white;
-            padding: 40px;
-            border-radius: 30px;
-            margin-bottom: 30px;
-        }
-
-        .cabecalho-grupo h1 {
-            font-family: 'Plus Jakarta Sans';
-            margin: 0;
-            font-size: 2rem;
-        }
-
-        /* LISTA DE TÓPICOS */
-        .card-topico {
-            background: white;
-            padding: 25px;
-            border-radius: 20px;
-            margin-bottom: 15px;
+        .header-flex {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            text-decoration: none;
-            color: inherit;
-            transition: 0.3s;
-            border-left: 6px solid transparent;
+            margin-bottom: 30px;
         }
 
-        .card-topico:hover {
-            border-left-color: var(--roxo);
-            transform: translateX(5px);
-        }
-
-        .titulo-topico {
-            font-family: 'Plus Jakarta Sans';
-            font-weight: 700;
+        h1 {
             color: var(--roxo);
-            font-size: 1.1rem;
-            margin-bottom: 5px;
-            display: block;
+            font-family: 'Plus Jakarta Sans';
+            margin: 0;
+            transition: 0.3s;
         }
 
-        /* MODAL E EDITOR */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
+        .grid-grupos {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
         }
 
-        .modal-content {
+        .card-grupo {
             background: white;
-            padding: 30px;
+            padding: 25px;
             border-radius: 30px;
-            width: 90%;
-            max-width: 600px;
-        }
-
-        .input-padrao {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #eee;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            font-family: 'Poppins';
-            box-sizing: border-box;
-        }
-
-        .toolbar {
+            box-shadow: 0 10px 25px rgba(88, 72, 208, 0.05);
             display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 10px;
-            background: #f8f7ff;
-            padding: 10px;
+            flex-direction: column;
+            gap: 15px;
+            transition: 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .grupo-info h3 {
+            margin: 0;
+            color: var(--roxo);
+        }
+
+        .grupo-meta {
+            font-size: 0.85rem;
+            color: #888;
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-ver-grupo {
+            background: #f0eeff;
+            color: var(--roxo);
+            border: none;
+            padding: 12px;
             border-radius: 12px;
-        }
-
-        .btn-tool {
-            background: white;
-            border: 1px solid #ddd;
-            padding: 5px 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        .input-cor {
-            border: none;
-            width: 30px;
-            height: 30px;
-            cursor: pointer;
-            background: none;
-        }
-
-        #editorTexto {
-            width: 100%;
-            border: 2px solid #eee;
-            border-radius: 15px;
-            padding: 15px;
-            min-height: 200px;
-            outline: none;
-            background: #fafafa;
-            box-sizing: border-box;
-        }
-
-        #editorTexto:focus {
-            border-color: var(--roxo);
-            background: white;
-        }
-
-        .btn-acao {
-            background: var(--roxo);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 15px;
             font-weight: 600;
             cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            transition: 0.3s;
         }
 
-        .btn-add {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 60px;
-            height: 60px;
-            border-radius: 30px;
+        .btn-ver-grupo:hover {
             background: var(--roxo);
             color: white;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            box-shadow: 0 10px 20px rgba(108, 92, 231, 0.4);
+        }
+
+        /* =========================================
+           ⚡ MODO TEEN - ESTÉTICA GAMER / NEON (MASTER)
+           ========================================= */
+        body.modo-teen {
+            --bg: #121214;
+            --roxo: #04d361;
+            --laranja: #8257e5;
+            color: #e1e1e6;
+            background: var(--bg);
+        }
+
+        body.modo-teen .card,
+        body.modo-teen .card-grupo,
+        body.modo-teen .card-topico {
+            background: #202024 !important;
+            border: 1px solid #29292e !important;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5) !important;
+            color: #e1e1e6 !important;
+        }
+
+        body.modo-teen h1,
+        body.modo-teen h2,
+        body.modo-teen h3,
+        body.modo-teen h4 {
+            color: var(--roxo) !important;
+        }
+
+        body.modo-teen p,
+        body.modo-teen small,
+        body.modo-teen .grupo-meta {
+            color: #a8a8b3 !important;
+        }
+
+        body.modo-teen textarea,
+        body.modo-teen input {
+            background: #121214 !important;
+            color: #e1e1e6 !important;
+            border: 1px solid #323238 !important;
+        }
+
+        body.modo-teen button,
+        body.modo-teen .btn-entrar,
+        body.modo-teen .btn-ver-grupo {
+            background: var(--roxo) !important;
+            color: #121214 !important;
+            font-weight: 800;
+        }
+
+        body.modo-teen .card-grupo:hover {
+            border-color: #04d361 !important;
+            box-shadow: 0 10px 25px rgba(4, 211, 97, 0.1) !important;
+            transform: translateY(-5px);
+        }
+
+        body.modo-teen #modalCriar>div {
+            background: #202024 !important;
+            border: 1px solid #04d361;
+        }
+
+
+
+
+        /* =========================================
+           📱 MUTIRÃO MOBILE - RESPONSIVIDADE
+           ========================================= */
+        @media (max-width: 768px) {
+
+            /* 1. Ajusta o respiro lateral para ganhar espaço na telinha */
+            .main-content,
+            .container {
+                padding: 20px 5%;
+            }
+
+            /* 2. Centraliza e diminui os títulos para não quebrarem de linha feio */
+            h1 {
+                font-size: 1.8rem;
+                text-align: center;
+            }
+
+            /* 3. Coloca os cards de Comunidade um embaixo do outro (1 coluna só) */
+            .grid-comunidades {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            /* 4. Ajusta a barra de ferramentas do Mural para os botões não vazarem */
+            .toolbar {
+                justify-content: center;
+                padding: 10px;
+            }
+
+            .toolbar button,
+            .toolbar select {
+                padding: 6px 10px;
+                font-size: 0.9rem;
+            }
+
+            /* 5. Deixa a área de texto do recado mais compacta */
+            .editor-area {
+                min-height: 120px;
+                padding: 15px;
+                font-size: 1rem;
+            }
+
+            /* 6. Encolhe um pouquinho o botão flutuante de Criar Comunidade (+) */
+            button[onclick*="modalCriar"] {
+                width: 50px !important;
+                height: 50px !important;
+                bottom: 20px !important;
+                right: 20px !important;
+                font-size: 24px !important;
+            }
+
+            /* 7. Ajusta o Pop-up de criação para caber perfeitamente no meio do celular */
+            #modalCriar>div {
+                width: 85% !important;
+                padding: 20px !important;
+            }
+
+            /* 8. Botão de postar no mural ocupa a largura toda para ficar fácil de clicar com o dedão */
+            .btn-postar {
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
 </head>
 
 <body>
-
-    <script type="module" src="menu.js"></script>
-
-    <div class="container">
-        <div class="cabecalho-grupo">
-            <span id="nomeComunidade"
-                style="font-size: 0.9rem; opacity: 0.8; text-transform: uppercase;">Comunidade</span>
-            <h1 id="tituloGrupo">Carregando...</h1>
+    <div id="menu-principal"></div>
+    <main class="main-content">
+        <div class="header-flex">
+            <h1 id="tituloPagina">Meus Grupos</h1>
+            <button class="btn-criar-grupo" onclick="document.getElementById('modalCriar').style.display='flex'"
+                style="background: var(--laranja); color: white; border: none; padding: 12px 25px; border-radius: 15px; font-weight: 600; cursor: pointer;">+
+                Criar Novo Grupo</button>
         </div>
+        <div class="grid-grupos" id="gridGrupos"></div>
+    </main>
 
-        <div id="listaTopicos"></div>
-    </div>
-
-    <button class="btn-add" onclick="abrirModal()">+</button>
-
-    <div class="modal" id="modalPost">
-        <div class="modal-content">
-            <h2 style="font-family: 'Plus Jakarta Sans'; color: var(--roxo); margin-top: 0;">Novo Tópico</h2>
-
-            <input type="text" id="inputTitulo" class="input-padrao"
-                placeholder="Título do Tópico (Ficará no padrão Líberi)">
-
-            <div class="toolbar">
-                <button class="btn-tool" onclick="formatar('bold')">B</button>
-                <button class="btn-tool" onclick="formatar('italic')">I</button>
-                <input type="color" class="input-cor" id="corTexto" onchange="mudarCor(this.value)">
-                <button class="btn-tool" onclick="inserirImagem()" style="margin-left: auto;">🖼️ Imagem</button>
-            </div>
-
-            <div id="editorTexto" contenteditable="true"></div>
-
-            <div style="margin-top: 20px; display: flex; justify-content: flex-end; gap: 10px;">
-                <button class="btn-acao" style="background: #eee; color: #666;"
-                    onclick="fecharModal()">Cancelar</button>
-                <button class="btn-acao" id="btnPublicar">Publicar ✨</button>
-            </div>
+    <div id="modalCriar"
+        style="display:none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); align-items:center; justify-content:center; z-index:1000;">
+        <div style="background:white; padding:30px; border-radius:25px; width:300px; text-align:center;">
+            <h3 style="color:#5848d0">Novo Grupo</h3>
+            <input type="text" id="nomeGrupo" placeholder="Nome do Grupo"
+                style="width:100%; padding:10px; margin:10px 0; border-radius:10px; border:1px solid #ddd; outline: none;">
+            <input type="text" id="descGrupo" placeholder="Descrição rápida"
+                style="width:100%; padding:10px; margin:10px 0; border-radius:10px; border:1px solid #ddd; outline: none;">
+            <button id="btnSalvarGrupo"
+                style="background:#FF8C00; color:white; border:none; padding:12px; width:100%; border-radius:12px; cursor:pointer; font-weight:bold;">Criar</button>
+            <button onclick="document.getElementById('modalCriar').style.display='none'"
+                style="background:none; border:none; color:#888; margin-top:10px; cursor:pointer;">Cancelar</button>
         </div>
     </div>
 
     <script type="module">
-        import { db, auth } from "./liberi.js";
-        import { collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { renderizarMenu } from './menu.js';
+        import { auth, db } from './liberi.js';
+        import { collection, query, where, onSnapshot, getDoc, getDocs, doc, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        const urlParams = new URLSearchParams(window.location.search);
-        const grupoId = urlParams.get('grupo');
+        renderizarMenu();
+        let categoriaGlobal = "kids";
 
-        // Editor
-        window.formatar = (cmd) => { document.execCommand(cmd, false, null); document.getElementById('editorTexto').focus(); };
-        window.mudarCor = (cor) => { document.execCommand('foreColor', false, cor); document.getElementById('editorTexto').focus(); };
-        window.inserirImagem = () => {
-            const url = prompt("Link da imagem:");
-            if (url) document.execCommand('insertImage', false, url);
-        };
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                const docSnap = await getDoc(doc(db, "usuarios", user.uid));
+                if (!docSnap.exists()) return;
+                const d = docSnap.data();
 
-        window.abrirModal = () => document.getElementById('modalPost').style.display = 'flex';
-        window.fecharModal = () => document.getElementById('modalPost').style.display = 'none';
+                let idade = 30;
+                if (d.filho && d.filho.idade) {
+                    idade = parseInt(d.filho.idade);
+                } else if (d.tipo === "dependente_autonomo" && d.pai_uid_referencia) {
+                    const qPai = query(collection(db, "usuarios"), where("codigoFamiliar", "==", d.pai_uid_referencia));
+                    const snapPai = await getDocs(qPai);
+                    if (!snapPai.empty) {
+                        const dadosPai = snapPai.docs[0].data();
+                        if (dadosPai.filho && dadosPai.filho.idade) {
+                            idade = parseInt(dadosPai.filho.idade);
+                        }
+                    }
+                }
 
-        onAuthStateChanged(auth, (user) => {
-            if (user && grupoId) {
-                document.getElementById('tituloGrupo').innerText = "Tópicos de Discussão";
-                carregarTopicos();
+                if (idade >= 11 && idade <= 17) {
+                    categoriaGlobal = "teen";
+                    document.body.classList.add('modo-teen');
+                    const titulo = document.getElementById('tituloPagina');
+                    if (titulo) titulo.innerText = "Meus Grupos Teen ⚡";
+                } else {
+                    categoriaGlobal = "kids";
+                }
+                carregarGrupos(categoriaGlobal);
             } else { window.location.href = "index.html"; }
         });
 
-        function carregarTopicos() {
-            const q = query(collection(db, "posts"), orderBy("data", "desc")); // Usando a mesma coleção centralizada
+        function carregarGrupos(cat) {
+            const q = query(collection(db, "grupos_kids"), where("faixa_etaria", "==", cat));
             onSnapshot(q, (snapshot) => {
-                const lista = document.getElementById('listaTopicos');
-                lista.innerHTML = "";
+                const grid = document.getElementById('gridGrupos');
+                grid.innerHTML = snapshot.empty ? "<p style='color:#888; width:100%; text-align:center;'>Nenhum grupo nesta bolha ainda.</p>" : "";
                 snapshot.forEach(docSnap => {
-                    const t = docSnap.data();
-                    lista.insertAdjacentHTML('beforeend', `
-                        <a href="discussao.html?id=${docSnap.id}" class="card-topico">
-                            <div>
-                                <span class="titulo-topico">${t.titulo || 'Postagem da Comunidade'}</span>
-                                <small>Por: ${t.autor}</small>
+                    const g = docSnap.data();
+                    grid.innerHTML += `
+                        <div class="card-grupo">
+                            <div class="grupo-info">
+                                <h3>${g.nome}</h3>
+                                <p style="font-size:0.9rem;">${g.descricao}</p>
                             </div>
-                            <span style="color: var(--roxo); font-weight: bold;">→</span>
-                        </a>
-                    `);
+                            <div class="grupo-meta"><span>💬 Tópicos ativos</span></div>
+                            <a href="topico.html?grupo=${docSnap.id}" class="btn-ver-grupo">Ver Tópicos</a>
+                        </div>`;
                 });
             });
         }
 
-        document.getElementById('btnPublicar').onclick = async () => {
-            const titulo = document.getElementById('inputTitulo').value;
-            const campo = document.getElementById('editorTexto');
-
-            if (!titulo || !campo.innerHTML.trim()) return alert("Preencha o título e o conteúdo!");
-
-            await addDoc(collection(db, "posts"), {
-                titulo: titulo, // Título padronizado
-                texto: campo.innerHTML, // Texto livre e colorido
-                autor: auth.currentUser.displayName,
-                fotoAutor: auth.currentUser.photoURL,
-                autorId: auth.currentUser.uid,
-                data: serverTimestamp()
-            });
-
-            fecharModal();
-            campo.innerHTML = "";
-            document.getElementById('inputTitulo').value = "";
+        document.getElementById('btnSalvarGrupo').onclick = async () => {
+            const nome = document.getElementById('nomeGrupo').value;
+            const desc = document.getElementById('descGrupo').value;
+            if (nome && desc) {
+                try {
+                    await addDoc(collection(db, "grupos_kids"), {
+                        nome: nome, descricao: desc, faixa_etaria: categoriaGlobal,
+                        criador_uid: auth.currentUser.uid, data: serverTimestamp()
+                    });
+                    document.getElementById('nomeGrupo').value = ""; document.getElementById('descGrupo').value = "";
+                    document.getElementById('modalCriar').style.display = 'none';
+                } catch (e) { alert("Erro ao conectar. Tente novamente."); }
+            }
         };
     </script>
 </body>
